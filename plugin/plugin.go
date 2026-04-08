@@ -93,7 +93,7 @@ type PluginConfig struct {
 
 // InitConfig provides all the information the plugin system needs
 // during initialization. This replaces the direct config.Config
-// dependency so that /plugin remains standalone.
+// dependency so that pkg/plugin remains standalone.
 type InitConfig struct {
 	// Plugins is the map of plugin configurations keyed by name.
 	Plugins map[string]PluginConfig
@@ -203,7 +203,14 @@ type ToolDefinition struct {
 	Name string `json:"name"`
 	// Description is the tool's description shown to the LLM.
 	Description string `json:"description"`
-	// Parameters is the JSON Schema for the tool's input parameters.
+	// Parameters is a flat map of property names to their JSON Schema
+	// definitions. The framework wraps this in {"type":"object",
+	// "properties": ...} automatically — do NOT include the outer
+	// object wrapper yourself.
+	//
+	//   Parameters: map[string]any{
+	//       "name": map[string]any{"type": "string", "description": "..."},
+	//   }
 	Parameters map[string]any `json:"parameters"`
 	// Required lists the required parameter names.
 	Required []string `json:"required,omitempty"`
@@ -569,14 +576,31 @@ func Initialize(ctx context.Context, cfg *InitConfig, perms PermissionService) {
 func initSinglePlugin(ctx context.Context, cfg *InitConfig, name string, pluginCfg PluginConfig) {
 	updateState(name, StateLoading, nil, nil)
 
+	// Auto-detect type when not set explicitly.
+	if pluginCfg.Type == "" {
+		pluginCfg.Type = resolvePluginType(cfg, name, pluginCfg)
+	}
+
 	var p Plugin
 	switch pluginCfg.Type {
 	case PluginTypeBuiltin:
-		var ok bool
-		p, ok = builtinPlugins[pluginCfg.Source]
-		if !ok {
-			err := fmt.Errorf("unknown built-in plugin: %s", pluginCfg.Source)
-			slog.Error("Failed to load plugin", "name", name, "error", err)
+		source := pluginCfg.Source
+		p = builtinPlugins[source]
+		if p == nil {
+			// The source may be a path like "./pkg/plugin/demo";
+			// fall back to the base name ("demo").
+			base := filepath.Base(source)
+			p = builtinPlugins[base]
+		}
+		if p == nil {
+			// Also try the config entry name itself as a last resort.
+			p = builtinPlugins[name]
+		}
+		if p == nil {
+			available := availableBuiltinNames()
+			hint := fmt.Sprintf("unknown built-in plugin %q; available: [%s]", source, strings.Join(available, ", "))
+			err := fmt.Errorf("%s", hint)
+			slog.Error("Failed to load plugin", "name", name, "error", err, "available", available)
 			updateState(name, StateError, err, nil)
 			return
 		}
@@ -587,7 +611,7 @@ func initSinglePlugin(ctx context.Context, cfg *InitConfig, name string, pluginC
 			soPath = resolveSharedPath(cfg.PluginDir, name)
 		}
 		if soPath == "" {
-			err := fmt.Errorf("shared plugin .so not found for %q in %s", name, cfg.PluginDir)
+			err := fmt.Errorf("Shared plugin .so not found for %q in %s", name, cfg.PluginDir)
 			slog.Error("Failed to load plugin", "name", name, "error", err)
 			updateState(name, StateError, err, nil)
 			return
@@ -602,7 +626,7 @@ func initSinglePlugin(ctx context.Context, cfg *InitConfig, name string, pluginC
 	case PluginTypeExec:
 		p = newExecPlugin(name, pluginCfg)
 	default:
-		err := fmt.Errorf("unsupported plugin type: %s", pluginCfg.Type)
+		err := fmt.Errorf("Unsupported plugin type: %s", pluginCfg.Type)
 		slog.Error("Failed to load plugin", "name", name, "error", err)
 		updateState(name, StateError, err, nil)
 		return
@@ -689,12 +713,12 @@ func resolveSharedPath(pluginDir, name string) string {
 func loadSharedPlugin(path string) (Plugin, error) {
 	p, err := plugin.Open(path)
 	if err != nil {
-		return nil, fmt.Errorf("failed to open shared plugin %s: %w", path, err)
+		return nil, fmt.Errorf("Failed to open shared plugin %s: %w", path, err)
 	}
 
 	sym, err := p.Lookup("CodgPlugin")
 	if err != nil {
-		return nil, fmt.Errorf("shared plugin %s does not export CodgPlugin symbol: %w", path, err)
+		return nil, fmt.Errorf("Shared plugin %s does not export CodgPlugin symbol: %w", path, err)
 	}
 
 	// The symbol should be a pointer to a value implementing Plugin.
@@ -704,7 +728,7 @@ func loadSharedPlugin(path string) (Plugin, error) {
 		if pp, ok2 := sym.(*Plugin); ok2 && pp != nil {
 			pluginImpl = *pp
 		} else {
-			return nil, fmt.Errorf("shared plugin %s: CodgPlugin symbol is %T, want plugin.Plugin", path, sym)
+			return nil, fmt.Errorf("Shared plugin %s: CodgPlugin symbol is %T, want plugin.Plugin", path, sym)
 		}
 	}
 
@@ -1045,7 +1069,59 @@ func RegisterBuiltin(name string, p Plugin) {
 	builtinPlugins[name] = p
 }
 
+// availableBuiltinNames returns a sorted list of registered built-in
+// plugin names for use in error messages.
+func availableBuiltinNames() []string {
+	names := make([]string, 0, len(builtinPlugins))
+	for name := range builtinPlugins {
+		names = append(names, name)
+	}
+	sort.Strings(names)
+	return names
+}
+
 // --- Exec plugin ---
+
+// resolvePluginType auto-detects the plugin type when the config entry
+// has no explicit type. It checks builtin registry first, then looks
+// for a .so in the plugin directory.
+func resolvePluginType(cfg *InitConfig, name string, pc PluginConfig) PluginType {
+	source := pc.Source
+	// Check builtin registry (exact, basename, and config name).
+	if _, ok := builtinPlugins[source]; ok {
+		return PluginTypeBuiltin
+	}
+	if source != "" {
+		if _, ok := builtinPlugins[filepath.Base(source)]; ok {
+			return PluginTypeBuiltin
+		}
+	}
+	if _, ok := builtinPlugins[name]; ok {
+		return PluginTypeBuiltin
+	}
+
+	// Check for an installed .so file.
+	if cfg.PluginDir != "" {
+		if soPath := resolveSharedPath(cfg.PluginDir, name); soPath != "" {
+			return PluginTypeShared
+		}
+	}
+	if source != "" {
+		// Source itself might be a .so path.
+		if strings.HasSuffix(source, ".so") {
+			return PluginTypeShared
+		}
+	}
+
+	// If command is set, assume exec.
+	if pc.Command != "" {
+		return PluginTypeExec
+	}
+
+	// Default to builtin — initSinglePlugin will produce a clear
+	// error if the name isn't registered.
+	return PluginTypeBuiltin
+}
 
 // execPlugin implements [Plugin] for external executable plugins that
 // communicate via JSON-RPC over stdin/stdout.
@@ -1066,7 +1142,7 @@ func (p *execPlugin) Init(ctx context.Context, input PluginInput) (*Hooks, error
 	// TODO: Implement exec plugin subprocess lifecycle.
 	// This will spawn the plugin command, send an init request via
 	// JSON-RPC, and map returned capabilities to Hooks.
-	return nil, fmt.Errorf("exec plugins are not yet implemented; plugin %q configured with command %q", p.name, p.config.Command)
+	return nil, fmt.Errorf("Exec plugins are not yet implemented; plugin %q configured with command %q", p.name, p.config.Command)
 }
 
 // --- Plugin tool → codgpkg.AgentTool adapter ---
@@ -1120,7 +1196,7 @@ func (t *PluginTool) Info() codgpkg.ToolInfo {
 func (t *PluginTool) Run(ctx context.Context, params codgpkg.ToolCall) (codgpkg.ToolResponse, error) {
 	sessionID, ok := ctx.Value(sessionIDContextKey("session_id")).(string)
 	if !ok || sessionID == "" {
-		return codgpkg.ToolResponse{}, fmt.Errorf("session ID is required")
+		return codgpkg.ToolResponse{}, fmt.Errorf("Session ID is required")
 	}
 
 	// Request permission.

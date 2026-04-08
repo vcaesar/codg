@@ -247,6 +247,49 @@ func TestRegisterBuiltin(t *testing.T) {
 	require.True(t, called)
 }
 
+func TestBuiltinSourcePathFallback(t *testing.T) {
+	// Save and restore.
+	orig := builtinPlugins
+	builtinPlugins = map[string]Plugin{}
+	defer func() { builtinPlugins = orig }()
+
+	RegisterBuiltin("demo", PluginFunc(func(_ context.Context, _ PluginInput) (*Hooks, error) {
+		return &Hooks{}, nil
+	}))
+
+	tests := []struct {
+		name   string
+		source string
+	}{
+		{"exact name", "demo"},
+		{"relative path", "./pkg/plugin/demo"},
+		{"absolute path", "/home/user/codg/pkg/plugin/demo"},
+		{"nested path", "some/deep/path/demo"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			// Sequential — shares mutable global state.
+			_ = Close(context.Background())
+
+			cfg := &InitConfig{
+				Plugins: map[string]PluginConfig{
+					"my-demo": {
+						Type:   PluginTypeBuiltin,
+						Source: tt.source,
+					},
+				},
+			}
+
+			initSinglePlugin(context.Background(), cfg, "my-demo", cfg.Plugins["my-demo"])
+
+			state := GetStates()
+			info, ok := state["my-demo"]
+			require.True(t, ok, "plugin %q not in states", "my-demo")
+			require.Equal(t, StateReady, info.State, "source=%q should resolve to builtin 'demo'", tt.source)
+		})
+	}
+}
+
 func TestExecPluginNotImplemented(t *testing.T) {
 	t.Parallel()
 
@@ -617,7 +660,7 @@ func TestPluginToolRunExecuteError(t *testing.T) {
 		def: ToolDefinition{
 			Name: "failing",
 			Execute: func(_ context.Context, _ string) (string, error) {
-				return "", fmt.Errorf("something went wrong")
+				return "", fmt.Errorf("Something went wrong")
 			},
 		},
 	}
