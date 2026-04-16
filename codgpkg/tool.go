@@ -21,10 +21,11 @@ type ToolInfo struct {
 // ToolCall represents a single tool invocation issued by the model.
 type ToolCall struct {
 	// Index when there are multiple tool calls in a message.
-	// Index int `json:"index,omitempty"`
-	ID    string `json:"id"`
-	Name  string `json:"name"`
-	Input string `json:"input"`
+	// Index int    `json:"index,omitempty"`
+	ID string `json:"id"`
+	// Type  string `json:"type"`
+	Name   string `json:"name"`
+	Params string `json:"params"` // Params map[string]any
 }
 
 // ToolResponse carries the result of a [ToolCall] execution back to

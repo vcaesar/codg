@@ -1208,7 +1208,7 @@ func (t *PluginTool) Run(ctx context.Context, params codgpkg.ToolCall) (codgpkg.
 		ToolName:    t.Name(),
 		Action:      "execute",
 		Description: desc,
-		Params:      params.Input,
+		Params:      params.Params,
 	})
 	if err != nil {
 		return codgpkg.ToolResponse{}, err
@@ -1221,7 +1221,7 @@ func (t *PluginTool) Run(ctx context.Context, params codgpkg.ToolCall) (codgpkg.
 		return codgpkg.NewTextErrorResponse("plugin tool has no execute function"), nil
 	}
 
-	result, err := t.def.Execute(ctx, params.Input)
+	result, err := t.def.Execute(ctx, params.Params)
 	if err != nil {
 		return codgpkg.NewTextErrorResponse(err.Error()), nil
 	}

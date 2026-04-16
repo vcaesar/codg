@@ -137,9 +137,9 @@ func TestPluginToolRunWithPermission(t *testing.T) {
 	// Context needs session ID.
 	ctx := context.WithValue(context.Background(), sessionIDContextKey("session_id"), "test-session")
 	resp, err := pt.Run(ctx, codgpkg.ToolCall{
-		ID:    "call-1",
-		Name:  "plugin_test_greet",
-		Input: `{"name": "world"}`,
+		ID:     "call-1",
+		Name:   "plugin_test_greet",
+		Params: `{"name": "world"}`,
 	})
 	require.NoError(t, err)
 	require.Equal(t, "Hello from plugin!", resp.Content)
@@ -161,9 +161,9 @@ func TestPluginToolRunNoSession(t *testing.T) {
 	}
 
 	_, err := pt.Run(context.Background(), codgpkg.ToolCall{
-		ID:    "call-1",
-		Name:  "plugin_test_greet",
-		Input: `{}`,
+		ID:     "call-1",
+		Name:   "plugin_test_greet",
+		Params: `{}`,
 	})
 	require.Error(t, err)
 	require.Contains(t, err.Error(), "session ID is required")
@@ -184,9 +184,9 @@ func TestPluginToolRunNilExecute(t *testing.T) {
 
 	ctx := context.WithValue(context.Background(), sessionIDContextKey("session_id"), "test-session")
 	resp, err := pt.Run(ctx, codgpkg.ToolCall{
-		ID:    "call-1",
-		Name:  "plugin_test_broken",
-		Input: `{}`,
+		ID:     "call-1",
+		Name:   "plugin_test_broken",
+		Params: `{}`,
 	})
 	require.NoError(t, err)
 	require.True(t, resp.IsError)
@@ -667,9 +667,9 @@ func TestPluginToolRunExecuteError(t *testing.T) {
 
 	ctx := context.WithValue(context.Background(), sessionIDContextKey("session_id"), "test-session")
 	resp, err := pt.Run(ctx, codgpkg.ToolCall{
-		ID:    "call-1",
-		Name:  "plugin_test_failing",
-		Input: `{}`,
+		ID:     "call-1",
+		Name:   "plugin_test_failing",
+		Params: `{}`,
 	})
 	require.NoError(t, err) // Run itself doesn't error; it wraps in error response.
 	require.True(t, resp.IsError)
