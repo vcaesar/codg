@@ -23,6 +23,16 @@ Mac and Linux:
 ```bash
 # Homebrew
 brew install vcaesar/tap/codg
+
+# NPM
+# npm install -g @vcaesar/codg
+```
+
+Windows:
+
+```bash
+# Winget
+# winget install vcaesar.codg
 ```
 
 Go to your project directory, run `codg`.
@@ -35,8 +45,167 @@ Go to your project directory, run `codg`.
 
 Desktop App (BETA), Web (BETA), Claw (BETA)
 
-Reporting Bugs:
+## Reporting Bugs:
+
 Open a [Github Issues](https://github.com/vcaesar/codg/issues)
 
-How we use your data:
+## How we use your data:
+
 Currently no any data and telemetry is collected here, and 100% local model supported, use the API you can see they providers' policies.
+
+# CLI Commands
+
+Use: codg -h or "/help" in TUI
+
+```bash
+codg auth/login               # Authenticate (Atom, OpenAI, GitHub...)
+codg web                      # Start web UI on port 4096
+codg desktop                  # Launch the desktop app (Wails)
+codg claw                     # Start messaging agent (Telegram/Discord/Slack)
+codg gateway --private-only   # Start secured gateway
+codg models claude            # List models matching "claude"
+codg runm start Qwen/Qwen3-8B-GGUF   # Start a local model
+codg runm download user/model # Download a GGUF model
+codg plugin install repo/name # Install a plugin
+codg plugin list              # List installed plugins
+codg install repo/name        # Shorthand for plugin install
+codg mcp add myserver cmd     # Add an MCP server
+codg mcp list                 # List configured MCP servers
+codg skill url add <url>      # Add a skill source URL
+codg themes set catppuccin    # Switch theme
+# codg logs -f                  # Tail application logs
+codg stats/s                    # Show usage statistics
+codg dirs                     # Print data/config directory paths
+codg projects                 # List tracked project directories
+codg lite 2                   # Set lite mode level (0-4)
+codg merge origin main        # Safe git merge with v1/ backup
+codg migrate                  # Migrate config from .claude/.opencode
+codg vm build                 # Build on remote VM
+codg vm run -- make test      # Execute command on VM
+codg sandbox run -- ./test.sh # Run in sandbox
+codg sandbox status           # Check sandbox availability
+codg update                   # Update provider definitions
+```
+
+## Usage Examples
+
+### Non-Interactive (`codg run`)
+
+```bash
+# Pipe input from another command.
+cat errors.log | codg run "What's causing these errors?"
+# Verbose mode (debug output to stderr).
+codg run -v "Debug this function"
+```
+
+### Web UI
+
+```bash
+# API-only mode (no frontend, no browser).
+codg web 0
+```
+
+### Plugin Management
+
+```bash
+# Install a plugin from a Git repository.
+codg install github.com/user/codg-xxx-auth
+```
+
+# Configuration System
+
+Create a `codg.toml` in your project root (or `~/.codg/config/codg.toml`
+for global settings):
+
+```toml
+# codg.toml — Minimal project config.
+[options]
+lite_mode = 0          # 0 = all agents, 2 = default lean set, 4 = single agent
+locale    = "en"       # UI language: en, zh-CN, ja
+
+[options.tui]
+theme     = "catppuccin"
+dark_mode = true
+compact_mode = false
+```
+
+### Provider Setup
+
+```toml
+# Use an API key (supports $ENV_VAR expansion).
+[providers.anthropic]
+api_key = "$ANTHROPIC_API_KEY"
+
+# Use OAuth (set via `codg auth`).
+[providers.openai]
+oauth = true
+
+# Custom / self-hosted provider.
+[providers.local]
+name     = "My Local LLM"
+type     = "openai-compat"
+base_url = "http://localhost:8080/v1"
+api_key  = "not-needed"
+```
+
+### Agent Customization
+
+```toml
+# Shorthand: assign a model type.
+agents.coder = "large"
+agents.task  = "small"
+
+# Full form: fine-tune an agent.
+[agents.advisor]
+model           = "large"
+temperature     = 0.3
+thinking_budget = 32000
+```
+
+### MCP Servers
+
+```toml
+# HTTP MCP server.
+[mcp.websearch]
+type = "http"
+url  = "https://mcp.exa.ai/mcp?tools=web_search_exa"
+```
+
+### Skills
+
+```toml
+# Auto load and download in TUI or codg skill
+[option]
+skill_urls = ["https://github.com/user/skills"]
+```
+
+### Local Models (llama.cpp)
+
+```toml
+[llama]
+port     = 8090
+host     = "127.0.0.1"
+ctx_size = 32000
+gpu      = "auto"          # auto, cuda, off
+```
+
+### Messaging Channels
+
+```toml
+[channels.telegram]
+enabled     = true
+token       = "$TELEGRAM_BOT_TOKEN"
+allowed_ids = ["123456789"]
+
+[channels.discord]
+enabled  = true
+token    = "$DISCORD_BOT_TOKEN"
+```
+
+### Permissions
+
+```toml
+[permissions]
+allowed_tools = ["bash", "edit", "view", "glob", "grep"]
+allowed_dirs = ["**x"]
+```
