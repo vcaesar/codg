@@ -39,9 +39,10 @@ Go to your project directory, run `codg`.
 
 # Features
 
-- Auto and asynchronous, concurrency and high performance agent system
+- Auto and asynchronous, concurrency and high performance agent system, and low memory use
 - Multi models and local models via by openai-compat or claude-compat, any terminal and OS support
 - Easy use: The TUI in everywhere like GUI and Easy, Desktop and Web in the BETA
+- Click or "/xxx" to switch sessions, clcik or "/diff" to view the diff files same the vscode
 
 Desktop App (BETA), Web (BETA), Claw (BETA)
 
@@ -73,8 +74,9 @@ codg mcp add myserver cmd     # Add an MCP server
 codg mcp list                 # List configured MCP servers
 codg skill url add <url>      # Add a skill source URL
 codg themes set catppuccin    # Switch theme
-# codg logs -f                  # Tail application logs
-codg stats/s                    # Show usage statistics
+# codg logs -f                # Tail application logs
+codg toml                     # show the all config
+codg stats/s                  # Show usage statistics
 codg dirs                     # Print data/config directory paths
 codg projects                 # List tracked project directories
 codg lite 2                   # Set lite mode level (0-4)
@@ -111,6 +113,10 @@ codg web 0
 # Install a plugin from a Git repository.
 codg install github.com/user/codg-xxx-auth
 ```
+
+### Custom Agents and Skills:
+
+Copy xx_agent.md (.codg/agents/templates) or SKILL.md (.codg/skills) to the directory
 
 # Configuration System
 
@@ -207,5 +213,5 @@ token    = "$DISCORD_BOT_TOKEN"
 ```toml
 [permissions]
 allowed_tools = ["bash", "edit", "view", "glob", "grep"]
-allowed_dirs = ["**x"]
+allowed_dirs = ["**x"] # all directories
 ```

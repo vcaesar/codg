@@ -20,6 +20,8 @@ type ToolInfo struct {
 
 // ToolCall represents a single tool invocation issued by the model.
 type ToolCall struct {
+	// Index when there are multiple tool calls in a message.
+	// Index int `json:"index,omitempty"`
 	ID    string `json:"id"`
 	Name  string `json:"name"`
 	Input string `json:"input"`
@@ -33,7 +35,12 @@ type ToolResponse struct {
 	Data      []byte `json:"data,omitempty"`       // Binary payload (images, audio, etc.).
 	MediaType string `json:"media_type,omitempty"` // MIME type of Data (e.g. "image/png").
 	Metadata  string `json:"metadata,omitempty"`
-	IsError   bool   `json:"is_error"`
+
+	// Extra is used to store extra information.
+	// Extra map[string]any `json:"extra,omitempty"`
+	IsError bool `json:"is_error"`
+	Stop    bool `json:"stop,omitempty"`
+	// IsLast bool `json:"is_last"`
 }
 
 // NewTextResponse returns a successful text [ToolResponse].
