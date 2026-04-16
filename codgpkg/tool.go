@@ -28,8 +28,8 @@ type ToolCall struct {
 // ToolResponse carries the result of a [ToolCall] execution back to
 // the model.
 type ToolResponse struct {
-	Type    string `json:"type"`
-	Content string `json:"content"`
+	Type      string `json:"type"`
+	Content   string `json:"content"`
 	Data      []byte `json:"data,omitempty"`       // Binary payload (images, audio, etc.).
 	MediaType string `json:"media_type,omitempty"` // MIME type of Data (e.g. "image/png").
 	Metadata  string `json:"metadata,omitempty"`
