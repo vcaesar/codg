@@ -4,7 +4,7 @@
     <a href="https://github.com/vcaesar/codg/releases"><img src="https://img.shields.io/github/release/vcaesar/codg" alt="Последний релиз"></a>
     <a href="https://github.com/vcaesar/codg/actions"><img src="https://github.com/vcaesar/codg/actions/workflows/go.yml/badge.svg" alt="Статус сборки"></a>
     <a href="https://pkg.go.dev/github.com/vcaesar/codg?tab=doc"><img src="https://pkg.go.dev/badge/github.com/vcaesar/codg?status.svg" alt="GoDoc"></a>
-    <a href="https://discord.gg/46DxmXR7"><img src="https://img.shields.io/discord/1484658282777018551.svg?logo=discord&logoColor=white&label=Discord&color=5865F2" alt="Присоединяйтесь к чату Discord на https://discord.gg/46DxmXR7"></a>
+    <a href="https://discord.gg/Dy5QZRbaND"><img src="https://img.shields.io/discord/1484658282777018551.svg?logo=discord&logoColor=white&label=Discord&color=5865F2" alt="Присоединяйтесь к чату Discord на https://discord.gg/Dy5QZRbaND"></a>
 </p>
 
 Следующее поколение простой AI-системы агентов для кода и работы: автоматическая и асинхронная, с высокой конкурентностью и производительностью, эффективная и точная.
