@@ -7,9 +7,9 @@
    <Join href ="https://discord.gg/codg"><img src ="https://img.shields.io/discord/1484658282777018551.svg?logo=discord&logoColor=white&label=Discord&color=5865F2" alt="Join the Discord chat at https://discord.gg/codg")
 </p>
 
-The next work and code AI agent, auto and asynchronous, concurrency and high performance.
+The next easy code and work AI agent system, auto and asynchronous, concurrency and high performance, Efficiently and High accuracy.
 
-[Englsih](README.md) | [繁體中文](./lang/README.zh-tw.md) | [简体中文](./lang/README.zh-cn.md)
+[English](./README.md) | [繁體中文](./lang/README.zht.md) | [简体中文](./lang/README.zh.md) | [日本語](./README.ja.md) | [한국어](./README.ko.md) | [Français](./README.fr.md) | [Deutsch](./README.de.md) | [Español](./README.es.md) | [Português](./README.pt.md) | [Русский](./README.ru.md) | [العربية](./README.ar.md)
 
 <p align="center">
 <a href="https://atomai.cc" rel="nofollow">
@@ -41,10 +41,12 @@ Go to your project directory, run `codg`.
 
 # Features
 
-- Auto and asynchronous, concurrency and high performance agent system, and low memory use
+- Auto and asynchronous, concurrency and high performance agents system, and low memory use
 - Multi models and local models via by openai-compat or claude-compat, any terminal and OS support
 - Easy use: The TUI in everywhere like GUI and Easy, Desktop and Web in the BETA
-- Click or "/xxx" to switch sessions, clcik or "/diff" to view the diff files same the vscode
+- Click or "/xxx" to switch sessions, Click to everywhere in TUI
+- Clcik "Modified Files" or "/diff" and "/diff git" to view the diff files in TUI same the vscode
+- Autocomplete the English letters and short sentences
 
 Desktop App (BETA), Web (BETA), Claw (BETA)
 
