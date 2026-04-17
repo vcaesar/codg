@@ -12,8 +12,8 @@ The next work and code AI agent, auto and asynchronous, concurrency and high per
 [Englsih](README.md) | [繁體中文](./lang/README.zh-tw.md) | [简体中文](./lang/README.zh-cn.md)
 
 <p align="center">
-<img width="800" alt="Codg Demo" src="https://github.com/vcaesar/codg/demo/26-04.png" />
-<img width="800" alt="Codg Demo" src="https://github.com/vcaesar/codg/demo/26-04-1.png" />
+<img width="800" alt="Codg Demo" src="https://github.com/vcaesar/codg/raw/main/demo/26-04.png" />
+<img width="800" alt="Codg Demo" src="https://github.com/vcaesar/codg/raw/main/demo/26-04-1.png" />
 </p>
 
 ## Installation
