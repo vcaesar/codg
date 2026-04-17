@@ -4,7 +4,7 @@
     <a href="https://github.com/vcaesar/codg/releases"><img src="https://img.shields.io/github/release/vcaesar/codg" alt="Neueste Version"></a>
     <a href="https://github.com/vcaesar/codg/actions"><img src="https://github.com/vcaesar/codg/actions/workflows/go.yml/badge.svg" alt="Build-Status"></a>
     <a href="https://pkg.go.dev/github.com/vcaesar/codg?tab=doc"><img src="https://pkg.go.dev/badge/github.com/vcaesar/codg?status.svg" alt="GoDoc"></a>
-   <Join href ="https://discord.gg/codg"><img src ="https://img.shields.io/discord/1484658282777018551.svg?logo=discord&logoColor=white&label=Discord&color=5865F2" alt="Discord-Chat beitreten unter https://discord.gg/codg")
+    <a href="https://discord.gg/46DxmXR7"><img src="https://img.shields.io/discord/1484658282777018551.svg?logo=discord&logoColor=white&label=Discord&color=5865F2" alt="Discord-Chat beitreten unter https://discord.gg/46DxmXR7"></a>
 </p>
 
 Das einfache Code- und Arbeits-KI-Agentensystem der nächsten Generation — automatisch und asynchron, hochparallel und leistungsstark, effizient und präzise.

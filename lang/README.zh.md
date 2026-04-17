@@ -4,7 +4,7 @@
     <a href="https://github.com/vcaesar/codg/releases"><img src="https://img.shields.io/github/release/vcaesar/codg" alt="最新版本"></a>
     <a href="https://github.com/vcaesar/codg/actions"><img src="https://github.com/vcaesar/codg/actions/workflows/go.yml/badge.svg" alt="构建状态"></a>
     <a href="https://pkg.go.dev/github.com/vcaesar/codg?tab=doc"><img src="https://pkg.go.dev/badge/github.com/vcaesar/codg?status.svg" alt="GoDoc"></a>
-   <Join href ="https://discord.gg/codg"><img src ="https://img.shields.io/discord/1484658282777018551.svg?logo=discord&logoColor=white&label=Discord&color=5865F2" alt="加入 Discord 聊天 https://discord.gg/codg")
+    <a href="https://discord.gg/46DxmXR7"><img src="https://img.shields.io/discord/1484658282777018551.svg?logo=discord&logoColor=white&label=Discord&color=5865F2" alt="加入 Discord 聊天 https://discord.gg/46DxmXR7"></a>
 </p>
 
 下一代简易的代码与工作 AI 智能体系统,自动化、异步化、高并发、高性能,高效且高精度。
