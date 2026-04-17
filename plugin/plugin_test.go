@@ -660,7 +660,7 @@ func TestPluginToolRunExecuteError(t *testing.T) {
 		def: ToolDefinition{
 			Name: "failing",
 			Execute: func(_ context.Context, _ string) (string, error) {
-				return "", fmt.Errorf("Something went wrong")
+				return "", fmt.Errorf("something went wrong")
 			},
 		},
 	}

@@ -75,11 +75,11 @@ type helloArgs struct {
 func executeHello(_ context.Context, input string) (string, error) {
 	var args helloArgs
 	if err := json.Unmarshal([]byte(input), &args); err != nil {
-		return "", fmt.Errorf("Invalid input: %w", err)
+		return "", fmt.Errorf("invalid input: %w", err)
 	}
 
 	if args.Name == "" {
-		return "", fmt.Errorf("Name is required")
+		return "", fmt.Errorf("name is required")
 	}
 
 	return fmt.Sprintf("Hello, %s! 👋 This message is from the Codg demo plugin.", args.Name), nil

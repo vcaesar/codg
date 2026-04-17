@@ -22,3 +22,5 @@ import (
 // CodgPlugin is the exported symbol that the Codg plugin loader looks
 // up. It must implement plugin.Plugin.
 var CodgPlugin plugin.Plugin = &demo.Plugin{} //nolint:gochecknoglobals
+
+func main() {}

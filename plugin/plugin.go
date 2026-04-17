@@ -611,7 +611,7 @@ func initSinglePlugin(ctx context.Context, cfg *InitConfig, name string, pluginC
 			soPath = resolveSharedPath(cfg.PluginDir, name)
 		}
 		if soPath == "" {
-			err := fmt.Errorf("Shared plugin .so not found for %q in %s", name, cfg.PluginDir)
+			err := fmt.Errorf("shared plugin .so not found for %q in %s", name, cfg.PluginDir)
 			slog.Error("Failed to load plugin", "name", name, "error", err)
 			updateState(name, StateError, err, nil)
 			return
@@ -626,7 +626,7 @@ func initSinglePlugin(ctx context.Context, cfg *InitConfig, name string, pluginC
 	case PluginTypeExec:
 		p = newExecPlugin(name, pluginCfg)
 	default:
-		err := fmt.Errorf("Unsupported plugin type: %s", pluginCfg.Type)
+		err := fmt.Errorf("unsupported plugin type: %s", pluginCfg.Type)
 		slog.Error("Failed to load plugin", "name", name, "error", err)
 		updateState(name, StateError, err, nil)
 		return
@@ -713,12 +713,12 @@ func resolveSharedPath(pluginDir, name string) string {
 func loadSharedPlugin(path string) (Plugin, error) {
 	p, err := plugin.Open(path)
 	if err != nil {
-		return nil, fmt.Errorf("Failed to open shared plugin %s: %w", path, err)
+		return nil, fmt.Errorf("failed to open shared plugin %s: %w", path, err)
 	}
 
 	sym, err := p.Lookup("CodgPlugin")
 	if err != nil {
-		return nil, fmt.Errorf("Shared plugin %s does not export CodgPlugin symbol: %w", path, err)
+		return nil, fmt.Errorf("shared plugin %s does not export CodgPlugin symbol: %w", path, err)
 	}
 
 	// The symbol should be a pointer to a value implementing Plugin.
@@ -728,7 +728,7 @@ func loadSharedPlugin(path string) (Plugin, error) {
 		if pp, ok2 := sym.(*Plugin); ok2 && pp != nil {
 			pluginImpl = *pp
 		} else {
-			return nil, fmt.Errorf("Shared plugin %s: CodgPlugin symbol is %T, want plugin.Plugin", path, sym)
+			return nil, fmt.Errorf("shared plugin %s: CodgPlugin symbol is %T, want plugin.Plugin", path, sym)
 		}
 	}
 
@@ -1142,7 +1142,7 @@ func (p *execPlugin) Init(ctx context.Context, input PluginInput) (*Hooks, error
 	// TODO: Implement exec plugin subprocess lifecycle.
 	// This will spawn the plugin command, send an init request via
 	// JSON-RPC, and map returned capabilities to Hooks.
-	return nil, fmt.Errorf("Exec plugins are not yet implemented; plugin %q configured with command %q", p.name, p.config.Command)
+	return nil, fmt.Errorf("exec plugins are not yet implemented; plugin %q configured with command %q", p.name, p.config.Command)
 }
 
 // --- Plugin tool → codgpkg.AgentTool adapter ---
@@ -1196,7 +1196,7 @@ func (t *PluginTool) Info() codgpkg.ToolInfo {
 func (t *PluginTool) Run(ctx context.Context, params codgpkg.ToolCall) (codgpkg.ToolResponse, error) {
 	sessionID, ok := ctx.Value(sessionIDContextKey("session_id")).(string)
 	if !ok || sessionID == "" {
-		return codgpkg.ToolResponse{}, fmt.Errorf("Session ID is required")
+		return codgpkg.ToolResponse{}, fmt.Errorf("session ID is required")
 	}
 
 	// Request permission.
