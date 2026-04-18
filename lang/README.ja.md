@@ -37,6 +37,8 @@ Windows:
 # winget install vcaesar.codg
 ```
 
+または [Releases](https://github.com/vcaesar/codg/releases) を直接クリックしてダウンロードし実行してください。
+
 プロジェクトのディレクトリに移動して `codg` を実行します。
 
 # 機能

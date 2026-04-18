@@ -37,6 +37,8 @@ Windows:
 # winget install vcaesar.codg
 ```
 
+或者直接点击 [Releases](https://github.com/vcaesar/codg/releases) 下载并运行。
+
 进入你的项目目录,运行 `codg`。
 
 # 功能特性
