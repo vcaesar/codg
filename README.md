@@ -45,6 +45,7 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 Or click [Releases](https://github.com/vcaesar/codg/releases) directly to download and run it.
 
 Go to your project directory, run `codg`.
+Use "/yolo" to toggle the auto and ask mode, and you can set permissions by codg.toml.
 
 # Features
 
