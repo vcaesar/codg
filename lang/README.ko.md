@@ -49,13 +49,14 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 # 주요 기능
 
 - 자동·비동기, 높은 동시성과 성능을 지닌 에이전트 시스템이며 메모리 사용량도 적음
-- openai-compat 또는 claude-compat을 통한 다중 모델 및 로컬 모델 지원. 모든 터미널과 OS에서 동작
+- 다중 모델 제공자(API 및 Pro) 및 로컬 모델(openai-compat 또는 claude-compat을 통해), Openrouter 무료 모델 지원
+- 모든 터미널과 OS 지원, 웹 터미널도 지원
 - 사용 편의성: TUI는 어디서나 GUI처럼 사용 가능하며, 데스크톱/웹 버전은 BETA 제공 중
 - 클릭 또는 "/xxx" 로 세션 전환, TUI 어디서나 클릭 가능
 - "Modified Files" 클릭 또는 "/diff", "/diff git" 으로 VSCode처럼 TUI 내에서 diff 파일 확인
 - 영문 글자 및 짧은 문장 자동 완성
 
-데스크톱 앱(BETA), 웹(BETA), Claw(BETA)
+데스크톱 앱(BETA), 웹(BETA), Claw(BETA), 일부 기능은 테스트 및 버그 수정 대기 중
 
 ## 버그 신고:
 

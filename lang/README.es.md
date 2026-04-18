@@ -49,13 +49,14 @@ Ve al directorio de tu proyecto y ejecuta `codg`.
 # Características
 
 - Sistema de agentes automático y asíncrono, con alta concurrencia y rendimiento, y bajo uso de memoria
-- Soporte multi-modelo y modelos locales vía openai-compat o claude-compat; funciona en cualquier terminal y SO
+- Proveedores multi-modelo (API y Pro) y modelos locales vía openai-compat o claude-compat; soporte para los modelos gratuitos de Openrouter
+- Compatible con cualquier terminal y SO, también con terminales web
 - Fácil de usar: TUI disponible en todas partes, cercana a una GUI; versiones Desktop y Web en BETA
 - Haz clic o usa «/xxx» para cambiar de sesión; todo es cliqueable en la TUI
 - Haz clic en «Modified Files» o usa «/diff» y «/diff git» para ver los archivos de diff en la TUI, como en VSCode
 - Autocompletado de letras y frases cortas en inglés
 
-App Desktop (BETA), Web (BETA), Claw (BETA)
+App Desktop (BETA), Web (BETA), Claw (BETA); algunas funciones aún requieren pruebas y corrección de errores
 
 ## Reportar bugs:
 

@@ -49,13 +49,14 @@ Go to your project directory, run `codg`.
 # Features
 
 - Auto and asynchronous, concurrency and high performance agents system, and low memory use
-- Multi models and local models via by openai-compat or claude-compat, any terminal and OS support
+- Multi models providers (API and Pro) and local models via by openai-compat or claude-compat, Support Openrouter free models
+- Any terminal and OS support, also web terminal support
 - Easy use: The TUI in everywhere like GUI and Easy, Desktop and Web in the BETA
 - Click or "/xxx" to switch sessions, Click to everywhere in TUI
 - Clcik "Modified Files" or "/diff" and "/diff git" to view the diff files in TUI same the vscode
 - Autocomplete the English letters and short sentences
 
-Desktop App (BETA), Web (BETA), Claw (BETA)
+Desktop App (BETA), Web (BETA), Claw (BETA), Some features need wait for the test and fix bugs
 
 ## Reporting Bugs:
 

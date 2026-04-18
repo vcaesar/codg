@@ -49,13 +49,14 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 # 功能特性
 
 - 自动化、异步化、高并发、高性能的智能体系统,内存占用低
-- 支持多模型及本地模型(通过 openai-compat 或 claude-compat),支持任何终端和操作系统
+- 多模型提供商(API 与 Pro)及本地模型(通过 openai-compat 或 claude-compat),支持 Openrouter 免费模型
+- 支持任何终端和操作系统,同时支持 Web 终端
 - 易用性:TUI 随处可用,体验接近 GUI,桌面版和 Web 版处于 BETA 阶段
 - 点击或输入 "/xxx" 切换会话,TUI 中任意位置可点击
 - 点击 "Modified Files" 或输入 "/diff"、"/diff git" 在 TUI 中查看差异文件,体验与 VSCode 相似
 - 自动补全英文字母和短句
 
-桌面应用(BETA)、Web(BETA)、Claw(BETA)
+桌面应用(BETA)、Web(BETA)、Claw(BETA),部分功能仍需等待测试与修复 bug
 
 ## 报告 Bug:
 

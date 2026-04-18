@@ -49,13 +49,14 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 # 機能
 
 - 自動かつ非同期、高並行・高性能なエージェントシステムで、メモリ使用量も少ない
-- openai-compat または claude-compat によるマルチモデルおよびローカルモデル対応。あらゆるターミナルと OS をサポート
+- マルチモデルプロバイダー（API および Pro）およびローカルモデル（openai-compat または claude-compat 経由）、Openrouter の無料モデルに対応
+- あらゆるターミナルと OS をサポート、Web ターミナルにも対応
 - 使いやすさ:TUI はどこでも GUI のように使え、デスクトップ版と Web 版は BETA 提供中
 - クリックまたは「/xxx」でセッション切り替え、TUI 内のあらゆる場所をクリック可能
 - 「Modified Files」をクリックするか「/diff」「/diff git」で VSCode のように差分ファイルを表示
 - 英文字と短文の自動補完
 
-デスクトップアプリ(BETA)、Web(BETA)、Claw(BETA)
+デスクトップアプリ(BETA)、Web(BETA)、Claw(BETA)、一部の機能はテストとバグ修正待ち
 
 ## バグ報告:
 
