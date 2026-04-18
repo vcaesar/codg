@@ -7,7 +7,7 @@
     <a href="https://discord.gg/Dy5QZRbaND"><img src="https://img.shields.io/discord/1484658282777018551.svg?logo=discord&logoColor=white&label=Discord&color=5865F2" alt="加入 Discord 聊天 https://discord.gg/Dy5QZRbaND"></a>
 </p>
 
-下一代简易的代码与工作 AI 智能体系统,自动化、异步化、高并发、高性能,高效且高精度。
+下一代简易的代码与工作 AI 智能体系统，自动化、异步化、高并发、高性能，高效且高精度。
 
 [English](../README.md) | [繁體中文](./README.zht.md) | [简体中文](./README.zh.md) | [日本語](./README.ja.md) | [한국어](./README.ko.md) | [Français](./README.fr.md) | [Deutsch](./README.de.md) | [Español](./README.es.md) | [Português](./README.pt.md) | [Русский](./README.ru.md) | [العربية](./README.ar.md)
 
@@ -20,7 +20,7 @@
 
 ## 安装
 
-Mac 和 Linux:
+Mac 和 Linux：
 
 ```bash
 # Homebrew
@@ -44,31 +44,31 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 
 或者直接点击 [Releases](https://github.com/vcaesar/codg/releases) 下载并运行。
 
-进入你的项目目录,运行 `codg`。
+进入你的项目目录，运行 `codg`。
 
 # 功能特性
 
-- 自动化、异步化、高并发、高性能的智能体系统,内存占用低
-- 多模型提供商(API 与 Pro)及本地模型(通过 openai-compat 或 claude-compat),支持 Openrouter 免费模型
-- 支持任何终端和操作系统,同时支持 Web 终端
-- 易用性:TUI 随处可用,体验接近 GUI,桌面版和 Web 版处于 BETA 阶段
-- 点击或输入 "/xxx" 切换会话,TUI 中任意位置可点击
-- 点击 "Modified Files" 或输入 "/diff"、"/diff git" 在 TUI 中查看差异文件,体验与 VSCode 相似
+- 自动化、异步化、高并发、高性能的智能体系统，内存占用低
+- 多模型提供商（API 与 Pro）及本地模型（通过 openai-compat 或 claude-compat），支持 Openrouter 免费模型
+- 支持任何终端和操作系统，同时支持 Web 终端
+- 易用性：TUI 随处可用，体验接近 GUI，桌面版和 Web 版处于 BETA 阶段
+- 点击或输入 “/xxx” 切换会话，TUI 中任意位置可点击
+- 点击 “Modified Files” 或输入 “/diff”、“/diff git” 在 TUI 中查看差异文件，体验与 VSCode 相似
 - 自动补全英文字母和短句
 
-桌面应用(BETA)、Web(BETA)、Claw(BETA),部分功能仍需等待测试与修复 bug
+桌面应用（BETA）、Web（BETA）、Claw（BETA），部分功能仍需等待测试与修复 bug
 
-## 报告 Bug:
+## 报告 Bug
 
 请提交 [Github Issues](https://github.com/vcaesar/codg/issues)
 
-## 我们如何使用你的数据:
+## 我们如何使用你的数据
 
-目前不收集任何数据和遥测信息,并支持 100% 本地模型;使用 API 时请参考对应服务商的隐私政策。
+目前不收集任何数据和遥测信息，并支持 100% 本地模型；使用 API 时请参考对应服务商的隐私政策。
 
 # CLI 命令
 
-使用 `codg -h` 或在 TUI 中输入 "/help"
+使用 `codg -h` 或在 TUI 中输入 “/help”
 
 ```bash
 codg auth/login               # 登录认证 (Atom、OpenAI、GitHub...)
@@ -131,13 +131,13 @@ codg web 0
 codg install github.com/user/codg-xxx-auth
 ```
 
-### 自定义智能体和技能:
+### 自定义智能体和技能
 
 将 xx_agent.md (.codg/agents/templates) 或 SKILL.md (.codg/skills) 复制到对应目录
 
 # 配置系统
 
-在项目根目录创建 `codg.toml`(或 `~/.codg/config/codg.toml` 用于全局设置):
+在项目根目录创建 `codg.toml`（或 `~/.codg/config/codg.toml` 用于全局设置）：
 
 ```toml
 # codg.toml — 最小化项目配置。

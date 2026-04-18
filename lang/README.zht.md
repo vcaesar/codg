@@ -7,7 +7,7 @@
     <a href="https://discord.gg/Dy5QZRbaND"><img src="https://img.shields.io/discord/1484658282777018551.svg?logo=discord&logoColor=white&label=Discord&color=5865F2" alt="加入 Discord 聊天 https://discord.gg/Dy5QZRbaND"></a>
 </p>
 
-下一代簡易的程式碼與工作 AI 智慧代理系統,自動化、非同步、高並行、高效能,高效率且高精度。
+下一代簡易的程式碼與工作 AI 智慧代理系統，自動化、非同步、高並行、高效能，高效率且高精度。
 
 [English](../README.md) | [繁體中文](./README.zht.md) | [简体中文](./README.zh.md) | [日本語](./README.ja.md) | [한국어](./README.ko.md) | [Français](./README.fr.md) | [Deutsch](./README.de.md) | [Español](./README.es.md) | [Português](./README.pt.md) | [Русский](./README.ru.md) | [العربية](./README.ar.md)
 
@@ -20,7 +20,7 @@
 
 ## 安裝
 
-Mac 與 Linux:
+Mac 與 Linux：
 
 ```bash
 # Homebrew
@@ -44,31 +44,31 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 
 或者直接點擊 [Releases](https://github.com/vcaesar/codg/releases) 下載並執行。
 
-進入您的專案目錄,執行 `codg`。
+進入您的專案目錄，執行 `codg`。
 
 # 功能特色
 
-- 自動化、非同步、高並行、高效能的智慧代理系統,記憶體佔用低
-- 多模型提供商(API 與 Pro)及本地模型(透過 openai-compat 或 claude-compat),支援 Openrouter 免費模型
-- 支援任何終端機與作業系統,同時支援 Web 終端機
-- 易用性:TUI 隨處可用,體驗接近 GUI,桌面版與 Web 版處於 BETA 階段
-- 點擊或輸入 "/xxx" 切換會話,TUI 中任意位置皆可點擊
-- 點擊 "Modified Files" 或輸入 "/diff"、"/diff git" 在 TUI 中檢視差異檔案,體驗與 VSCode 相似
+- 自動化、非同步、高並行、高效能的智慧代理系統，記憶體佔用低
+- 多模型提供商（API 與 Pro）及本地模型（透過 openai-compat 或 claude-compat），支援 Openrouter 免費模型
+- 支援任何終端機與作業系統，同時支援 Web 終端機
+- 易用性：TUI 隨處可用，體驗接近 GUI，桌面版與 Web 版處於 BETA 階段
+- 點擊或輸入 “/xxx” 切換會話，TUI 中任意位置皆可點擊
+- 點擊 “Modified Files” 或輸入 “/diff”、“/diff git” 在 TUI 中檢視差異檔案，體驗與 VSCode 相似
 - 自動補全英文字母與短句
 
-桌面應用(BETA)、Web(BETA)、Claw(BETA),部分功能仍需等待測試與修復 bug
+桌面應用（BETA）、Web（BETA）、Claw（BETA），部分功能仍需等待測試與修復 bug
 
-## 回報 Bug:
+## 回報 Bug
 
 請提交 [Github Issues](https://github.com/vcaesar/codg/issues)
 
-## 我們如何使用您的資料:
+## 我們如何使用您的資料
 
-目前不蒐集任何資料與遙測資訊,並支援 100% 本地模型;使用 API 時請參閱對應服務商的隱私政策。
+目前不蒐集任何資料與遙測資訊，並支援 100% 本地模型；使用 API 時請參閱對應服務商的隱私政策。
 
 # CLI 指令
 
-使用 `codg -h` 或在 TUI 中輸入 "/help"
+使用 `codg -h` 或在 TUI 中輸入 “/help”
 
 ```bash
 codg auth/login               # 登入認證 (Atom、OpenAI、GitHub...)
@@ -131,13 +131,13 @@ codg web 0
 codg install github.com/user/codg-xxx-auth
 ```
 
-### 自訂代理與技能:
+### 自訂代理與技能
 
 將 xx_agent.md (.codg/agents/templates) 或 SKILL.md (.codg/skills) 複製到對應目錄
 
 # 設定系統
 
-在專案根目錄建立 `codg.toml`(或 `~/.codg/config/codg.toml` 用於全域設定):
+在專案根目錄建立 `codg.toml`（或 `~/.codg/config/codg.toml` 用於全域設定）：
 
 ```toml
 # codg.toml — 最小化專案設定。
