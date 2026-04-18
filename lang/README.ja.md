@@ -7,7 +7,7 @@
     <a href="https://discord.gg/Dy5QZRbaND"><img src="https://img.shields.io/discord/1484658282777018551.svg?logo=discord&logoColor=white&label=Discord&color=5865F2" alt="Discord チャットに参加 https://discord.gg/Dy5QZRbaND"></a>
 </p>
 
-次世代のシンプルなコーディング・業務 AI エージェントシステム。自動かつ非同期、高い並行性とパフォーマンス、効率性と正確性を両立。
+次世代のシンプルなコーディング・業務 AI エージェント Harness システム。自動かつ非同期、高い並行性とパフォーマンス、効率性と正確性を両立。
 
 [English](../README.md) | [繁體中文](./README.zht.md) | [简体中文](./README.zh.md) | [日本語](./README.ja.md) | [한국어](./README.ko.md) | [Français](./README.fr.md) | [Deutsch](./README.de.md) | [Español](./README.es.md) | [Português](./README.pt.md) | [Русский](./README.ru.md) | [العربية](./README.ar.md)
 
@@ -45,11 +45,12 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 または [Releases](https://github.com/vcaesar/codg/releases) を直接クリックしてダウンロードし実行してください。
 
 プロジェクトのディレクトリに移動して `codg` を実行します。
+「/yolo」で自動モードと確認モードを切り替えできます。権限は codg.toml で設定可能です。
 
 # 機能
 
 - 自動かつ非同期、高並行・高性能なエージェントシステムで、メモリ使用量も少ない
-- マルチモデルプロバイダー（API および Pro）およびローカルモデル（openai-compat または claude-compat 経由）、Openrouter の無料モデルに対応
+- マルチモデルプロバイダー（API および Pro）およびローカルモデル（openai-compat または claude-compat 経由）、Openrouter の無料モデルに対応。「/connect」「/models」または「codg auth」から設定可能
 - あらゆるターミナルと OS をサポート、Web ターミナルにも対応
 - 使いやすさ：TUI はどこでも GUI のように使え、デスクトップ版と Web 版は BETA 提供中
 - クリックまたは「/xxx」でセッション切り替え、TUI 内のあらゆる場所をクリック可能

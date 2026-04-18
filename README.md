@@ -7,7 +7,7 @@
     <a href="https://discord.gg/Dy5QZRbaND"><img src="https://img.shields.io/discord/1484658282777018551.svg?logo=discord&logoColor=white&label=Discord&color=5865F2" alt="Join the Discord chat at https://discord.gg/Dy5QZRbaND"></a>
 </p>
 
-The next easy code and work AI agent system, auto and asynchronous, concurrency and high performance, Efficiently and High accuracy.
+The next easy code and work AI agents harness system, auto and asynchronous, concurrency and high performance, Efficiently and High accuracy.
 
 [English](./README.md) | [繁體中文](./lang/README.zht.md) | [简体中文](./lang/README.zh.md) | [日本語](./lang/README.ja.md) | [한국어](./lang/README.ko.md) | [Français](./lang/README.fr.md) | [Deutsch](./lang/README.de.md) | [Español](./lang/README.es.md) | [Português](./lang/README.pt.md) | [Русский](./lang/README.ru.md) | [العربية](./lang/README.ar.md)
 
@@ -50,7 +50,7 @@ Use "/yolo" to toggle the auto and ask mode, and you can set permissions by codg
 # Features
 
 - Auto and asynchronous, concurrency and high performance agents system, and low memory use
-- Multi models providers (API and Pro) and local models via by openai-compat or claude-compat, Support Openrouter free models
+- Multi models providers (API and Pro) and local models via by openai-compat or claude-compat, Support Openrouter free models, "/connect" "/models" or "codg auth"
 - Any terminal and OS support, also web terminal support
 - Easy use: The TUI in everywhere like GUI and Easy, Desktop and Web in the BETA
 - Click or "/xxx" to switch sessions, Click to everywhere in TUI

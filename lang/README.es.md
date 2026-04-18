@@ -7,7 +7,7 @@
     <a href="https://discord.gg/Dy5QZRbaND"><img src="https://img.shields.io/discord/1484658282777018551.svg?logo=discord&logoColor=white&label=Discord&color=5865F2" alt="Únete al chat de Discord en https://discord.gg/Dy5QZRbaND"></a>
 </p>
 
-El sistema de agentes de IA de nueva generación, sencillo para código y trabajo: automático y asíncrono, con alta concurrencia y rendimiento, eficiente y preciso.
+El sistema de orquestación de agentes de IA de nueva generación, sencillo para código y trabajo: automático y asíncrono, con alta concurrencia y rendimiento, eficiente y preciso.
 
 [English](../README.md) | [繁體中文](./README.zht.md) | [简体中文](./README.zh.md) | [日本語](./README.ja.md) | [한국어](./README.ko.md) | [Français](./README.fr.md) | [Deutsch](./README.de.md) | [Español](./README.es.md) | [Português](./README.pt.md) | [Русский](./README.ru.md) | [العربية](./README.ar.md)
 
@@ -45,11 +45,12 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 O haz clic directamente en [Releases](https://github.com/vcaesar/codg/releases) para descargarlo y ejecutarlo.
 
 Ve al directorio de tu proyecto y ejecuta `codg`.
+Usa «/yolo» para alternar entre el modo automático y el modo de confirmación; los permisos se configuran desde codg.toml.
 
 # Características
 
 - Sistema de agentes automático y asíncrono, con alta concurrencia y rendimiento, y bajo uso de memoria
-- Proveedores multi-modelo (API y Pro) y modelos locales vía openai-compat o claude-compat; soporte para los modelos gratuitos de Openrouter
+- Proveedores multi-modelo (API y Pro) y modelos locales vía openai-compat o claude-compat; soporte para los modelos gratuitos de Openrouter; configurable con «/connect», «/models» o «codg auth»
 - Compatible con cualquier terminal y SO, también con terminales web
 - Fácil de usar: TUI disponible en todas partes, cercana a una GUI; versiones Desktop y Web en BETA
 - Haz clic o usa «/xxx» para cambiar de sesión; todo es cliqueable en la TUI

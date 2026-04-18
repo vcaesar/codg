@@ -7,7 +7,7 @@
     <a href="https://discord.gg/Dy5QZRbaND"><img src="https://img.shields.io/discord/1484658282777018551.svg?logo=discord&logoColor=white&label=Discord&color=5865F2" alt="Rejoignez le chat Discord sur https://discord.gg/Dy5QZRbaND"></a>
 </p>
 
-Le prochain système d'agent IA simple pour le code et le travail : automatique et asynchrone, haute concurrence et haute performance, efficace et précis.
+Le prochain système de harnais d'agents IA simple pour le code et le travail : automatique et asynchrone, haute concurrence et haute performance, efficace et précis.
 
 [English](../README.md) | [繁體中文](./README.zht.md) | [简体中文](./README.zh.md) | [日本語](./README.ja.md) | [한국어](./README.ko.md) | [Français](./README.fr.md) | [Deutsch](./README.de.md) | [Español](./README.es.md) | [Português](./README.pt.md) | [Русский](./README.ru.md) | [العربية](./README.ar.md)
 
@@ -45,11 +45,12 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 Ou cliquez directement sur [Releases](https://github.com/vcaesar/codg/releases) pour le télécharger et l'exécuter.
 
 Rendez-vous dans votre répertoire de projet et exécutez `codg`.
+Utilisez « /yolo » pour basculer entre le mode automatique et le mode de confirmation ; les permissions peuvent être configurées via codg.toml.
 
 # Fonctionnalités
 
 - Système d'agents automatique et asynchrone, à haute concurrence et haute performance, avec faible consommation mémoire
-- Fournisseurs multi-modèles (API et Pro) et modèles locaux via openai-compat ou claude-compat, prise en charge des modèles gratuits d'Openrouter
+- Fournisseurs multi-modèles (API et Pro) et modèles locaux via openai-compat ou claude-compat, prise en charge des modèles gratuits d'Openrouter, via « /connect », « /models » ou « codg auth »
 - Compatible avec tout terminal et OS, y compris les terminaux web
 - Facile à utiliser : TUI disponible partout, proche d'une GUI ; versions Desktop et Web en BETA
 - Cliquez ou utilisez « /xxx » pour changer de session, tout est cliquable dans le TUI

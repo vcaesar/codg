@@ -7,7 +7,7 @@
     <a href="https://discord.gg/Dy5QZRbaND"><img src="https://img.shields.io/discord/1484658282777018551.svg?logo=discord&logoColor=white&label=Discord&color=5865F2" alt="Discord-Chat beitreten unter https://discord.gg/Dy5QZRbaND"></a>
 </p>
 
-Das einfache Code- und Arbeits-KI-Agentensystem der nächsten Generation — automatisch und asynchron, hochparallel und leistungsstark, effizient und präzise.
+Das einfache Code- und Arbeits-KI-Agenten-Harness-System der nächsten Generation — automatisch und asynchron, hochparallel und leistungsstark, effizient und präzise.
 
 [English](../README.md) | [繁體中文](./README.zht.md) | [简体中文](./README.zh.md) | [日本語](./README.ja.md) | [한국어](./README.ko.md) | [Français](./README.fr.md) | [Deutsch](./README.de.md) | [Español](./README.es.md) | [Português](./README.pt.md) | [Русский](./README.ru.md) | [العربية](./README.ar.md)
 
@@ -45,11 +45,12 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 Oder klicken Sie direkt auf [Releases](https://github.com/vcaesar/codg/releases), um es herunterzuladen und auszuführen.
 
 Wechseln Sie in Ihr Projektverzeichnis und führen Sie `codg` aus.
+Mit „/yolo“ können Sie zwischen Auto- und Bestätigungsmodus wechseln; Berechtigungen lassen sich über codg.toml festlegen.
 
 # Funktionen
 
 - Automatisches und asynchrones, hochparalleles und leistungsstarkes Agentensystem mit geringem Speicherverbrauch
-- Mehrere Modellanbieter (API und Pro) sowie lokale Modelle über openai-compat oder claude-compat; Unterstützung der kostenlosen Modelle von Openrouter
+- Mehrere Modellanbieter (API und Pro) sowie lokale Modelle über openai-compat oder claude-compat; Unterstützung der kostenlosen Modelle von Openrouter; Konfiguration via „/connect“, „/models“ oder „codg auth“
 - Unterstützung für jedes Terminal und Betriebssystem, auch für Web-Terminals
 - Benutzerfreundlich: TUI überall einsetzbar, GUI-nah; Desktop- und Web-Version im BETA-Stadium
 - Klicken oder „/xxx" zum Sitzungswechsel, überall im TUI anklickbar

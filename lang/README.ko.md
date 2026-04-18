@@ -7,7 +7,7 @@
     <a href="https://discord.gg/Dy5QZRbaND"><img src="https://img.shields.io/discord/1484658282777018551.svg?logo=discord&logoColor=white&label=Discord&color=5865F2" alt="Discord 채팅 참여 https://discord.gg/Dy5QZRbaND"></a>
 </p>
 
-차세대의 손쉬운 코드 및 업무용 AI 에이전트 시스템. 자동·비동기, 높은 동시성과 성능, 효율성과 정확성을 모두 갖춘 솔루션입니다.
+차세대의 손쉬운 코드 및 업무용 AI 에이전트 Harness 시스템. 자동·비동기, 높은 동시성과 성능, 효율성과 정확성을 모두 갖춘 솔루션입니다.
 
 [English](../README.md) | [繁體中文](./README.zht.md) | [简体中文](./README.zh.md) | [日本語](./README.ja.md) | [한국어](./README.ko.md) | [Français](./README.fr.md) | [Deutsch](./README.de.md) | [Español](./README.es.md) | [Português](./README.pt.md) | [Русский](./README.ru.md) | [العربية](./README.ar.md)
 
@@ -45,11 +45,12 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 또는 [Releases](https://github.com/vcaesar/codg/releases)를 직접 클릭하여 다운로드한 뒤 실행하세요.
 
 프로젝트 디렉터리로 이동해 `codg`를 실행하세요.
+"/yolo"로 자동/확인 모드를 전환할 수 있으며, 권한은 codg.toml 로 설정할 수 있습니다.
 
 # 주요 기능
 
 - 자동·비동기, 높은 동시성과 성능을 지닌 에이전트 시스템이며 메모리 사용량도 적음
-- 다중 모델 제공자(API 및 Pro) 및 로컬 모델(openai-compat 또는 claude-compat을 통해), Openrouter 무료 모델 지원
+- 다중 모델 제공자(API 및 Pro) 및 로컬 모델(openai-compat 또는 claude-compat을 통해), Openrouter 무료 모델 지원. "/connect", "/models" 또는 "codg auth"로 연결
 - 모든 터미널과 OS 지원, 웹 터미널도 지원
 - 사용 편의성: TUI는 어디서나 GUI처럼 사용 가능하며, 데스크톱/웹 버전은 BETA 제공 중
 - 클릭 또는 "/xxx" 로 세션 전환, TUI 어디서나 클릭 가능

@@ -7,7 +7,7 @@
     <a href="https://discord.gg/Dy5QZRbaND"><img src="https://img.shields.io/discord/1484658282777018551.svg?logo=discord&logoColor=white&label=Discord&color=5865F2" alt="加入 Discord 聊天 https://discord.gg/Dy5QZRbaND"></a>
 </p>
 
-下一代簡易的程式碼與工作 AI 智慧代理系統，自動化、非同步、高並行、高效能，高效率且高精度。
+下一代簡易的程式碼與工作 AI 智慧代理 Harness 系統，自動化、非同步、高並行、高效能，高效率且高精度。
 
 [English](../README.md) | [繁體中文](./README.zht.md) | [简体中文](./README.zh.md) | [日本語](./README.ja.md) | [한국어](./README.ko.md) | [Français](./README.fr.md) | [Deutsch](./README.de.md) | [Español](./README.es.md) | [Português](./README.pt.md) | [Русский](./README.ru.md) | [العربية](./README.ar.md)
 
@@ -45,11 +45,12 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 或者直接點擊 [Releases](https://github.com/vcaesar/codg/releases) 下載並執行。
 
 進入您的專案目錄，執行 `codg`。
+使用 “/yolo” 切換自動模式與詢問模式，權限可透過 codg.toml 設定。
 
 # 功能特色
 
 - 自動化、非同步、高並行、高效能的智慧代理系統，記憶體佔用低
-- 多模型提供商（API 與 Pro）及本地模型（透過 openai-compat 或 claude-compat），支援 Openrouter 免費模型
+- 多模型提供商（API 與 Pro）及本地模型（透過 openai-compat 或 claude-compat），支援 Openrouter 免費模型，可使用 “/connect” “/models” 或 “codg auth”
 - 支援任何終端機與作業系統，同時支援 Web 終端機
 - 易用性：TUI 隨處可用，體驗接近 GUI，桌面版與 Web 版處於 BETA 階段
 - 點擊或輸入 “/xxx” 切換會話，TUI 中任意位置皆可點擊

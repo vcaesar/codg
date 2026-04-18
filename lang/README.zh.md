@@ -7,7 +7,7 @@
     <a href="https://discord.gg/Dy5QZRbaND"><img src="https://img.shields.io/discord/1484658282777018551.svg?logo=discord&logoColor=white&label=Discord&color=5865F2" alt="加入 Discord 聊天 https://discord.gg/Dy5QZRbaND"></a>
 </p>
 
-下一代简易的代码与工作 AI 智能体系统，自动化、异步化、高并发、高性能，高效且高精度。
+下一代简易的代码与工作 AI 智能体 Harness 系统，自动化、异步化、高并发、高性能，高效且高精度。
 
 [English](../README.md) | [繁體中文](./README.zht.md) | [简体中文](./README.zh.md) | [日本語](./README.ja.md) | [한국어](./README.ko.md) | [Français](./README.fr.md) | [Deutsch](./README.de.md) | [Español](./README.es.md) | [Português](./README.pt.md) | [Русский](./README.ru.md) | [العربية](./README.ar.md)
 
@@ -45,11 +45,12 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 或者直接点击 [Releases](https://github.com/vcaesar/codg/releases) 下载并运行。
 
 进入你的项目目录，运行 `codg`。
+使用 “/yolo” 切换自动模式与询问模式，权限可通过 codg.toml 设置。
 
 # 功能特性
 
 - 自动化、异步化、高并发、高性能的智能体系统，内存占用低
-- 多模型提供商（API 与 Pro）及本地模型（通过 openai-compat 或 claude-compat），支持 Openrouter 免费模型
+- 多模型提供商（API 与 Pro）及本地模型（通过 openai-compat 或 claude-compat），支持 Openrouter 免费模型，可使用 “/connect” “/models” 或 “codg auth”
 - 支持任何终端和操作系统，同时支持 Web 终端
 - 易用性：TUI 随处可用，体验接近 GUI，桌面版和 Web 版处于 BETA 阶段
 - 点击或输入 “/xxx” 切换会话，TUI 中任意位置可点击

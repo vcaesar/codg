@@ -9,7 +9,7 @@
     <a href="https://discord.gg/Dy5QZRbaND"><img src="https://img.shields.io/discord/1484658282777018551.svg?logo=discord&logoColor=white&label=Discord&color=5865F2" alt="انضم إلى دردشة Discord على https://discord.gg/Dy5QZRbaND"></a>
 </p>
 
-نظام وكلاء ذكاء اصطناعي للجيل القادم، سهل الاستخدام للبرمجة والعمل: تلقائي وغير متزامن، بتزامن عالٍ وأداء مرتفع، وبكفاءة ودقة عاليتين.
+نظام Harness وكلاء ذكاء اصطناعي للجيل القادم، سهل الاستخدام للبرمجة والعمل: تلقائي وغير متزامن، بتزامن عالٍ وأداء مرتفع، وبكفاءة ودقة عاليتين.
 
 [English](../README.md) | [繁體中文](./README.zht.md) | [简体中文](./README.zh.md) | [日本語](./README.ja.md) | [한국어](./README.ko.md) | [Français](./README.fr.md) | [Deutsch](./README.de.md) | [Español](./README.es.md) | [Português](./README.pt.md) | [Русский](./README.ru.md) | [العربية](./README.ar.md)
 
@@ -47,11 +47,12 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 أو انقر مباشرةً على [الإصدارات](https://github.com/vcaesar/codg/releases) لتنزيله وتشغيله.
 
 انتقل إلى مجلد مشروعك ثم شغّل `codg`.
+استخدم "/yolo" للتبديل بين الوضع التلقائي ووضع التأكيد، ويمكن ضبط الأذونات من خلال codg.toml.
 
 # الميزات
 
 - نظام وكلاء تلقائي وغير متزامن، عالي التزامن والأداء، مع استهلاك منخفض للذاكرة
-- دعم مزودي نماذج متعددين (API و Pro) ونماذج محلية عبر openai-compat أو claude-compat، مع دعم نماذج Openrouter المجانية
+- دعم مزودي نماذج متعددين (API و Pro) ونماذج محلية عبر openai-compat أو claude-compat، مع دعم نماذج Openrouter المجانية، عبر "/connect" أو "/models" أو "codg auth"
 - دعم أي طرفية ونظام تشغيل، بالإضافة إلى دعم طرفيات الويب
 - سهل الاستخدام: واجهة TUI متاحة في كل مكان وقريبة من GUI؛ إصدار سطح المكتب والويب في مرحلة BETA
 - انقر أو استخدم "/xxx" لتبديل الجلسات، كل شيء في TUI قابل للنقر
