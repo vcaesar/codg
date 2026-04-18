@@ -114,6 +114,11 @@ codg run -v "Débugger cette fonction"
 ### Interface Web
 
 ```bash
+# Démarrer l'interface web sur le port par défaut 4096 ; (une fois les tests terminés, la compiler).
+codg web
+# Port personnalisé.
+codg web -p 8080
+
 # Mode API uniquement (sans frontend, sans navigateur).
 codg web 0
 ```

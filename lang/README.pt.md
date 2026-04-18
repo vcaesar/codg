@@ -114,6 +114,11 @@ codg run -v "Debugar esta função"
 ### UI Web
 
 ```bash
+# Iniciar a UI web na porta padrão 4096; (após os testes concluírem, compile).
+codg web
+# Porta personalizada.
+codg web -p 8080
+
 # Modo somente API (sem frontend nem navegador).
 codg web 0
 ```

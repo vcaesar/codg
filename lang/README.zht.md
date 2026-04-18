@@ -114,6 +114,11 @@ codg run -v "除錯這個函式"
 ### Web UI
 
 ```bash
+# 在預設埠 4096 啟動 Web UI;(等待測試完成後建置)。
+codg web
+# 自訂埠。
+codg web -p 8080
+
 # 僅 API 模式 (無前端、無瀏覽器)。
 codg web 0
 ```

@@ -114,6 +114,11 @@ codg run -v "Diese Funktion debuggen"
 ### Web-UI
 
 ```bash
+# Web-UI auf Standardport 4096 starten; (nach Abschluss des Tests bauen).
+codg web
+# Benutzerdefinierter Port.
+codg web -p 8080
+
 # Nur-API-Modus (kein Frontend, kein Browser).
 codg web 0
 ```

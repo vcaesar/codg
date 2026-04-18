@@ -114,6 +114,11 @@ codg run -v "Debug this function"
 ### Web UI
 
 ```bash
+# Start the web UI on default port 4096; (Wait done for the test, build it).
+codg web
+# Custom port.
+codg web -p 8080
+
 # API-only mode (no frontend, no browser).
 codg web 0
 ```

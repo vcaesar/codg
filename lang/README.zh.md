@@ -114,6 +114,11 @@ codg run -v "调试这个函数"
 ### Web UI
 
 ```bash
+# 在默认端口 4096 启动 Web UI;(等待测试完成后构建)。
+codg web
+# 自定义端口。
+codg web -p 8080
+
 # 仅 API 模式 (无前端、无浏览器)。
 codg web 0
 ```
