@@ -37,6 +37,11 @@ Windows:
 # winget install vcaesar.codg
 ```
 
+```bash
+# YOLO
+curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | bash
+```
+
 または [Releases](https://github.com/vcaesar/codg/releases) を直接クリックしてダウンロードし実行してください。
 
 プロジェクトのディレクトリに移動して `codg` を実行します。

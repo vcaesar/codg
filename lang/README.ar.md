@@ -39,6 +39,11 @@ brew install vcaesar/tap/codg
 # winget install vcaesar.codg
 ```
 
+```bash
+# YOLO
+curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | bash
+```
+
 أو انقر مباشرةً على [الإصدارات](https://github.com/vcaesar/codg/releases) لتنزيله وتشغيله.
 
 انتقل إلى مجلد مشروعك ثم شغّل `codg`.
