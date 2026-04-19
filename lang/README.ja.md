@@ -57,7 +57,7 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 - 「Modified Files」をクリックするか「/diff」「/diff git」で VSCode のように差分ファイルを表示
 - 英文字と短文の自動補完
 
-デスクトップアプリ(BETA)、Web(BETA)、Claw(BETA)、一部の機能はテストとバグ修正待ち
+デスクトップアプリ(BETA)、Web(BETA)、Claw(BETA)、一部の機能はテストとバグ修正後にリリース予定。
 
 ## バグ報告
 
@@ -116,7 +116,7 @@ codg run -v "この関数をデバッグして"
 ### Web UI
 
 ```bash
-# デフォルトポート 4096 で Web UI を起動;(テスト完了後にビルド)。
+# デフォルトポート 4096 で Web UI を起動;(テスト完了後にリリース)。
 codg web
 # カスタムポート。
 codg web -p 8080

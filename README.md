@@ -57,7 +57,7 @@ Use "/yolo" to toggle the auto and ask mode, and you can set permissions by codg
 - Clcik "Modified Files" or "/diff" and "/diff git" to view the diff files in TUI same the vscode
 - Autocomplete the English letters and short sentences
 
-Desktop App (BETA), Web (BETA), Claw (BETA), Some features need wait for the test and fix bugs
+Desktop App (BETA), Web (BETA), Claw (BETA), Some features need wait for the test and fix bugs then release it.
 
 ## Reporting Bugs:
 
@@ -116,7 +116,7 @@ codg run -v "Debug this function"
 ### Web UI
 
 ```bash
-# Start the web UI on default port 4096; (Wait done for the test, build it).
+# Start the web UI on default port 4096; (Wait done for the test, then release it).
 codg web
 # Custom port.
 codg web -p 8080

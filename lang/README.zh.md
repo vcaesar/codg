@@ -57,7 +57,7 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 - 点击 “Modified Files” 或输入 “/diff”、“/diff git” 在 TUI 中查看差异文件，体验与 VSCode 相似
 - 自动补全英文字母和短句
 
-桌面应用（BETA）、Web（BETA）、Claw（BETA），部分功能仍需等待测试与修复 bug
+桌面应用（BETA）、Web（BETA）、Claw（BETA），部分功能仍需等待测试与修复 bug 后再发布。
 
 ## 报告 Bug
 
@@ -116,7 +116,7 @@ codg run -v "调试这个函数"
 ### Web UI
 
 ```bash
-# 在默认端口 4096 启动 Web UI;(等待测试完成后构建)。
+# 在默认端口 4096 启动 Web UI;(等待测试完成后发布)。
 codg web
 # 自定义端口。
 codg web -p 8080

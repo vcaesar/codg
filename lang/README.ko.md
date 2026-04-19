@@ -57,7 +57,7 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 - "Modified Files" 클릭 또는 "/diff", "/diff git" 으로 VSCode처럼 TUI 내에서 diff 파일 확인
 - 영문 글자 및 짧은 문장 자동 완성
 
-데스크톱 앱(BETA), 웹(BETA), Claw(BETA), 일부 기능은 테스트 및 버그 수정 대기 중
+데스크톱 앱(BETA), 웹(BETA), Claw(BETA), 일부 기능은 테스트 및 버그 수정 후 릴리스 예정.
 
 ## 버그 신고:
 
@@ -116,7 +116,7 @@ codg run -v "이 함수 디버깅"
 ### 웹 UI
 
 ```bash
-# 기본 포트 4096 에서 웹 UI 시작; (테스트 완료 후 빌드).
+# 기본 포트 4096 에서 웹 UI 시작; (테스트 완료 후 릴리스).
 codg web
 # 사용자 지정 포트.
 codg web -p 8080

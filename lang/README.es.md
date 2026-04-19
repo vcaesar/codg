@@ -57,7 +57,7 @@ Usa «/yolo» para alternar entre el modo automático y el modo de confirmación
 - Haz clic en «Modified Files» o usa «/diff» y «/diff git» para ver los archivos de diff en la TUI, como en VSCode
 - Autocompletado de letras y frases cortas en inglés
 
-App Desktop (BETA), Web (BETA), Claw (BETA); algunas funciones aún requieren pruebas y corrección de errores
+App Desktop (BETA), Web (BETA), Claw (BETA); algunas funciones aún requieren pruebas y corrección de errores antes de publicarla.
 
 ## Reportar bugs:
 
@@ -116,7 +116,7 @@ codg run -v "Depurar esta función"
 ### UI Web
 
 ```bash
-# Iniciar la UI web en el puerto predeterminado 4096; (esperar a las pruebas y luego compilar).
+# Iniciar la UI web en el puerto predeterminado 4096; (esperar a las pruebas y luego publicarla).
 codg web
 # Puerto personalizado.
 codg web -p 8080

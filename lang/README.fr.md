@@ -57,7 +57,7 @@ Utilisez « /yolo » pour basculer entre le mode automatique et le mode de con
 - Cliquez sur « Modified Files » ou utilisez « /diff » et « /diff git » pour visualiser les diffs dans le TUI, comme dans VSCode
 - Autocomplétion des lettres anglaises et phrases courtes
 
-Application Desktop (BETA), Web (BETA), Claw (BETA), certaines fonctionnalités nécessitent encore des tests et des corrections de bugs
+Application Desktop (BETA), Web (BETA), Claw (BETA), certaines fonctionnalités nécessitent encore des tests et des corrections de bugs avant sa publication.
 
 ## Signaler un bug :
 
@@ -116,7 +116,7 @@ codg run -v "Débugger cette fonction"
 ### Interface Web
 
 ```bash
-# Démarrer l'interface web sur le port par défaut 4096 ; (une fois les tests terminés, la compiler).
+# Démarrer l'interface web sur le port par défaut 4096 ; (une fois les tests terminés, la publier).
 codg web
 # Port personnalisé.
 codg web -p 8080

@@ -57,7 +57,7 @@ Mit „/yolo“ können Sie zwischen Auto- und Bestätigungsmodus wechseln; Bere
 - Klick auf „Modified Files" oder „/diff" bzw. „/diff git" zeigt Diff-Dateien im TUI wie in VSCode
 - Autovervollständigung englischer Buchstaben und kurzer Sätze
 
-Desktop-App (BETA), Web (BETA), Claw (BETA); einige Funktionen müssen noch getestet und Bugs behoben werden
+Desktop-App (BETA), Web (BETA), Claw (BETA); einige Funktionen müssen noch getestet und Bugs behoben werden, dann freigegeben.
 
 ## Fehler melden:
 
@@ -116,7 +116,7 @@ codg run -v "Diese Funktion debuggen"
 ### Web-UI
 
 ```bash
-# Web-UI auf Standardport 4096 starten; (nach Abschluss des Tests bauen).
+# Web-UI auf Standardport 4096 starten; (nach Abschluss des Tests freigeben).
 codg web
 # Benutzerdefinierter Port.
 codg web -p 8080
