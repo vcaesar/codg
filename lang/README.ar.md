@@ -52,7 +52,7 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 # الميزات
 
 - نظام وكلاء تلقائي وغير متزامن، عالي التزامن والأداء، مع استهلاك منخفض للذاكرة
-- دعم مزودي نماذج متعددين (API و Pro) ونماذج محلية عبر openai-compat أو claude-compat، مع دعم نماذج Openrouter المجانية، عبر "/connect" أو "/models" أو "codg auth"
+- دعم مزودي نماذج متعددين (API و Pro) ونماذج محلية عبر openai-compat أو claude-compat، مع دعم نماذج Openrouter و Ollama و Nvidia وغيرها المجانية، استخدمها عبر "/connect" أو "/models" أو "codg auth"
 - دعم أي طرفية ونظام تشغيل، بالإضافة إلى دعم طرفيات الويب
 - سهل الاستخدام: واجهة TUI متاحة في كل مكان وقريبة من GUI؛ إصدار سطح المكتب والويب في مرحلة BETA
 - انقر أو استخدم "/xxx" لتبديل الجلسات، كل شيء في TUI قابل للنقر

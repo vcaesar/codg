@@ -50,7 +50,7 @@ Usa «/yolo» para alternar entre el modo automático y el modo de confirmación
 # Características
 
 - Sistema de agentes automático y asíncrono, con alta concurrencia y rendimiento, y bajo uso de memoria
-- Proveedores multi-modelo (API y Pro) y modelos locales vía openai-compat o claude-compat; soporte para los modelos gratuitos de Openrouter; configurable con «/connect», «/models» o «codg auth»
+- Proveedores multi-modelo (API y Pro) y modelos locales vía openai-compat o claude-compat; soporte para los modelos gratuitos de Openrouter, Ollama, Nvidia y otros; úsalos con «/connect», «/models» o «codg auth»
 - Compatible con cualquier terminal y SO, también con terminales web
 - Fácil de usar: TUI disponible en todas partes, cercana a una GUI; versiones Desktop y Web en BETA
 - Haz clic o usa «/xxx» para cambiar de sesión; todo es cliqueable en la TUI

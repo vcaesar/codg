@@ -50,7 +50,7 @@ Use "/yolo" para alternar entre o modo automático e o modo de confirmação; as
 # Recursos
 
 - Sistema de agentes automático e assíncrono, com alta concorrência e desempenho, e baixo consumo de memória
-- Provedores multi-modelo (API e Pro) e modelos locais via openai-compat ou claude-compat; suporte aos modelos gratuitos do Openrouter; configurável via "/connect", "/models" ou "codg auth"
+- Provedores multi-modelo (API e Pro) e modelos locais via openai-compat ou claude-compat; suporte aos modelos gratuitos do Openrouter, Ollama, Nvidia e outros; use-os via "/connect", "/models" ou "codg auth"
 - Compatível com qualquer terminal e SO, incluindo terminais web
 - Fácil de usar: TUI disponível em todos os lugares, próxima de uma GUI; versões Desktop e Web em BETA
 - Clique ou use "/xxx" para alternar sessões; tudo é clicável na TUI
