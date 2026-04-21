@@ -59,6 +59,19 @@ Utilisez « /yolo » pour basculer entre le mode automatique et le mode de con
 
 Application Desktop (BETA), Web (BETA), Claw (BETA), certaines fonctionnalités nécessitent encore des tests et des corrections de bugs avant sa publication.
 
+## Benchmark
+
+### Utilisation de la RAM
+
+| Outil                  | 1 session active | 10 sessions actives | PSS supplémentaire par session ajoutée |
+| ---------------------- | ---------------- | ------------------- | -------------------------------------- |
+| **Codg**               | 65 MB            | 165 MB              | ~10 MB                                 |
+| **Codex CLI**          | 140.0 MB         | 334.8 MB            | ~21.6 MB                               |
+| **Cursor Agent**       | 214.9 MB         | 1632.4 MB           | ~157.5 MB                              |
+| **GitHub Copilot CLI** | 333.3 MB         | 1756.5 MB           | ~158.1 MB                              |
+| **OpenCode**           | 371.5 MB         | 3237.2 MB           | ~318.4 MB                              |
+| **Claude Code**        | 386.6 MB         | 2300.6 MB           | ~212.7 MB                              |
+
 ## Signaler un bug :
 
 Ouvrez un [Github Issue](https://github.com/vcaesar/codg/issues)

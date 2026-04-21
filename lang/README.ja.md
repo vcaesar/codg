@@ -59,6 +59,19 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 
 デスクトップアプリ(BETA)、Web(BETA)、Claw(BETA)、一部の機能はテストとバグ修正後にリリース予定。
 
+## ベンチマーク
+
+### RAM 使用量
+
+| ツール                 | アクティブセッション 1 | アクティブセッション 10 | セッション追加ごとの追加 PSS |
+| ---------------------- | ---------------------- | ----------------------- | ---------------------------- |
+| **Codg**               | 65 MB                  | 165 MB                  | ~10 MB                       |
+| **Codex CLI**          | 140.0 MB               | 334.8 MB                | ~21.6 MB                     |
+| **Cursor Agent**       | 214.9 MB               | 1632.4 MB               | ~157.5 MB                    |
+| **GitHub Copilot CLI** | 333.3 MB               | 1756.5 MB               | ~158.1 MB                    |
+| **OpenCode**           | 371.5 MB               | 3237.2 MB               | ~318.4 MB                    |
+| **Claude Code**        | 386.6 MB               | 2300.6 MB               | ~212.7 MB                    |
+
 ## バグ報告
 
 [Github Issues](https://github.com/vcaesar/codg/issues) を開いてください
