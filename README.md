@@ -9,7 +9,7 @@
 
 The next easy code and work AI agents harness system, auto and asynchronous, concurrency and high performance, Efficiently and High accuracy.
 
-[English](./README.md) | [繁體中文](./lang/README.zht.md) | [简体中文](./lang/README.zh.md) | [日本語](./lang/README.ja.md) | [한국어](./lang/README.ko.md) | [Français](./lang/README.fr.md) | [Deutsch](./lang/README.de.md) | [Español](./lang/README.es.md) | [Português](./lang/README.pt.md) | [Русский](./lang/README.ru.md) | [العربية](./lang/README.ar.md)
+**English** | [繁體中文](./lang/README.zht.md) | [简体中文](./lang/README.zh.md) | [日本語](./lang/README.ja.md) | [한국어](./lang/README.ko.md) | [Français](./lang/README.fr.md) | [Deutsch](./lang/README.de.md) | [Español](./lang/README.es.md) | [Português](./lang/README.pt.md) | [Русский](./lang/README.ru.md) | [العربية](./lang/README.ar.md)
 
 <p align="center">
 <a href="https://atomai.cc" rel="nofollow">

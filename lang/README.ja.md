@@ -9,7 +9,7 @@
 
 次世代のシンプルなコーディング・業務 AI エージェント Harness システム。自動かつ非同期、高い並行性とパフォーマンス、効率性と正確性を両立。
 
-[English](../README.md) | [繁體中文](./README.zht.md) | [简体中文](./README.zh.md) | [日本語](./README.ja.md) | [한국어](./README.ko.md) | [Français](./README.fr.md) | [Deutsch](./README.de.md) | [Español](./README.es.md) | [Português](./README.pt.md) | [Русский](./README.ru.md) | [العربية](./README.ar.md)
+[English](../README.md) | [繁體中文](./README.zht.md) | [简体中文](./README.zh.md) | **日本語** | [한국어](./README.ko.md) | [Français](./README.fr.md) | [Deutsch](./README.de.md) | [Español](./README.es.md) | [Português](./README.pt.md) | [Русский](./README.ru.md) | [العربية](./README.ar.md)
 
 <p align="center">
 <a href="https://atomai.cc" rel="nofollow">
@@ -47,7 +47,7 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 プロジェクトのディレクトリに移動して `codg` を実行します。
 「/yolo」で自動モードと確認モードを切り替えできます。権限は codg.toml で設定可能です。
 
-# 機能
+## 機能
 
 - 自動かつ非同期、高並行・高性能なエージェントシステムで、メモリ使用量も少ない
 - マルチモデルプロバイダー（API および Pro）およびローカルモデル（openai-compat または claude-compat 経由）、Openrouter、Ollama、Nvidia などの無料モデルに対応。「/connect」「/models」または「codg auth」から利用可能

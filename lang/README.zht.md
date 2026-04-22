@@ -9,7 +9,7 @@
 
 下一代簡易的程式碼與工作 AI 智慧代理 Harness 系統，自動化、非同步、高並行、高效能，高效率且高精度。
 
-[English](../README.md) | [繁體中文](./README.zht.md) | [简体中文](./README.zh.md) | [日本語](./README.ja.md) | [한국어](./README.ko.md) | [Français](./README.fr.md) | [Deutsch](./README.de.md) | [Español](./README.es.md) | [Português](./README.pt.md) | [Русский](./README.ru.md) | [العربية](./README.ar.md)
+[English](../README.md) | **繁體中文** | [简体中文](./README.zh.md) | [日本語](./README.ja.md) | [한국어](./README.ko.md) | [Français](./README.fr.md) | [Deutsch](./README.de.md) | [Español](./README.es.md) | [Português](./README.pt.md) | [Русский](./README.ru.md) | [العربية](./README.ar.md)
 
 <p align="center">
 <a href="https://atomai.cc" rel="nofollow">
@@ -47,7 +47,7 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 進入您的專案目錄，執行 `codg`。
 使用 “/yolo” 切換自動模式與詢問模式，權限可透過 codg.toml 設定。
 
-# 功能特色
+## 功能特色
 
 - 自動化、非同步、高並行、高效能的智慧代理系統，記憶體佔用低
 - 多模型提供商（API 與 Pro）及本地模型（透過 openai-compat 或 claude-compat），支援 Openrouter、Ollama、Nvidia 等免費模型，可透過 “/connect” “/models” 或 “codg auth” 使用

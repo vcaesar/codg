@@ -9,7 +9,7 @@
 
 El sistema de orquestación de agentes de IA de nueva generación, sencillo para código y trabajo: automático y asíncrono, con alta concurrencia y rendimiento, eficiente y preciso.
 
-[English](../README.md) | [繁體中文](./README.zht.md) | [简体中文](./README.zh.md) | [日本語](./README.ja.md) | [한국어](./README.ko.md) | [Français](./README.fr.md) | [Deutsch](./README.de.md) | [Español](./README.es.md) | [Português](./README.pt.md) | [Русский](./README.ru.md) | [العربية](./README.ar.md)
+[English](../README.md) | [繁體中文](./README.zht.md) | [简体中文](./README.zh.md) | [日本語](./README.ja.md) | [한국어](./README.ko.md) | [Français](./README.fr.md) | [Deutsch](./README.de.md) | **Español** | [Português](./README.pt.md) | [Русский](./README.ru.md) | [العربية](./README.ar.md)
 
 <p align="center">
 <a href="https://atomai.cc" rel="nofollow">
@@ -47,7 +47,7 @@ O haz clic directamente en [Releases](https://github.com/vcaesar/codg/releases) 
 Ve al directorio de tu proyecto y ejecuta `codg`.
 Usa «/yolo» para alternar entre el modo automático y el modo de confirmación; los permisos se configuran desde codg.toml.
 
-# Características
+## Características
 
 - Sistema de agentes automático y asíncrono, con alta concurrencia y rendimiento, y bajo uso de memoria
 - Proveedores multi-modelo (API y Pro) y modelos locales vía openai-compat o claude-compat; soporte para los modelos gratuitos de Openrouter, Ollama, Nvidia y otros; úsalos con «/connect», «/models» o «codg auth»

@@ -9,7 +9,7 @@
 
 차세대의 손쉬운 코드 및 업무용 AI 에이전트 Harness 시스템. 자동·비동기, 높은 동시성과 성능, 효율성과 정확성을 모두 갖춘 솔루션입니다.
 
-[English](../README.md) | [繁體中文](./README.zht.md) | [简体中文](./README.zh.md) | [日本語](./README.ja.md) | [한국어](./README.ko.md) | [Français](./README.fr.md) | [Deutsch](./README.de.md) | [Español](./README.es.md) | [Português](./README.pt.md) | [Русский](./README.ru.md) | [العربية](./README.ar.md)
+[English](../README.md) | [繁體中文](./README.zht.md) | [简体中文](./README.zh.md) | [日本語](./README.ja.md) | **한국어** | [Français](./README.fr.md) | [Deutsch](./README.de.md) | [Español](./README.es.md) | [Português](./README.pt.md) | [Русский](./README.ru.md) | [العربية](./README.ar.md)
 
 <p align="center">
 <a href="https://atomai.cc" rel="nofollow">
@@ -47,7 +47,7 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 프로젝트 디렉터리로 이동해 `codg`를 실행하세요.
 "/yolo"로 자동/확인 모드를 전환할 수 있으며, 권한은 codg.toml 로 설정할 수 있습니다.
 
-# 주요 기능
+## 주요 기능
 
 - 자동·비동기, 높은 동시성과 성능을 지닌 에이전트 시스템이며 메모리 사용량도 적음
 - 다중 모델 제공자(API 및 Pro) 및 로컬 모델(openai-compat 또는 claude-compat을 통해), Openrouter, Ollama, Nvidia 등의 무료 모델 지원. "/connect", "/models" 또는 "codg auth"로 사용

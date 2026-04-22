@@ -11,7 +11,7 @@
 
 نظام Harness وكلاء ذكاء اصطناعي للجيل القادم، سهل الاستخدام للبرمجة والعمل: تلقائي وغير متزامن، بتزامن عالٍ وأداء مرتفع، وبكفاءة ودقة عاليتين.
 
-[English](../README.md) | [繁體中文](./README.zht.md) | [简体中文](./README.zh.md) | [日本語](./README.ja.md) | [한국어](./README.ko.md) | [Français](./README.fr.md) | [Deutsch](./README.de.md) | [Español](./README.es.md) | [Português](./README.pt.md) | [Русский](./README.ru.md) | [العربية](./README.ar.md)
+[English](../README.md) | [繁體中文](./README.zht.md) | [简体中文](./README.zh.md) | [日本語](./README.ja.md) | [한국어](./README.ko.md) | [Français](./README.fr.md) | [Deutsch](./README.de.md) | [Español](./README.es.md) | [Português](./README.pt.md) | [Русский](./README.ru.md) | **العربية**
 
 <p align="center">
 <a href="https://atomai.cc" rel="nofollow">
@@ -49,7 +49,7 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 انتقل إلى مجلد مشروعك ثم شغّل `codg`.
 استخدم "/yolo" للتبديل بين الوضع التلقائي ووضع التأكيد، ويمكن ضبط الأذونات من خلال codg.toml.
 
-# الميزات
+## الميزات
 
 - نظام وكلاء تلقائي وغير متزامن، عالي التزامن والأداء، مع استهلاك منخفض للذاكرة
 - دعم مزودي نماذج متعددين (API و Pro) ونماذج محلية عبر openai-compat أو claude-compat، مع دعم نماذج Openrouter و Ollama و Nvidia وغيرها المجانية، استخدمها عبر "/connect" أو "/models" أو "codg auth"

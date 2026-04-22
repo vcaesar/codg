@@ -9,7 +9,7 @@
 
 Следующее поколение простой AI-системы-харнесса агентов для кода и работы: автоматическая и асинхронная, с высокой конкурентностью и производительностью, эффективная и точная.
 
-[English](../README.md) | [繁體中文](./README.zht.md) | [简体中文](./README.zh.md) | [日本語](./README.ja.md) | [한국어](./README.ko.md) | [Français](./README.fr.md) | [Deutsch](./README.de.md) | [Español](./README.es.md) | [Português](./README.pt.md) | [Русский](./README.ru.md) | [العربية](./README.ar.md)
+[English](../README.md) | [繁體中文](./README.zht.md) | [简体中文](./README.zh.md) | [日本語](./README.ja.md) | [한국어](./README.ko.md) | [Français](./README.fr.md) | [Deutsch](./README.de.md) | [Español](./README.es.md) | [Português](./README.pt.md) | **Русский** | [العربية](./README.ar.md)
 
 <p align="center">
 <a href="https://atomai.cc" rel="nofollow">
@@ -47,7 +47,7 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 Перейдите в каталог проекта и выполните `codg`.
 «/yolo» переключает автоматический режим и режим подтверждения; разрешения настраиваются в codg.toml.
 
-# Возможности
+## Возможности
 
 - Автоматическая и асинхронная, высоко конкурентная и высокопроизводительная система агентов с низким потреблением памяти
 - Поддержка многочисленных провайдеров моделей (API и Pro) и локальных моделей через openai-compat или claude-compat; поддержка бесплатных моделей Openrouter, Ollama, Nvidia и других; используйте их через «/connect», «/models» или «codg auth»

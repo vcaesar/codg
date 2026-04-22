@@ -9,7 +9,7 @@
 
 O próximo sistema de harness de agentes de IA simples para código e trabalho: automático e assíncrono, com alta concorrência e desempenho, eficiente e preciso.
 
-[English](../README.md) | [繁體中文](./README.zht.md) | [简体中文](./README.zh.md) | [日本語](./README.ja.md) | [한국어](./README.ko.md) | [Français](./README.fr.md) | [Deutsch](./README.de.md) | [Español](./README.es.md) | [Português](./README.pt.md) | [Русский](./README.ru.md) | [العربية](./README.ar.md)
+[English](../README.md) | [繁體中文](./README.zht.md) | [简体中文](./README.zh.md) | [日本語](./README.ja.md) | [한국어](./README.ko.md) | [Français](./README.fr.md) | [Deutsch](./README.de.md) | [Español](./README.es.md) | **Português** | [Русский](./README.ru.md) | [العربية](./README.ar.md)
 
 <p align="center">
 <a href="https://atomai.cc" rel="nofollow">
@@ -47,7 +47,7 @@ Ou clique diretamente em [Releases](https://github.com/vcaesar/codg/releases) pa
 Entre no diretório do seu projeto e execute `codg`.
 Use "/yolo" para alternar entre o modo automático e o modo de confirmação; as permissões podem ser definidas no codg.toml.
 
-# Recursos
+## Recursos
 
 - Sistema de agentes automático e assíncrono, com alta concorrência e desempenho, e baixo consumo de memória
 - Provedores multi-modelo (API e Pro) e modelos locais via openai-compat ou claude-compat; suporte aos modelos gratuitos do Openrouter, Ollama, Nvidia e outros; use-os via "/connect", "/models" ou "codg auth"
