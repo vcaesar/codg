@@ -30,12 +30,17 @@ brew install vcaesar/tap/codg
 # npm install -g @vcaesar/codg
 ```
 
-Windows:
+Windows (PowerShell):
 
-```bash
+```powershell
 # Winget
 # winget install vcaesar.codg
+
+# YOLO (native PowerShell installer)
+irm https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.ps1 | iex
 ```
+
+All (macOS, Linux, or Windows via Git Bash / MSYS2 / Cygwin / WSL):
 
 ```bash
 # YOLO
@@ -71,6 +76,10 @@ Desktop App (BETA), Web (BETA), Claw (BETA), Some features need wait for the tes
 | **GitHub Copilot CLI** | 333.3 MB         | 1756.5 MB          | ~158.1 MB                   |
 | **OpenCode**           | 371.5 MB         | 3237.2 MB          | ~318.4 MB                   |
 | **Claude Code**        | 386.6 MB         | 2300.6 MB          | ~212.7 MB                   |
+
+### Terminal-bench
+
+### SWE
 
 ## Reporting Bugs:
 

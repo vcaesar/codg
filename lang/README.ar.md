@@ -32,12 +32,17 @@ brew install vcaesar/tap/codg
 # npm install -g @vcaesar/codg
 ```
 
-ويندوز:
+ويندوز (PowerShell):
 
-```bash
+```powershell
 # Winget
 # winget install vcaesar.codg
+
+# YOLO (مثبّت PowerShell الأصلي)
+irm https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.ps1 | iex
 ```
+
+الكل (macOS أو Linux أو Windows عبر Git Bash / MSYS2 / Cygwin / WSL):
 
 ```bash
 # YOLO

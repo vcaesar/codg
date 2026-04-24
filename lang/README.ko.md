@@ -30,12 +30,17 @@ brew install vcaesar/tap/codg
 # npm install -g @vcaesar/codg
 ```
 
-Windows:
+Windows (PowerShell):
 
-```bash
+```powershell
 # Winget
 # winget install vcaesar.codg
+
+# YOLO (네이티브 PowerShell 설치 프로그램)
+irm https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.ps1 | iex
 ```
+
+모두 (macOS, Linux 또는 Git Bash / MSYS2 / Cygwin / WSL 환경의 Windows):
 
 ```bash
 # YOLO

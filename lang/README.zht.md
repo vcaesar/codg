@@ -30,12 +30,17 @@ brew install vcaesar/tap/codg
 # npm install -g @vcaesar/codg
 ```
 
-Windows:
+Windows (PowerShell):
 
-```bash
+```powershell
 # Winget
 # winget install vcaesar.codg
+
+# YOLO（原生 PowerShell 安裝腳本）
+irm https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.ps1 | iex
 ```
+
+全平台（macOS、Linux，或透過 Git Bash / MSYS2 / Cygwin / WSL 執行的 Windows）：
 
 ```bash
 # YOLO
