@@ -55,7 +55,7 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 ## 功能特性
 
 - 自动化、异步化、高并发、高性能的智能体系统，内存占用低
-- 多模型提供商（API 与 Pro）及本地模型（通过 openai-compat 或 claude-compat），支持 Openrouter、Ollama、Nvidia 等免费模型，可通过 “/connect” “/models” 或 “codg auth” 使用
+- 多模型提供商（40+ API 与 Pro 提供商、Custom URL API）及本地模型（通过 openai-compat 或 claude-compat），支持 Openrouter、Ollama、Nvidia 等免费模型，可通过 “/connect” “/models” 或 “codg auth” 使用
 - 支持任何终端和操作系统，同时支持 Web 终端
 - 易用性：TUI 随处可用，体验接近 GUI，桌面版和 Web 版处于 BETA 阶段
 - 点击或输入 “/xxx” 切换会话，TUI 中任意位置可点击

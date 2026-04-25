@@ -57,7 +57,7 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 ## الميزات
 
 - نظام وكلاء تلقائي وغير متزامن، عالي التزامن والأداء، مع استهلاك منخفض للذاكرة
-- دعم مزودي نماذج متعددين (API و Pro) ونماذج محلية عبر openai-compat أو claude-compat، مع دعم نماذج Openrouter و Ollama و Nvidia وغيرها المجانية، استخدمها عبر "/connect" أو "/models" أو "codg auth"
+- دعم مزودي نماذج متعددين (أكثر من 40 مزود API و Pro، و Custom URL API) ونماذج محلية عبر openai-compat أو claude-compat، مع دعم نماذج Openrouter و Ollama و Nvidia وغيرها المجانية، استخدمها عبر "/connect" أو "/models" أو "codg auth"
 - دعم أي طرفية ونظام تشغيل، بالإضافة إلى دعم طرفيات الويب
 - سهل الاستخدام: واجهة TUI متاحة في كل مكان وقريبة من GUI؛ إصدار سطح المكتب والويب في مرحلة BETA
 - انقر أو استخدم "/xxx" لتبديل الجلسات، كل شيء في TUI قابل للنقر
@@ -70,14 +70,14 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 
 ### استخدام الذاكرة (RAM)
 
-| الأداة                 | جلسة نشطة واحدة  | 10 جلسات نشطة       | PSS إضافي لكل جلسة مضافة   |
-| ---------------------- | ---------------- | ------------------- | -------------------------- |
-| **Codg**               | 65 MB            | 165 MB              | ~10 MB                     |
-| **Codex CLI**          | 140.0 MB         | 334.8 MB            | ~21.6 MB                   |
-| **Cursor Agent**       | 214.9 MB         | 1632.4 MB           | ~157.5 MB                  |
-| **GitHub Copilot CLI** | 333.3 MB         | 1756.5 MB           | ~158.1 MB                  |
-| **OpenCode**           | 371.5 MB         | 3237.2 MB           | ~318.4 MB                  |
-| **Claude Code**        | 386.6 MB         | 2300.6 MB           | ~212.7 MB                  |
+| الأداة                 | جلسة نشطة واحدة | 10 جلسات نشطة | PSS إضافي لكل جلسة مضافة |
+| ---------------------- | --------------- | ------------- | ------------------------ |
+| **Codg**               | 65 MB           | 165 MB        | ~10 MB                   |
+| **Codex CLI**          | 140.0 MB        | 334.8 MB      | ~21.6 MB                 |
+| **Cursor Agent**       | 214.9 MB        | 1632.4 MB     | ~157.5 MB                |
+| **GitHub Copilot CLI** | 333.3 MB        | 1756.5 MB     | ~158.1 MB                |
+| **OpenCode**           | 371.5 MB        | 3237.2 MB     | ~318.4 MB                |
+| **Claude Code**        | 386.6 MB        | 2300.6 MB     | ~212.7 MB                |
 
 ## الإبلاغ عن الأخطاء:
 

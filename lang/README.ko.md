@@ -55,7 +55,7 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 ## 주요 기능
 
 - 자동·비동기, 높은 동시성과 성능을 지닌 에이전트 시스템이며 메모리 사용량도 적음
-- 다중 모델 제공자(API 및 Pro) 및 로컬 모델(openai-compat 또는 claude-compat을 통해), Openrouter, Ollama, Nvidia 등의 무료 모델 지원. "/connect", "/models" 또는 "codg auth"로 사용
+- 다중 모델 제공자(40+ API 및 Pro 제공자, Custom URL API) 및 로컬 모델(openai-compat 또는 claude-compat을 통해), Openrouter, Ollama, Nvidia 등의 무료 모델 지원. "/connect", "/models" 또는 "codg auth"로 사용
 - 모든 터미널과 OS 지원, 웹 터미널도 지원
 - 사용 편의성: TUI는 어디서나 GUI처럼 사용 가능하며, 데스크톱/웹 버전은 BETA 제공 중
 - 클릭 또는 "/xxx" 로 세션 전환, TUI 어디서나 클릭 가능
@@ -68,14 +68,14 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 
 ### RAM 사용량
 
-| 도구                   | 활성 세션 1개    | 활성 세션 10개     | 세션 추가당 추가 PSS        |
-| ---------------------- | ---------------- | ------------------ | --------------------------- |
-| **Codg**               | 65 MB            | 165 MB             | ~10 MB                      |
-| **Codex CLI**          | 140.0 MB         | 334.8 MB           | ~21.6 MB                    |
-| **Cursor Agent**       | 214.9 MB         | 1632.4 MB          | ~157.5 MB                   |
-| **GitHub Copilot CLI** | 333.3 MB         | 1756.5 MB          | ~158.1 MB                   |
-| **OpenCode**           | 371.5 MB         | 3237.2 MB          | ~318.4 MB                   |
-| **Claude Code**        | 386.6 MB         | 2300.6 MB          | ~212.7 MB                   |
+| 도구                   | 활성 세션 1개 | 활성 세션 10개 | 세션 추가당 추가 PSS |
+| ---------------------- | ------------- | -------------- | -------------------- |
+| **Codg**               | 65 MB         | 165 MB         | ~10 MB               |
+| **Codex CLI**          | 140.0 MB      | 334.8 MB       | ~21.6 MB             |
+| **Cursor Agent**       | 214.9 MB      | 1632.4 MB      | ~157.5 MB            |
+| **GitHub Copilot CLI** | 333.3 MB      | 1756.5 MB      | ~158.1 MB            |
+| **OpenCode**           | 371.5 MB      | 3237.2 MB      | ~318.4 MB            |
+| **Claude Code**        | 386.6 MB      | 2300.6 MB      | ~212.7 MB            |
 
 ## 버그 신고:
 

@@ -55,7 +55,7 @@ Utilisez « /yolo » pour basculer entre le mode automatique et le mode de con
 ## Fonctionnalités
 
 - Système d'agents automatique et asynchrone, à haute concurrence et haute performance, avec faible consommation mémoire
-- Fournisseurs multi-modèles (API et Pro) et modèles locaux via openai-compat ou claude-compat, prise en charge des modèles gratuits d'Openrouter, Ollama, Nvidia et d'autres, utilisez-les via « /connect », « /models » ou « codg auth »
+- Fournisseurs multi-modèles (40+ fournisseurs API et Pro, Custom URL API) et modèles locaux via openai-compat ou claude-compat, prise en charge des modèles gratuits d'Openrouter, Ollama, Nvidia et d'autres, utilisez-les via « /connect », « /models » ou « codg auth »
 - Compatible avec tout terminal et OS, y compris les terminaux web
 - Facile à utiliser : TUI disponible partout, proche d'une GUI ; versions Desktop et Web en BETA
 - Cliquez ou utilisez « /xxx » pour changer de session, tout est cliquable dans le TUI

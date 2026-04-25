@@ -55,7 +55,7 @@ Mit „/yolo“ können Sie zwischen Auto- und Bestätigungsmodus wechseln; Bere
 ## Funktionen
 
 - Automatisches und asynchrones, hochparalleles und leistungsstarkes Agentensystem mit geringem Speicherverbrauch
-- Mehrere Modellanbieter (API und Pro) sowie lokale Modelle über openai-compat oder claude-compat; Unterstützung der kostenlosen Modelle von Openrouter, Ollama, Nvidia und weiteren; Nutzung via „/connect“, „/models“ oder „codg auth“
+- Mehrere Modellanbieter (40+ API- und Pro-Anbieter, Custom URL API) sowie lokale Modelle über openai-compat oder claude-compat; Unterstützung der kostenlosen Modelle von Openrouter, Ollama, Nvidia und weiteren; Nutzung via „/connect“, „/models“ oder „codg auth“
 - Unterstützung für jedes Terminal und Betriebssystem, auch für Web-Terminals
 - Benutzerfreundlich: TUI überall einsetzbar, GUI-nah; Desktop- und Web-Version im BETA-Stadium
 - Klicken oder „/xxx" zum Sitzungswechsel, überall im TUI anklickbar

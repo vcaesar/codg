@@ -55,7 +55,7 @@ Usa «/yolo» para alternar entre el modo automático y el modo de confirmación
 ## Características
 
 - Sistema de agentes automático y asíncrono, con alta concurrencia y rendimiento, y bajo uso de memoria
-- Proveedores multi-modelo (API y Pro) y modelos locales vía openai-compat o claude-compat; soporte para los modelos gratuitos de Openrouter, Ollama, Nvidia y otros; úsalos con «/connect», «/models» o «codg auth»
+- Proveedores multi-modelo (40+ proveedores API y Pro, Custom URL API) y modelos locales vía openai-compat o claude-compat; soporte para los modelos gratuitos de Openrouter, Ollama, Nvidia y otros; úsalos con «/connect», «/models» o «codg auth»
 - Compatible con cualquier terminal y SO, también con terminales web
 - Fácil de usar: TUI disponible en todas partes, cercana a una GUI; versiones Desktop y Web en BETA
 - Haz clic o usa «/xxx» para cambiar de sesión; todo es cliqueable en la TUI
@@ -68,14 +68,14 @@ App Desktop (BETA), Web (BETA), Claw (BETA); algunas funciones aún requieren pr
 
 ### Uso de RAM
 
-| Herramienta            | 1 sesión activa  | 10 sesiones activas | PSS adicional por sesión añadida |
-| ---------------------- | ---------------- | ------------------- | -------------------------------- |
-| **Codg**               | 65 MB            | 165 MB              | ~10 MB                           |
-| **Codex CLI**          | 140.0 MB         | 334.8 MB            | ~21.6 MB                         |
-| **Cursor Agent**       | 214.9 MB         | 1632.4 MB           | ~157.5 MB                        |
-| **GitHub Copilot CLI** | 333.3 MB         | 1756.5 MB           | ~158.1 MB                        |
-| **OpenCode**           | 371.5 MB         | 3237.2 MB           | ~318.4 MB                        |
-| **Claude Code**        | 386.6 MB         | 2300.6 MB           | ~212.7 MB                        |
+| Herramienta            | 1 sesión activa | 10 sesiones activas | PSS adicional por sesión añadida |
+| ---------------------- | --------------- | ------------------- | -------------------------------- |
+| **Codg**               | 65 MB           | 165 MB              | ~10 MB                           |
+| **Codex CLI**          | 140.0 MB        | 334.8 MB            | ~21.6 MB                         |
+| **Cursor Agent**       | 214.9 MB        | 1632.4 MB           | ~157.5 MB                        |
+| **GitHub Copilot CLI** | 333.3 MB        | 1756.5 MB           | ~158.1 MB                        |
+| **OpenCode**           | 371.5 MB        | 3237.2 MB           | ~318.4 MB                        |
+| **Claude Code**        | 386.6 MB        | 2300.6 MB           | ~212.7 MB                        |
 
 ## Reportar bugs:
 

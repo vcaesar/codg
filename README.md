@@ -55,7 +55,7 @@ Use "/yolo" to toggle the auto and ask mode, and you can set permissions by codg
 ## Features
 
 - Auto and asynchronous, concurrency and high performance agents system, and low memory use
-- Multi models providers (API and Pro) and local models via by openai-compat or claude-compat, Support Openrouter, Ollama, Nvidia and others free models, use it by "/connect" "/models" or "codg auth"
+- Multi models providers (40+ API and Pro providers, Custom URL API) and local models via by openai-compat or claude-compat, Support Openrouter, Ollama, Nvidia and others free models, use it by "/connect" "/models" or "codg auth"
 - Any terminal and OS support, also web terminal support
 - Easy use: The TUI in everywhere like GUI and Easy, Desktop and Web in the BETA
 - Click or "/xxx" to switch sessions, Click to everywhere in TUI
