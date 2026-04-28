@@ -174,6 +174,9 @@ token_save = true
 theme     = "catppuccin"
 dark_mode = true
 compact_mode = false
+
+[tools.grep]
+backends = ["rg", "sg", "csearch", "ngram", "regex"]
 ```
 
 ### إعداد المزوّد
