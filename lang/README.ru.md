@@ -163,8 +163,10 @@ codg install github.com/user/codg-xxx-auth
 ```toml
 # codg.toml — Минимальная конфигурация проекта.
 [options]
-lite_mode = 0          # 0 = все агенты, 2 = стандартный облегчённый набор, 4 = единственный агент
+lite_mode = 2          # 0 = все агенты, 2 = стандартный облегчённый набор, 4 = единственный агент
 locale    = "en"       # Язык UI: en, zh-CN, ja
+ctx_resize = true
+token_save = true
 
 [options.tui]
 theme     = "catppuccin"

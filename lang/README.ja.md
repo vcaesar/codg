@@ -163,8 +163,10 @@ xx_agent.md (.codg/agents/templates) または SKILL.md (.codg/skills) をディ
 ```toml
 # codg.toml — 最小限のプロジェクト設定。
 [options]
-lite_mode = 0          # 0 = 全エージェント、2 = デフォルト軽量セット、4 = 単一エージェント
+lite_mode = 2          # 0 = 全エージェント、2 = デフォルト軽量セット、4 = 単一エージェント
 locale    = "en"       # UI 言語: en, zh-CN, ja
+ctx_resize = true
+token_save = true
 
 [options.tui]
 theme     = "catppuccin"

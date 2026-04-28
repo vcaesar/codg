@@ -163,8 +163,10 @@ codg install github.com/user/codg-xxx-auth
 ```toml
 # codg.toml — 最小化專案設定。
 [options]
-lite_mode = 0          # 0 = 全部代理,2 = 預設精簡集,4 = 單一代理
+lite_mode = 2          # 0 = 全部代理,2 = 預設精簡集,4 = 單一代理
 locale    = "en"       # UI 語言:en、zh-CN、ja
+ctx_resize = true
+token_save = true
 
 [options.tui]
 theme     = "catppuccin"

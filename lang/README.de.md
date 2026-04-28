@@ -163,8 +163,10 @@ Erstellen Sie `codg.toml` im Projekt-Root (oder `~/.codg/config/codg.toml` für 
 ```toml
 # codg.toml — Minimale Projektkonfiguration.
 [options]
-lite_mode = 0          # 0 = alle Agenten, 2 = Standard-Minimalsatz, 4 = einzelner Agent
+lite_mode = 2          # 0 = alle Agenten, 2 = Standard-Minimalsatz, 4 = einzelner Agent
 locale    = "en"       # UI-Sprache: en, zh-CN, ja
+ctx_resize = true
+token_save = true
 
 [options.tui]
 theme     = "catppuccin"

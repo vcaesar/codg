@@ -168,8 +168,10 @@ for global settings):
 ```toml
 # codg.toml — Minimal project config.
 [options]
-lite_mode = 0          # 0 = all agents, 2 = default lean set, 4 = single agent
+lite_mode = 2          # 0 = all agents, 2 = default lean set, 4 = single agent
 locale    = "en"       # UI language: en, zh-CN, ja
+ctx_resize = true
+token_save = true
 
 [options.tui]
 theme     = "catppuccin"
