@@ -15,6 +15,18 @@ RED='\033[0;31m'
 ORANGE='\033[38;5;214m'
 NC='\033[0m'
 
+# Script-scope working directory for downloads. Hoisted out of the install
+# function so the EXIT trap (registered at script scope below) can reference
+# it without tripping `set -u` after the function frame unwinds.
+TMP_DIR=""
+cleanup() {
+    if [ -n "${TMP_DIR:-}" ] && [ -d "${TMP_DIR}" ]; then
+        # Use builtin-friendly deletion; avoid `find -delete` for portability.
+        rm -rf -- "${TMP_DIR}"
+    fi
+}
+trap cleanup EXIT
+
 usage() {
     cat <<EOF
 Codg Installer
@@ -180,12 +192,10 @@ download_and_install() {
 
     echo -e "\n${MUTED}Installing ${NC}${APP} ${MUTED}version: ${NC}${requested_version} ${MUTED}(${OS}/${ARCH})${NC}"
 
-    local tmp_dir
-    tmp_dir=$(mktemp -d "${TMPDIR:-/tmp}/${APP}_install_XXXXXX")
-    trap 'rm -rf "$tmp_dir"' EXIT
+    TMP_DIR=$(mktemp -d "${TMPDIR:-/tmp}/${APP}_install_XXXXXX")
 
-    curl -# -fL -o "$tmp_dir/$filename" "$url"
-    unzip -q "$tmp_dir/$filename" -d "$tmp_dir/extracted"
+    curl -# -fL -o "$TMP_DIR/$filename" "$url"
+    unzip -q "$TMP_DIR/$filename" -d "$TMP_DIR/extracted"
 
     local bin_name="$APP"
     [ "$OS" = "windows" ] && bin_name="${APP}.exe"
@@ -198,8 +208,8 @@ download_and_install() {
     local src=""
     local candidate
     for candidate in \
-        "$tmp_dir/extracted/$bin_name" \
-        "$tmp_dir/extracted/$suffixed_name"; do
+        "$TMP_DIR/extracted/$bin_name" \
+        "$TMP_DIR/extracted/$suffixed_name"; do
         if [ -f "$candidate" ]; then
             src="$candidate"
             break
@@ -209,14 +219,14 @@ download_and_install() {
     if [ -z "$src" ]; then
         # Fall back to searching one level deep (some archives nest into a folder
         # or use other naming variants). Match the plain or platform-suffixed name.
-        src=$(command find "$tmp_dir/extracted" -maxdepth 2 -type f \
+        src=$(command find "$TMP_DIR/extracted" -maxdepth 2 -type f \
             \( -name "$bin_name" -o -name "$suffixed_name" \) | head -n1)
     fi
 
     if [ -z "$src" ] || [ ! -f "$src" ]; then
         print_message error "Error: '${bin_name}' not found in downloaded archive"
         echo -e "${MUTED}Archive contents:${NC}"
-        command find "$tmp_dir/extracted" -maxdepth 3 -type f >&2 || true
+        command find "$TMP_DIR/extracted" -maxdepth 3 -type f >&2 || true
         exit 1
     fi
 
