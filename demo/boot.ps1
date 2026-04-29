@@ -26,8 +26,34 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
+# Suppress Invoke-WebRequest / Expand-Archive progress bars. On Windows
+# PowerShell 5.1 the rendered progress UI can slow downloads/extracts by
+# 10-100x, which is the most common cause of "the installer hangs" reports.
+$ProgressPreference = 'SilentlyContinue'
+
 $App  = 'codg'
 $Repo = 'vcaesar/codg'
+
+# Strict-mode-safe access helpers. Under `Set-StrictMode -Version Latest`,
+# touching a missing property throws PropertyNotFoundException -- which then
+# escapes any catch{} that uses it for a feature test. Use these for any
+# defensive "does this object have property X?" probe on values whose shape
+# we don't fully control (notably exception objects and HTTP responses).
+function Test-MemberExists {
+    param($Object, [string]$Name)
+    if ($null -eq $Object) { return $false }
+    try {
+        return [bool]($Object.PSObject.Properties.Match($Name).Count)
+    } catch {
+        return $false
+    }
+}
+
+function Get-MemberValue {
+    param($Object, [string]$Name)
+    if (-not (Test-MemberExists -Object $Object -Name $Name)) { return $null }
+    try { return $Object.$Name } catch { return $null }
+}
 
 function Write-Muted  { param([string]$Msg) Write-Host $Msg -ForegroundColor DarkGray }
 function Write-Info   { param([string]$Msg) Write-Host $Msg -ForegroundColor Cyan }
@@ -104,13 +130,19 @@ function Install-FromRelease {
     $url      = "https://github.com/$Repo/releases/download/v$requested/$filename"
     $tagUrl   = "https://github.com/$Repo/releases/tag/v$requested"
 
+    $status = 0
     try {
         $head = Invoke-WebRequest -Uri $tagUrl -Method Head -UseBasicParsing -ErrorAction Stop
         $status = [int]$head.StatusCode
     } catch {
-        $status = 0
-        if ($_.Exception.Response) {
-            $status = [int]$_.Exception.Response.StatusCode
+        # Strict-mode safe: many failure modes (DNS, TLS, proxy errors) raise
+        # exceptions like System.Net.Http.HttpRequestException that don't have
+        # a `.Response` property. Direct property access would re-throw
+        # PropertyNotFoundException out of this catch and abort the script.
+        $resp = Get-MemberValue -Object $_.Exception -Name 'Response'
+        $code = Get-MemberValue -Object $resp -Name 'StatusCode'
+        if ($null -ne $code) {
+            try { $status = [int]$code } catch { $status = 0 }
         }
     }
     if ($status -eq 404) {
