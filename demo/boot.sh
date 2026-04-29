@@ -190,14 +190,33 @@ download_and_install() {
     local bin_name="$APP"
     [ "$OS" = "windows" ] && bin_name="${APP}.exe"
 
-    local src
-    src=$(command ls "$tmp_dir/extracted/$bin_name" 2>/dev/null || true)
+    # Release archives may contain either a plain binary (e.g. "codg") or a
+    # platform-suffixed one (e.g. "codg_darwin_arm64", "codg_windows_amd64.exe").
+    local suffixed_name="${APP}_${OS}_${ARCH}"
+    [ "$OS" = "windows" ] && suffixed_name="${suffixed_name}.exe"
+
+    local src=""
+    local candidate
+    for candidate in \
+        "$tmp_dir/extracted/$bin_name" \
+        "$tmp_dir/extracted/$suffixed_name"; do
+        if [ -f "$candidate" ]; then
+            src="$candidate"
+            break
+        fi
+    done
+
     if [ -z "$src" ]; then
-        # Fall back to searching one level deep (some archives nest into a folder).
-        src=$(command find "$tmp_dir/extracted" -maxdepth 2 -type f -name "$bin_name" | head -n1)
+        # Fall back to searching one level deep (some archives nest into a folder
+        # or use other naming variants). Match the plain or platform-suffixed name.
+        src=$(command find "$tmp_dir/extracted" -maxdepth 2 -type f \
+            \( -name "$bin_name" -o -name "$suffixed_name" \) | head -n1)
     fi
+
     if [ -z "$src" ] || [ ! -f "$src" ]; then
         print_message error "Error: '${bin_name}' not found in downloaded archive"
+        echo -e "${MUTED}Archive contents:${NC}"
+        command find "$tmp_dir/extracted" -maxdepth 3 -type f >&2 || true
         exit 1
     fi
 

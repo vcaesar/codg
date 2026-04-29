@@ -132,17 +132,28 @@ function Install-FromRelease {
         New-Item -ItemType Directory -Path $extractDir -Force | Out-Null
         Expand-Archive -Path $zipPath -DestinationPath $extractDir -Force
 
-        $binName = "$App.exe"
-        $src = Get-ChildItem -Path $extractDir -Recurse -Filter $binName -File |
+        # Release archives may contain either a plain binary (e.g. "codg.exe") or
+        # a platform-suffixed one (e.g. "codg_windows_amd64.exe"). Match both.
+        $binName      = "$App.exe"
+        $suffixedName = "${App}_$($target.OS)_$($target.Arch).exe"
+        $candidates   = @($binName, $suffixedName) | Select-Object -Unique
+
+        $src = Get-ChildItem -Path $extractDir -Recurse -File |
+               Where-Object { $candidates -contains $_.Name } |
                Select-Object -First 1
         if (-not $src) {
             Write-ErrorC "Error: '$binName' not found in downloaded archive"
+            Write-Muted  "Archive contents:"
+            Get-ChildItem -Path $extractDir -Recurse -File |
+                ForEach-Object { Write-Host ("  " + $_.FullName.Substring($extractDir.Length).TrimStart('\','/')) }
             exit 1
         }
 
         if (-not (Test-Path $script:InstallDir)) {
             New-Item -ItemType Directory -Path $script:InstallDir -Force | Out-Null
         }
+        # Always install as the canonical name (codg.exe), regardless of the
+        # name used inside the archive.
         $dest = Join-Path $script:InstallDir $binName
         Copy-Item -Path $src.FullName -Destination $dest -Force
     } finally {
