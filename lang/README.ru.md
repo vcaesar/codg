@@ -49,7 +49,7 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 
 Или перейдите напрямую на страницу [Releases](https://github.com/vcaesar/codg/releases), чтобы скачать и запустить.
 
-Перейдите в каталог проекта и выполните `codg`.
+Перейдите в каталог проекта, выполните `codg` и используйте «/init» для инициализации проекта.
 «/yolo» переключает автоматический режим и режим подтверждения; разрешения настраиваются в codg.toml.
 
 ## Возможности
@@ -63,6 +63,8 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 - Клик или «/xxx» для переключения сессий; всё в TUI кликабельно
 - Клик по «Modified Files» или «/diff» и «/diff git» — просмотр diff-файлов в TUI как в VSCode
 - Автодополнение английских букв и коротких фраз
+- Более удобная система Agents, Skills и MCP, поддержка пользовательских Agents и Skills
+- Поддержка каналов и функций как в OpenClaw
 
 Desktop-приложение (BETA), Web (BETA), Claw (BETA); некоторые функции ожидают тестирования и исправления ошибок, затем релиза.
 

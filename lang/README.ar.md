@@ -51,7 +51,7 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 
 أو انقر مباشرةً على [الإصدارات](https://github.com/vcaesar/codg/releases) لتنزيله وتشغيله.
 
-انتقل إلى مجلد مشروعك ثم شغّل `codg`.
+انتقل إلى مجلد مشروعك ثم شغّل `codg`، واستخدم "/init" لتهيئة المشروع.
 استخدم "/yolo" للتبديل بين الوضع التلقائي ووضع التأكيد، ويمكن ضبط الأذونات من خلال codg.toml.
 
 ## الميزات
@@ -65,6 +65,8 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 - انقر أو استخدم "/xxx" لتبديل الجلسات، كل شيء في TUI قابل للنقر
 - انقر على "Modified Files" أو استخدم "/diff" و"/diff git" لعرض ملفات الفرق داخل TUI كما في VSCode
 - إكمال تلقائي للحروف الإنجليزية والعبارات القصيرة
+- نظام Agents وSkills وMCP أسهل في الاستخدام، مع دعم Agents وSkills المخصصة
+- دعم القنوات والميزات على غرار OpenClaw
 
 تطبيق سطح المكتب (BETA)، ويب (BETA)، Claw (BETA)، بعض الميزات لا تزال بحاجة إلى اختبار وإصلاح للأخطاء ثم إصدارها.
 

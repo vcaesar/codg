@@ -49,7 +49,7 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 
 或者直接點擊 [Releases](https://github.com/vcaesar/codg/releases) 下載並執行。
 
-進入您的專案目錄，執行 `codg`。
+進入您的專案目錄，執行 `codg`，使用「/init」初始化專案。
 使用 “/yolo” 切換自動模式與詢問模式，權限可透過 codg.toml 設定。
 
 ## 功能特色
@@ -63,6 +63,8 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 - 點擊或輸入 “/xxx” 切換會話，TUI 中任意位置皆可點擊
 - 點擊 “Modified Files” 或輸入 “/diff”、“/diff git” 在 TUI 中檢視差異檔案，體驗與 VSCode 相似
 - 自動補全英文字母與短句
+- 更易用的 Agents、Skills 與 MCP 系統，支援自訂 Agents 與 Skills
+- 類似 OpenClaw 的頻道與功能支援
 
 桌面應用（BETA）、Web（BETA）、Claw（BETA），部分功能仍需等待測試與修復 bug 後再發佈。
 

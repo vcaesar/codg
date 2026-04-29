@@ -49,7 +49,7 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 
 Ou cliquez directement sur [Releases](https://github.com/vcaesar/codg/releases) pour le télécharger et l'exécuter.
 
-Rendez-vous dans votre répertoire de projet et exécutez `codg`.
+Rendez-vous dans votre répertoire de projet, exécutez `codg`, puis utilisez « /init » pour initialiser le projet.
 Utilisez « /yolo » pour basculer entre le mode automatique et le mode de confirmation ; les permissions peuvent être configurées via codg.toml.
 
 ## Fonctionnalités
@@ -63,6 +63,8 @@ Utilisez « /yolo » pour basculer entre le mode automatique et le mode de con
 - Cliquez ou utilisez « /xxx » pour changer de session, tout est cliquable dans le TUI
 - Cliquez sur « Modified Files » ou utilisez « /diff » et « /diff git » pour visualiser les diffs dans le TUI, comme dans VSCode
 - Autocomplétion des lettres anglaises et phrases courtes
+- Système d’Agents, Skills et MCP plus simple, prise en charge des Agents et Skills personnalisés
+- Prise en charge des canaux et fonctionnalités comme OpenClaw
 
 Application Desktop (BETA), Web (BETA), Claw (BETA), certaines fonctionnalités nécessitent encore des tests et des corrections de bugs avant sa publication.
 

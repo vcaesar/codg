@@ -49,7 +49,7 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 
 또는 [Releases](https://github.com/vcaesar/codg/releases)를 직접 클릭하여 다운로드한 뒤 실행하세요.
 
-프로젝트 디렉터리로 이동해 `codg`를 실행하세요.
+프로젝트 디렉터리로 이동해 `codg`를 실행하고, "/init"로 프로젝트를 초기화하세요.
 "/yolo"로 자동/확인 모드를 전환할 수 있으며, 권한은 codg.toml 로 설정할 수 있습니다.
 
 ## 주요 기능
@@ -63,6 +63,8 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 - 클릭 또는 "/xxx" 로 세션 전환, TUI 어디서나 클릭 가능
 - "Modified Files" 클릭 또는 "/diff", "/diff git" 으로 VSCode처럼 TUI 내에서 diff 파일 확인
 - 영문 글자 및 짧은 문장 자동 완성
+- 더 쉽고 간편한 Agents, Skills 및 MCP 시스템, 사용자 정의 Agents 및 Skills 지원
+- OpenClaw와 유사한 채널 및 기능 지원
 
 데스크톱 앱(BETA), 웹(BETA), Claw(BETA), 일부 기능은 테스트 및 버그 수정 후 릴리스 예정.
 

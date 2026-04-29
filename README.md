@@ -49,7 +49,7 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 
 Or click [Releases](https://github.com/vcaesar/codg/releases) directly to download and run it.
 
-Go to your project directory, run `codg`.
+Go to your project directory, run `codg`, use "/init" to init the projects.
 Use "/yolo" to toggle the auto and ask mode, and you can set permissions by codg.toml.
 
 ## Features
@@ -63,6 +63,8 @@ Use "/yolo" to toggle the auto and ask mode, and you can set permissions by codg
 - Click or "/xxx" to switch sessions, Click to everywhere in TUI
 - Clcik "Modified Files" or "/diff" and "/diff git" to view the diff files in TUI same the vscode
 - Autocomplete the English letters and short sentences
+- More easy Agents, Skills and MCP system, custom Agents and Skills support
+- Channel and features support like OpenClaw
 
 Desktop App (BETA), Web (BETA), Claw (BETA), Some features need wait for the test and fix bugs then release it.
 
