@@ -168,7 +168,7 @@ xx_agent.md (.codg/agents/templates) 또는 SKILL.md (.codg/skills)를 해당 �
 lite_mode = 2          # 0 = 모든 에이전트, 2 = 기본 경량 세트, 4 = 단일 에이전트
 locale    = "en"       # UI 언어: en, zh-CN, ja
 ctx_resize = true
-token_save = true
+token_save = 2
 
 [options.tui]
 theme     = "catppuccin"

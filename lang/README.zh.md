@@ -72,14 +72,14 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 
 ### 内存占用
 
-| 工具                   | 1 个活跃会话     | 10 个活跃会话      | 每新增会话额外 PSS          |
-| ---------------------- | ---------------- | ------------------ | --------------------------- |
-| **Codg**               | 65 MB            | 165 MB             | ~10 MB                      |
-| **Codex CLI**          | 140.0 MB         | 334.8 MB           | ~21.6 MB                    |
-| **Cursor Agent**       | 214.9 MB         | 1632.4 MB          | ~157.5 MB                   |
-| **GitHub Copilot CLI** | 333.3 MB         | 1756.5 MB          | ~158.1 MB                   |
-| **OpenCode**           | 371.5 MB         | 3237.2 MB          | ~318.4 MB                   |
-| **Claude Code**        | 386.6 MB         | 2300.6 MB          | ~212.7 MB                   |
+| 工具                   | 1 个活跃会话 | 10 个活跃会话 | 每新增会话额外 PSS |
+| ---------------------- | ------------ | ------------- | ------------------ |
+| **Codg**               | 65 MB        | 165 MB        | ~10 MB             |
+| **Codex CLI**          | 140.0 MB     | 334.8 MB      | ~21.6 MB           |
+| **Cursor Agent**       | 214.9 MB     | 1632.4 MB     | ~157.5 MB          |
+| **GitHub Copilot CLI** | 333.3 MB     | 1756.5 MB     | ~158.1 MB          |
+| **OpenCode**           | 371.5 MB     | 3237.2 MB     | ~318.4 MB          |
+| **Claude Code**        | 386.6 MB     | 2300.6 MB     | ~212.7 MB          |
 
 ## 报告 Bug
 
@@ -168,7 +168,7 @@ codg install github.com/user/codg-xxx-auth
 lite_mode = 2          # 0 = 全部智能体,2 = 默认精简集,4 = 单智能体
 locale    = "en"       # UI 语言:en、zh-CN、ja
 ctx_resize = true
-token_save = true
+token_save = 2
 
 [options.tui]
 theme     = "catppuccin"

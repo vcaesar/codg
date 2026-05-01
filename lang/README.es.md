@@ -168,7 +168,7 @@ Crea un `codg.toml` en la raíz de tu proyecto (o `~/.codg/config/codg.toml` par
 lite_mode = 2          # 0 = todos los agentes, 2 = conjunto ligero por defecto, 4 = único agente
 locale    = "en"       # Idioma UI: en, zh-CN, ja
 ctx_resize = true
-token_save = true
+token_save = 2
 
 [options.tui]
 theme     = "catppuccin"

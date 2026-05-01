@@ -173,7 +173,7 @@ for global settings):
 lite_mode = 2          # 0 = all agents, 2 = default lean set, 4 = single agent
 locale    = "en"       # UI language: en, zh-CN, ja
 ctx_resize = true
-token_save = true
+token_save = 2
 
 [options.tui]
 theme     = "catppuccin"

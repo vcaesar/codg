@@ -170,7 +170,7 @@ codg install github.com/user/codg-xxx-auth
 lite_mode = 2          # 0 = جميع الوكلاء، 2 = المجموعة الافتراضية المبسطة، 4 = وكيل واحد
 locale    = "en"       # لغة الواجهة: en، zh-CN، ja
 ctx_resize = true
-token_save = true
+token_save = 2
 
 [options.tui]
 theme     = "catppuccin"
