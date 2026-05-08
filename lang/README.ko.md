@@ -68,6 +68,12 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 
 데스크톱 앱(BETA), 웹(BETA), Claw(BETA), 일부 기능은 테스트 및 버그 수정 후 릴리스 예정.
 
+## 제공자
+
+Atom, Copilot, Anthropic, Anthropic API, OpenAI, OpenAI API, Gemini, Gemini API, OpenRouter, Antigravity, Cursor, Kiro, xAI, Azure, Bedrock, Vertex AI, Nvidia, HuggingFace, Vercel, Ollama Cloud, Cloudflare Workers, GitHub, Poe, Meta, Groq, IO.net, OpenCode Zen, OpenCode Go, Windsurf, Cerebras.
+
+중국: Z.ai, Zhipu, Zhipu Coding, Kimi, Kimi Coding, DeepSeek, MiniMax, MiniMax China, Qwen, MiMo, Qiniu Cloud, Ali Coding, Ali Coding CN, Tencent Coding.
+
 ## 벤치마크
 
 ### RAM 사용량

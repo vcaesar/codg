@@ -68,6 +68,12 @@ Use "/yolo" para alternar entre o modo automático e o modo de confirmação; as
 
 App Desktop (BETA), Web (BETA), Claw (BETA); alguns recursos ainda aguardam testes e correções de bugs antes do lançamento.
 
+## Provedores
+
+Atom, Copilot, Anthropic, Anthropic API, OpenAI, OpenAI API, Gemini, Gemini API, OpenRouter, Antigravity, Cursor, Kiro, xAI, Azure, Bedrock, Vertex AI, Nvidia, HuggingFace, Vercel, Ollama Cloud, Cloudflare Workers, GitHub, Poe, Meta, Groq, IO.net, OpenCode Zen, OpenCode Go, Windsurf, Cerebras.
+
+China: Z.ai, Zhipu, Zhipu Coding, Kimi, Kimi Coding, DeepSeek, MiniMax, MiniMax China, Qwen, MiMo, Qiniu Cloud, Ali Coding, Ali Coding CN, Tencent Coding.
+
 ## Benchmark
 
 ### Uso de RAM

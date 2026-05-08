@@ -70,6 +70,12 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 
 تطبيق سطح المكتب (BETA)، ويب (BETA)، Claw (BETA)، بعض الميزات لا تزال بحاجة إلى اختبار وإصلاح للأخطاء ثم إصدارها.
 
+## المزودون
+
+Atom، Copilot، Anthropic، Anthropic API، OpenAI، OpenAI API، Gemini، Gemini API، OpenRouter، Antigravity، Cursor، Kiro، xAI، Azure، Bedrock، Vertex AI، Nvidia، HuggingFace، Vercel، Ollama Cloud، Cloudflare Workers، GitHub، Poe، Meta، Groq، IO.net، OpenCode Zen، OpenCode Go، Windsurf، Cerebras.
+
+الصين: Z.ai، Zhipu، Zhipu Coding، Kimi، Kimi Coding، DeepSeek، MiniMax، MiniMax China، Qwen، MiMo، Qiniu Cloud، Ali Coding، Ali Coding CN، Tencent Coding.
+
 ## المعيار
 
 ### استخدام الذاكرة (RAM)
