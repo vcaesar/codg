@@ -129,7 +129,9 @@ codg vm build                 # البناء على جهاز افتراضي بع
 codg vm run -- make test      # تنفيذ أمر على الـ VM
 codg sandbox run -- ./test.sh # التشغيل في بيئة الحماية
 codg sandbox status           # التحقق من توفر الـ sandbox
-codg update                   # تحديث تعريفات المزوّدين
+codg used                          # عرض حدود الاستخدام وإحصائيات API لجميع المزوّدين
+codg update                   # تحديث إصدار codg
+codg updatep                  # تحديث تعريفات المزوّدين
 ```
 
 ## أمثلة الاستخدام

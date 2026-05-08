@@ -127,7 +127,9 @@ codg vm build                 # 원격 VM에서 빌드
 codg vm run -- make test      # VM에서 명령 실행
 codg sandbox run -- ./test.sh # 샌드박스에서 실행
 codg sandbox status           # 샌드박스 가용성 확인
-codg update                   # 제공자 정의 업데이트
+codg used                          # 모든 제공자의 사용량 한도 및 API 통계 표시
+codg update                   # codg 버전 업데이트
+codg updatep                  # 제공자 정의 업데이트
 ```
 
 ## 사용 예시

@@ -127,7 +127,9 @@ codg vm build                 # 在远程 VM 上构建
 codg vm run -- make test      # 在 VM 上执行命令
 codg sandbox run -- ./test.sh # 在沙箱中运行
 codg sandbox status           # 查看沙箱可用性
-codg update                   # 更新服务商定义
+codg used                          # 显示所有服务商的使用限额和 API 统计
+codg update                   # 更新 codg 版本
+codg updatep                  # 更新服务商定义
 ```
 
 ## 使用示例

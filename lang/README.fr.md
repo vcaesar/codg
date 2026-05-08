@@ -127,7 +127,9 @@ codg vm build                 # Builder sur une VM distante
 codg vm run -- make test      # Exécuter une commande sur la VM
 codg sandbox run -- ./test.sh # Exécuter en sandbox
 codg sandbox status           # Vérifier la disponibilité de la sandbox
-codg update                   # Mettre à jour les définitions de fournisseurs
+codg used                          # Afficher les limites d'utilisation et les statistiques API pour tous les fournisseurs
+codg update                   # Mettre à jour la version de codg
+codg updatep                  # Mettre à jour les définitions de fournisseurs
 ```
 
 ## Exemples d'utilisation

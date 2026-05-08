@@ -127,7 +127,9 @@ codg vm build                 # リモート VM でビルド
 codg vm run -- make test      # VM でコマンドを実行
 codg sandbox run -- ./test.sh # サンドボックスで実行
 codg sandbox status           # サンドボックスの利用可否を確認
-codg update                   # プロバイダー定義を更新
+codg used                          # すべてのプロバイダーの使用制限と API 統計を表示
+codg update                   # codg のバージョンを更新
+codg updatep                  # プロバイダー定義を更新
 ```
 
 ## 使用例
