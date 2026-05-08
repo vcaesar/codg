@@ -95,9 +95,11 @@ Ouvrez un [Github Issue](https://github.com/vcaesar/codg/issues)
 
 Aucune donnée ni télémétrie n'est collectée ici, et les modèles 100 % locaux sont pris en charge ; si vous utilisez une API, consultez les politiques du fournisseur correspondant.
 
+Pour l'utilisation du TUI, consultez la [documentation des commandes TUI](./docs/cli.fr.md), et tapez `/help` dans le TUI pour afficher les raccourcis et autres aides.
+
 # Commandes CLI
 
-Utilisez : `codg -h` ou « /help » dans le TUI
+Utilisez : `codg -h`
 
 ```bash
 codg auth/login               # S'authentifier (Atom, OpenAI, GitHub...)

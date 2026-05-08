@@ -99,9 +99,11 @@ Open a [Github Issues](https://github.com/vcaesar/codg/issues)
 
 Currently no any data and telemetry is collected here, and 100% local model supported, use the API you can see they providers' policies.
 
+For TUI usage, see the [TUI commands documentation](./docs/cli.md), and type `/help` inside the TUI to view key bindings and other help.
+
 # CLI Commands
 
-Use: codg -h or "/help" in TUI
+Use: codg -h
 
 ```bash
 codg auth/login               # Authenticate (Atom, OpenAI, GitHub...)

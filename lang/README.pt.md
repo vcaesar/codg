@@ -95,9 +95,11 @@ Abra uma [Issue no Github](https://github.com/vcaesar/codg/issues)
 
 Atualmente nenhum dado ou telemetria é coletado, e modelos 100% locais são suportados. Ao usar uma API, consulte as políticas do provedor correspondente.
 
+Para o uso da TUI, consulte a [documentação dos comandos TUI](./docs/cli.pt.md), e digite `/help` dentro da TUI para ver atalhos de teclado e outras ajudas.
+
 # Comandos CLI
 
-Use `codg -h` ou "/help" na TUI
+Uso: `codg -h`
 
 ```bash
 codg auth/login               # Autenticar (Atom, OpenAI, GitHub...)

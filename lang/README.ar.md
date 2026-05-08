@@ -97,9 +97,11 @@ Atom، Copilot، Anthropic، Anthropic API، OpenAI، OpenAI API، Gemini، Gemi
 
 حاليًا لا يتم جمع أي بيانات أو قياسات، كما يتم دعم النماذج المحلية بنسبة 100%. عند استخدام واجهة API، يرجى مراجعة سياسات المزوّد المعني.
 
+للاطلاع على استخدام واجهة TUI، راجع [توثيق أوامر TUI](./docs/cli.ar.md)، واكتب `/help` داخل TUI لعرض اختصارات المفاتيح والمساعدة الأخرى.
+
 # أوامر CLI
 
-استخدم `codg -h` أو "/help" في TUI
+الاستخدام: `codg -h`
 
 ```bash
 codg auth/login               # المصادقة (Atom، OpenAI، GitHub...)

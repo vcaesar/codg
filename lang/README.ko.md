@@ -95,9 +95,11 @@ Atom, Copilot, Anthropic, Anthropic API, OpenAI, OpenAI API, Gemini, Gemini API,
 
 현재 어떠한 데이터나 텔레메트리도 수집하지 않으며, 100% 로컬 모델을 지원합니다. API 사용 시 해당 제공자의 정책을 참고하세요.
 
+TUI 사용법은 [TUI 명령어 문서](./docs/cli.ko.md)를 참조하고 TUI에서 `/help`를 입력하여 키 바인딩 및 기타 도움말을 확인하세요.
+
 # CLI 명령어
 
-`codg -h` 또는 TUI에서 "/help" 사용:
+사용법: `codg -h`
 
 ```bash
 codg auth/login               # 인증 (Atom, OpenAI, GitHub...)

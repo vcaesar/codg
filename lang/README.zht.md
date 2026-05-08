@@ -95,9 +95,11 @@ Atom、Copilot、Anthropic、Anthropic API、OpenAI、OpenAI API、Gemini、Gemi
 
 目前不蒐集任何資料與遙測資訊，並支援 100% 本地模型；使用 API 時請參閱對應服務商的隱私政策。
 
+關於 TUI 用法，請參閱 [TUI 指令文件](./docs/cli.zht.md)，並在 TUI 中輸入 `/help` 查看快捷鍵與其他說明。
+
 # CLI 指令
 
-使用 `codg -h` 或在 TUI 中輸入 “/help”
+使用：`codg -h`
 
 ```bash
 codg auth/login               # 登入認證 (Atom、OpenAI、GitHub...)
