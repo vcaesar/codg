@@ -1,0 +1,21 @@
+# -----------------------------------------------------------------------------
+# [options] - General application settings.
+# -----------------------------------------------------------------------------
+[options]
+# 0 = all 24 agents, 1 = drop a few, 2 = default lean set,
+# 3 = minimal, 4 = single agent only.
+lite_mode = 2
+
+locale     = "en"        # UI language: en, zh-CN, ja...
+show_bar   = true        # Show status bar / progress bar in TUI.
+# progress   = true        # Indeterminate progress spinner.
+
+claude_style = true      # Render output / inject reminders Claude-Code-style.
+ctx_resize   = true      # Compress system prompt before sending.
+token_save   = 1         # 0=off 1=rkt 2=caveman-full 3=caveman-lite 4=caveman-ultra.
+cache_ttl    = "1h"      # Anthropic prompt cache TTL (integer seconds, Go duration, or "5m"/"1h").
+
+# Async / sub-agent dispatch behaviour.
+# sub_agent              = false
+sub_agent_wait           = 100   # ms throttle between sub-agent calls (rate-limit safety).
+# sub_agent_sync_timeout = 180   # Seconds; 0 = default (180), -1 = unlimited.
