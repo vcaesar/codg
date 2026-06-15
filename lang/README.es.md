@@ -65,8 +65,10 @@ Usa «/yolo» para alternar entre el modo automático y el modo de confirmación
 - Autocompletado de letras y frases cortas en inglés
 - Sistema de Agents, Skills y MCP más sencillo, con soporte para Agents y Skills personalizados
 - Soporte de canales y funciones similar a OpenClaw
+- Soporte completo de UI web y TUI remota
+- Soporte de plugins de Claude Code/Codex
 
-App Desktop (BETA), Web (BETA), Claw (BETA); algunas funciones aún requieren pruebas y corrección de errores antes de publicarla.
+App Desktop (BETA); algunas funciones aún requieren pruebas y corrección de errores antes de publicarla.
 
 ## Proveedores
 
@@ -134,6 +136,14 @@ codg update                   # Actualizar la versión de codg
 codg updatep                  # Actualizar las definiciones de proveedores
 ```
 
+## Plugin de Claude-Code/Codex
+
+```shell
+# Codg
+codg plugin marketplace add earthtojake/text-to-cad
+codg plugin add cad@text-to-cad
+```
+
 ## Ejemplos de uso
 
 ### No interactivo (`codg run`)
@@ -148,13 +158,13 @@ codg run -v "Depurar esta función"
 ### UI Web
 
 ```bash
-# Iniciar la UI web en el puerto predeterminado 4096; (esperar a las pruebas y luego publicarla).
-codg web
+# Iniciar la UI web en el puerto predeterminado 4096.
+codg web --skip-build
 # Puerto personalizado.
-codg web -p 8080
+codg web --skip-build -p 8080
 
 # Modo solo API (sin frontend ni navegador).
-codg web 0
+codg web 0, codg api
 ```
 
 ### Gestión de plugins

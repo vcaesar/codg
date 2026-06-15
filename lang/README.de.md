@@ -65,8 +65,10 @@ Mit „/yolo“ können Sie zwischen Auto- und Bestätigungsmodus wechseln; Bere
 - Autovervollständigung englischer Buchstaben und kurzer Sätze
 - Einfacheres Agents-, Skills- und MCP-System, Unterstützung für benutzerdefinierte Agents und Skills
 - Kanal- und Funktionsunterstützung wie OpenClaw
+- Vollständige Web-UI und Remote-TUI-Unterstützung
+- Unterstützung für Claude Code/Codex-Plugins
 
-Desktop-App (BETA), Web (BETA), Claw (BETA); einige Funktionen müssen noch getestet und Bugs behoben werden, dann freigegeben.
+Desktop-App (BETA); einige Funktionen müssen noch getestet und Bugs behoben werden, dann freigegeben.
 
 ## Anbieter
 
@@ -134,6 +136,14 @@ codg update                   # codg-Version aktualisieren
 codg updatep                  # Provider-Definitionen aktualisieren
 ```
 
+## Claude-Code/Codex-Plugin
+
+```shell
+# Codg
+codg plugin marketplace add earthtojake/text-to-cad
+codg plugin add cad@text-to-cad
+```
+
 ## Anwendungsbeispiele
 
 ### Nicht interaktiv (`codg run`)
@@ -148,13 +158,13 @@ codg run -v "Diese Funktion debuggen"
 ### Web-UI
 
 ```bash
-# Web-UI auf Standardport 4096 starten; (nach Abschluss des Tests freigeben).
-codg web
+# Web-UI auf Standardport 4096 starten.
+codg web --skip-build
 # Benutzerdefinierter Port.
-codg web -p 8080
+codg web --skip-build -p 8080
 
 # Nur-API-Modus (kein Frontend, kein Browser).
-codg web 0
+codg web 0, codg api
 ```
 
 ### Plugin-Verwaltung

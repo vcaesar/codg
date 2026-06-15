@@ -65,8 +65,10 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 - Автодополнение английских букв и коротких фраз
 - Более удобная система Agents, Skills и MCP, поддержка пользовательских Agents и Skills
 - Поддержка каналов и функций как в OpenClaw
+- Полная поддержка веб-интерфейса и удалённого TUI
+- Поддержка плагинов Claude Code/Codex
 
-Desktop-приложение (BETA), Web (BETA), Claw (BETA); некоторые функции ожидают тестирования и исправления ошибок, затем релиза.
+Desktop-приложение (BETA); некоторые функции ожидают тестирования и исправления ошибок, затем релиза.
 
 ## Провайдеры
 
@@ -134,6 +136,14 @@ codg update                   # Обновить версию codg
 codg updatep                  # Обновить определения провайдеров
 ```
 
+## Плагин Claude-Code/Codex
+
+```shell
+# Codg
+codg plugin marketplace add earthtojake/text-to-cad
+codg plugin add cad@text-to-cad
+```
+
 ## Примеры использования
 
 ### Неинтерактивный режим (`codg run`)
@@ -148,13 +158,13 @@ codg run -v "Отладить эту функцию"
 ### Web UI
 
 ```bash
-# Запустить web-UI на порту по умолчанию 4096; (после тестов — выпустить).
-codg web
+# Запустить web-UI на порту по умолчанию 4096.
+codg web --skip-build
 # Пользовательский порт.
-codg web -p 8080
+codg web --skip-build -p 8080
 
 # Режим только API (без фронтенда и браузера).
-codg web 0
+codg web 0, codg api
 ```
 
 ### Управление плагинами

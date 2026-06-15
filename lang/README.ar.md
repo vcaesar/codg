@@ -67,8 +67,10 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 - إكمال تلقائي للحروف الإنجليزية والعبارات القصيرة
 - نظام Agents وSkills وMCP أسهل في الاستخدام، مع دعم Agents وSkills المخصصة
 - دعم القنوات والميزات على غرار OpenClaw
+- دعم واجهة ويب كاملة و TUI عن بُعد
+- دعم إضافات Claude Code/Codex
 
-تطبيق سطح المكتب (BETA)، ويب (BETA)، Claw (BETA)، بعض الميزات لا تزال بحاجة إلى اختبار وإصلاح للأخطاء ثم إصدارها.
+تطبيق سطح المكتب (BETA)، بعض الميزات لا تزال بحاجة إلى اختبار وإصلاح للأخطاء ثم إصدارها.
 
 ## المزودون
 
@@ -136,6 +138,14 @@ codg update                   # تحديث إصدار codg
 codg updatep                  # تحديث تعريفات المزوّدين
 ```
 
+## إضافة Claude-Code/Codex
+
+```shell
+# Codg
+codg plugin marketplace add earthtojake/text-to-cad
+codg plugin add cad@text-to-cad
+```
+
 ## أمثلة الاستخدام
 
 ### الوضع غير التفاعلي (`codg run`)
@@ -150,13 +160,13 @@ codg run -v "تصحيح هذه الدالة"
 ### واجهة الويب
 
 ```bash
-# تشغيل واجهة الويب على المنفذ الافتراضي 4096؛ (بعد اكتمال الاختبارات، قم بإصدارها).
-codg web
+# تشغيل واجهة الويب على المنفذ الافتراضي 4096.
+codg web --skip-build
 # منفذ مخصص.
-codg web -p 8080
+codg web --skip-build -p 8080
 
 # وضع API فقط (بدون واجهة أمامية أو متصفح).
-codg web 0
+codg web 0, codg api
 ```
 
 ### إدارة المكوّنات الإضافية

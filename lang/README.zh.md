@@ -65,8 +65,10 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 - 自动补全英文字母和短句
 - 更易用的 Agents、Skills 与 MCP 系统，支持自定义 Agents 与 Skills
 - 类似 OpenClaw 的频道与功能支持
+- 完整的 Web UI 与远程 TUI 支持
+- 支持 Claude Code/Codex 插件
 
-桌面应用（BETA）、Web（BETA）、Claw（BETA），部分功能仍需等待测试与修复 bug 后再发布。
+桌面应用（BETA），部分功能仍需等待测试与修复 bug 后再发布。
 
 ## 提供商
 
@@ -134,6 +136,14 @@ codg update                   # 更新 codg 版本
 codg updatep                  # 更新服务商定义
 ```
 
+## Claude-Code/Codex 插件
+
+```shell
+# Codg
+codg plugin marketplace add earthtojake/text-to-cad
+codg plugin add cad@text-to-cad
+```
+
 ## 使用示例
 
 ### 非交互模式 (`codg run`)
@@ -148,13 +158,13 @@ codg run -v "调试这个函数"
 ### Web UI
 
 ```bash
-# 在默认端口 4096 启动 Web UI;(等待测试完成后发布)。
-codg web
+# 在默认端口 4096 启动 Web UI。
+codg web --skip-build
 # 自定义端口。
-codg web -p 8080
+codg web --skip-build -p 8080
 
 # 仅 API 模式 (无前端、无浏览器)。
-codg web 0
+codg web 0, codg api
 ```
 
 ### 插件管理

@@ -65,8 +65,10 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 - 自動補全英文字母與短句
 - 更易用的 Agents、Skills 與 MCP 系統，支援自訂 Agents 與 Skills
 - 類似 OpenClaw 的頻道與功能支援
+- 完整的 Web UI 與遠端 TUI 支援
+- 支援 Claude Code/Codex 外掛
 
-桌面應用（BETA）、Web（BETA）、Claw（BETA），部分功能仍需等待測試與修復 bug 後再發佈。
+桌面應用（BETA），部分功能仍需等待測試與修復 bug 後再發佈。
 
 ## 提供商
 
@@ -134,6 +136,14 @@ codg update                   # 更新 codg 版本
 codg updatep                  # 更新服務商定義
 ```
 
+## Claude-Code/Codex 外掛
+
+```shell
+# Codg
+codg plugin marketplace add earthtojake/text-to-cad
+codg plugin add cad@text-to-cad
+```
+
 ## 使用範例
 
 ### 非互動模式 (`codg run`)
@@ -148,13 +158,13 @@ codg run -v "除錯這個函式"
 ### Web UI
 
 ```bash
-# 在預設埠 4096 啟動 Web UI;(等待測試完成後發佈)。
-codg web
+# 在預設埠 4096 啟動 Web UI。
+codg web --skip-build
 # 自訂埠。
-codg web -p 8080
+codg web --skip-build -p 8080
 
 # 僅 API 模式 (無前端、無瀏覽器)。
-codg web 0
+codg web 0, codg api
 ```
 
 ### 外掛管理

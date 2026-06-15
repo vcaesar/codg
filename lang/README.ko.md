@@ -65,8 +65,10 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 - 영문 글자 및 짧은 문장 자동 완성
 - 더 쉽고 간편한 Agents, Skills 및 MCP 시스템, 사용자 정의 Agents 및 Skills 지원
 - OpenClaw와 유사한 채널 및 기능 지원
+- 완전한 웹 UI 및 원격 TUI 지원
+- Claude Code/Codex 플러그인 지원
 
-데스크톱 앱(BETA), 웹(BETA), Claw(BETA), 일부 기능은 테스트 및 버그 수정 후 릴리스 예정.
+데스크톱 앱(BETA), 일부 기능은 테스트 및 버그 수정 후 릴리스 예정.
 
 ## 제공자
 
@@ -134,6 +136,14 @@ codg update                   # codg 버전 업데이트
 codg updatep                  # 제공자 정의 업데이트
 ```
 
+## Claude-Code/Codex 플러그인
+
+```shell
+# Codg
+codg plugin marketplace add earthtojake/text-to-cad
+codg plugin add cad@text-to-cad
+```
+
 ## 사용 예시
 
 ### 비대화식 모드 (`codg run`)
@@ -148,13 +158,13 @@ codg run -v "이 함수 디버깅"
 ### 웹 UI
 
 ```bash
-# 기본 포트 4096 에서 웹 UI 시작; (테스트 완료 후 릴리스).
-codg web
+# 기본 포트 4096 에서 웹 UI 시작.
+codg web --skip-build
 # 사용자 지정 포트.
-codg web -p 8080
+codg web --skip-build -p 8080
 
 # API 전용 모드 (프런트엔드 및 브라우저 없음).
-codg web 0
+codg web 0, codg api
 ```
 
 ### 플러그인 관리
