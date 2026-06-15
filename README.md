@@ -65,8 +65,10 @@ Use "/yolo" to toggle the auto and ask mode, and you can set permissions by codg
 - Autocomplete the English letters and short sentences
 - More easy Agents, Skills and MCP system, custom Agents and Skills support
 - Channel and features support like OpenClaw
+- Full Web UI and remote TUI support
+- Claude Code/Codex Plugin support
 
-Desktop App (BETA), Web (BETA), Claw (BETA), Some features need wait for the test and fix bugs then release it.
+Desktop App (BETA), Some features need wait for the test and fix bugs then release it.
 
 ## Providers
 
@@ -138,6 +140,14 @@ codg update                   # Update codg version
 codg updatep                  # Update provider definitions
 ```
 
+## Claude-Code/Codex plugin
+
+```shell
+# Codg
+codg plugin marketplace add earthtojake/text-to-cad
+codg plugin add cad@text-to-cad
+```
+
 ## Usage Examples
 
 ### Non-Interactive (`codg run`)
@@ -152,13 +162,13 @@ codg run -v "Debug this function"
 ### Web UI
 
 ```bash
-# Start the web UI on default port 4096; (Wait done for the test, then release it).
-codg web
+# Start the web UI on default port 4096.
+codg web --skip-build
 # Custom port.
-codg web -p 8080
+codg web --skip-build -p 8080
 
 # API-only mode (no frontend, no browser).
-codg web 0
+codg web 0, codg api
 ```
 
 ### Plugin Management
