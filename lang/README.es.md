@@ -159,9 +159,9 @@ codg run -v "Depurar esta función"
 
 ```bash
 # Iniciar la UI web en el puerto predeterminado 4096.
-codg web --skip-build
+codg web
 # Puerto personalizado.
-codg web --skip-build -p 8080
+codg web -p 8080
 
 # Modo solo API (sin frontend ni navegador).
 codg web 0, codg api

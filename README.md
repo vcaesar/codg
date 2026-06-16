@@ -163,9 +163,9 @@ codg run -v "Debug this function"
 
 ```bash
 # Start the web UI on default port 4096.
-codg web --skip-build
+codg web
 # Custom port.
-codg web --skip-build -p 8080
+codg web -p 8080
 
 # API-only mode (no frontend, no browser).
 codg web 0, codg api

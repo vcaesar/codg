@@ -36,4 +36,4 @@ ENV HOSTNAME="127.0.0.1"
 
 # Start the web UI server. --skip-build: no npm/ui sources in the image,
 # the release binary ships pre-built frontend assets.
-CMD ["./codg", "web", "--skip-build", "-p", "4096"]
+CMD ["./codg", "web", "-p", "4096"]

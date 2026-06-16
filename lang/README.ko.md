@@ -159,9 +159,9 @@ codg run -v "이 함수 디버깅"
 
 ```bash
 # 기본 포트 4096 에서 웹 UI 시작.
-codg web --skip-build
+codg web
 # 사용자 지정 포트.
-codg web --skip-build -p 8080
+codg web -p 8080
 
 # API 전용 모드 (프런트엔드 및 브라우저 없음).
 codg web 0, codg api

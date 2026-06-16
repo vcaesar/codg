@@ -161,9 +161,9 @@ codg run -v "تصحيح هذه الدالة"
 
 ```bash
 # تشغيل واجهة الويب على المنفذ الافتراضي 4096.
-codg web --skip-build
+codg web
 # منفذ مخصص.
-codg web --skip-build -p 8080
+codg web -p 8080
 
 # وضع API فقط (بدون واجهة أمامية أو متصفح).
 codg web 0, codg api

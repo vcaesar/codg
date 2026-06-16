@@ -159,9 +159,9 @@ codg run -v "Débugger cette fonction"
 
 ```bash
 # Démarrer l'interface web sur le port par défaut 4096.
-codg web --skip-build
+codg web
 # Port personnalisé.
-codg web --skip-build -p 8080
+codg web -p 8080
 
 # Mode API uniquement (sans frontend, sans navigateur).
 codg web 0, codg api

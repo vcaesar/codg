@@ -159,9 +159,9 @@ codg run -v "Отладить эту функцию"
 
 ```bash
 # Запустить web-UI на порту по умолчанию 4096.
-codg web --skip-build
+codg web
 # Пользовательский порт.
-codg web --skip-build -p 8080
+codg web -p 8080
 
 # Режим только API (без фронтенда и браузера).
 codg web 0, codg api

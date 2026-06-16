@@ -159,9 +159,9 @@ codg run -v "Debugar esta função"
 
 ```bash
 # Iniciar a UI web na porta padrão 4096.
-codg web --skip-build
+codg web
 # Porta personalizada.
-codg web --skip-build -p 8080
+codg web -p 8080
 
 # Modo somente API (sem frontend nem navegador).
 codg web 0, codg api

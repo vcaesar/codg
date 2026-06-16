@@ -159,9 +159,9 @@ codg run -v "この関数をデバッグして"
 
 ```bash
 # デフォルトポート 4096 で Web UI を起動。
-codg web --skip-build
+codg web
 # カスタムポート。
-codg web --skip-build -p 8080
+codg web -p 8080
 
 # API のみモード (フロントエンド・ブラウザなし)。
 codg web 0, codg api
