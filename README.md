@@ -65,7 +65,7 @@ Use "/yolo" to toggle the auto and ask mode, and you can set permissions by codg
 - Autocomplete the English letters and short sentences
 - More easy Agents, Skills and MCP system, custom Agents and Skills support
 - Channel and features support like OpenClaw
-- Full Web UI and remote TUI support
+- Full Web UI and remote TUI support, and desktop app support
 - Claude Code/Codex Plugin support
 
 Desktop App (BETA), Some features need wait for the test and fix bugs then release it.

@@ -67,7 +67,7 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 - إكمال تلقائي للحروف الإنجليزية والعبارات القصيرة
 - نظام Agents وSkills وMCP أسهل في الاستخدام، مع دعم Agents وSkills المخصصة
 - دعم القنوات والميزات على غرار OpenClaw
-- دعم واجهة ويب كاملة و TUI عن بُعد
+- دعم كامل لواجهة الويب وTUI عن بُعد وتطبيق سطح المكتب
 - دعم إضافات Claude Code/Codex
 
 تطبيق سطح المكتب (BETA)، بعض الميزات لا تزال بحاجة إلى اختبار وإصلاح للأخطاء ثم إصدارها.

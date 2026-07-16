@@ -65,7 +65,7 @@ Mit „/yolo“ können Sie zwischen Auto- und Bestätigungsmodus wechseln; Bere
 - Autovervollständigung englischer Buchstaben und kurzer Sätze
 - Einfacheres Agents-, Skills- und MCP-System, Unterstützung für benutzerdefinierte Agents und Skills
 - Kanal- und Funktionsunterstützung wie OpenClaw
-- Vollständige Web-UI und Remote-TUI-Unterstützung
+- Vollständige Unterstützung für Web-UI, Remote-TUI und Desktop-App
 - Unterstützung für Claude Code/Codex-Plugins
 
 Desktop-App (BETA); einige Funktionen müssen noch getestet und Bugs behoben werden, dann freigegeben.

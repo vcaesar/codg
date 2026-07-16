@@ -65,7 +65,7 @@ Utilisez « /yolo » pour basculer entre le mode automatique et le mode de con
 - Autocomplétion des lettres anglaises et phrases courtes
 - Système d’Agents, Skills et MCP plus simple, prise en charge des Agents et Skills personnalisés
 - Prise en charge des canaux et fonctionnalités comme OpenClaw
-- Prise en charge complète de l'interface Web et du TUI distant
+- Prise en charge complète de l'interface Web, du TUI distant et de l'application de bureau
 - Prise en charge des plugins Claude Code/Codex
 
 Application Desktop (BETA), certaines fonctionnalités nécessitent encore des tests et des corrections de bugs avant sa publication.

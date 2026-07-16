@@ -65,7 +65,7 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 - 영문 글자 및 짧은 문장 자동 완성
 - 더 쉽고 간편한 Agents, Skills 및 MCP 시스템, 사용자 정의 Agents 및 Skills 지원
 - OpenClaw와 유사한 채널 및 기능 지원
-- 완전한 웹 UI 및 원격 TUI 지원
+- 완전한 웹 UI, 원격 TUI 및 데스크톱 앱 지원
 - Claude Code/Codex 플러그인 지원
 
 데스크톱 앱(BETA), 일부 기능은 테스트 및 버그 수정 후 릴리스 예정.

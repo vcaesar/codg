@@ -65,7 +65,7 @@ Usa «/yolo» para alternar entre el modo automático y el modo de confirmación
 - Autocompletado de letras y frases cortas en inglés
 - Sistema de Agents, Skills y MCP más sencillo, con soporte para Agents y Skills personalizados
 - Soporte de canales y funciones similar a OpenClaw
-- Soporte completo de UI web y TUI remota
+- Soporte completo de la interfaz web, la TUI remota y la aplicación de escritorio
 - Soporte de plugins de Claude Code/Codex
 
 App Desktop (BETA); algunas funciones aún requieren pruebas y corrección de errores antes de publicarla.
