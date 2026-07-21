@@ -1,19 +1,19 @@
 //go:build unix
 
-package main
+package pub
 
 import (
 	"os/exec"
 	"syscall"
 )
 
-// configureSysProcAttr puts the child in its own process group so the whole
+// ConfigureSysProcAttr puts the child in its own process group so the whole
 // tree (codg plus the LSP/MCP/PTY helpers it spawns) can be signalled as a
 // unit, and — on Linux — dies if this shell dies (see setPdeathsig). Without
 // this, a hard crash of the shell would orphan the backend, which (running
 // on a random free port) would never be found and reused, accumulating
 // stale processes holding ports and DB locks.
-func configureSysProcAttr(cmd *exec.Cmd) {
+func ConfigureSysProcAttr(cmd *exec.Cmd) {
 	if cmd.SysProcAttr == nil {
 		cmd.SysProcAttr = &syscall.SysProcAttr{}
 	}
@@ -31,8 +31,8 @@ func signalGroup(cmd *exec.Cmd, sig syscall.Signal) error {
 	return syscall.Kill(-cmd.Process.Pid, sig)
 }
 
-// interruptProcessTree asks the backend tree to stop gracefully.
-func interruptProcessTree(cmd *exec.Cmd) error { return signalGroup(cmd, syscall.SIGINT) }
+// InterruptProcessTree asks the backend tree to stop gracefully.
+func InterruptProcessTree(cmd *exec.Cmd) error { return signalGroup(cmd, syscall.SIGINT) }
 
-// killProcessTree force-terminates the backend tree.
-func killProcessTree(cmd *exec.Cmd) error { return signalGroup(cmd, syscall.SIGKILL) }
+// KillProcessTree force-terminates the backend tree.
+func KillProcessTree(cmd *exec.Cmd) error { return signalGroup(cmd, syscall.SIGKILL) }

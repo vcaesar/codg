@@ -1,6 +1,6 @@
 //go:build unix && !linux
 
-package main
+package pub
 
 import "syscall"
 

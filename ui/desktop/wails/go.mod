@@ -7,7 +7,14 @@ go 1.26.4
 // NOT import the codg agent stack, so this module needs only Wails + its
 // transitive dependencies.
 
-require github.com/wailsapp/wails/v3 v3.0.0-alpha2.111
+require (
+	github.com/vcaesar/codg/ui/desktop/pub v0.0.0
+	github.com/wailsapp/wails/v3 v3.0.0-alpha2.111
+)
+
+// The shared desktop process-management code lives in the sibling pub
+// package; use the in-repo copy.
+replace github.com/vcaesar/codg/ui/desktop/pub => ../pub
 
 require (
 	github.com/adrg/xdg v0.5.3 // indirect
