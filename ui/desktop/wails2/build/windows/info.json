@@ -1,0 +1,15 @@
+{
+  "fixed": {
+    "file_version": "0.1.0"
+  },
+  "info": {
+    "0000": {
+      "ProductVersion": "0.1.0",
+      "CompanyName": "AtomAI",
+      "FileDescription": "Atom codg agent app",
+      "LegalCopyright": "© 2026, AtomAI",
+      "ProductName": "Codg",
+      "Comments": "This is a comment"
+    }
+  }
+}
