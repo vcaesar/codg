@@ -1,0 +1,200 @@
+# Codg desktop release line. Tag namespace `desktop-v<semver>` triggers
+# this; plain `v*` tags stay the CLI release and do NOT match here.
+#   git tag desktop-vX.Y.Z && git push origin desktop-vX.Y.Z
+#
+name: Release desktop
+
+on:
+  push:
+    tags: ["desktop-v*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag to publish (e.g. desktop-v1.2.0)"
+        required: false
+        type: string
+
+permissions:
+  contents: write # create the release and upload artifacts
+
+# The desktop shell launches the standalone `codg` binary at runtime, so each
+# package bundles it as a sibling. It is downloaded from the PUBLIC codg
+# releases (no GitHub token needed).
+env:
+  CODG_RELEASE_REPO: "vcaesar/codg"
+
+jobs:
+  build:
+    name: build (${{ matrix.name }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Apple Silicon runner also cross-compiles the amd64 slice
+          # natively (CGO darwin->darwin works), so one mac runner
+          # covers both arches.
+          - { runner: macos-14, platform: darwin/arm64, name: darwin-arm64 }
+          - { runner: macos-14, platform: darwin/amd64, name: darwin-amd64 }
+          - {
+              runner: windows-latest,
+              platform: windows/amd64,
+              name: windows-amd64,
+            }
+          - { runner: ubuntu-22.04, platform: linux/amd64, name: linux-amd64 }
+          - {
+              runner: ubuntu-22.04-arm,
+              platform: linux/arm64,
+              name: linux-arm64,
+            }
+    runs-on: ${{ matrix.runner }}
+    defaults:
+      run:
+        shell: bash # desktop-release.sh is bash; windows defaults to pwsh
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          # The wails shell module pins the newest Go (>= root go.mod), so use
+          # its go.mod: setup-go then installs a toolchain that satisfies both.
+          go-version-file: ui/desktop/wails2/go.mod
+          cache: true
+          cache-dependency-path: ui/desktop/wails2/go.sum
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      # Linux: Wails v2 is built with the webkit2_41 tag configured in
+      # wails.json, matching Ubuntu 22.04's WebKitGTK 4.1 packages.
+      - name: Install Linux build deps
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc libgtk-3-dev libwebkit2gtk-4.1-dev
+
+      # Windows: NSIS provides makensis for the windows:package task.
+      - name: Install NSIS
+        if: runner.os == 'Windows'
+        run: |
+          choco install nsis -y --no-progress
+          echo "C:\Program Files (x86)\NSIS" >> "$GITHUB_PATH"
+
+      # macOS: create-dmg for the pretty drag-to-install layout
+      # (hdiutil fallback exists, but this is cheap).
+      - name: Install create-dmg
+        if: runner.os == 'macOS'
+        run: brew install create-dmg
+
+      - name: Install Wails v2 CLI
+        run: go install github.com/wailsapp/wails/v2/cmd/wails@v2.13.0
+
+      - name: Resolve version
+        id: ver
+        run: |
+          tag="${{ inputs.tag || github.ref_name }}"
+          version="${tag#desktop-v}"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "backend_tag=v$version" >> "$GITHUB_OUTPUT"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+
+      # Build the shared React app once; the wails shell embeds the prebuilt
+      # ui/web/dist (staged via frontend/stage-dist.mjs) instead of rebuilding
+      # from source during packaging.
+      - name: Build web UI
+        run: |
+          if [ -f ui/web/package.json ]; then
+            (cd ui/web && (npm ci || npm install) && npm run build)
+          else
+            echo "ui/web/package.json absent; skipping web UI build" >&2
+          fi
+
+      # Download the matching codg CLI from the PUBLIC codg releases so the
+      # packager can bundle it next to the shell. No token: public release
+      # assets are fetched over plain HTTPS.
+      - name: Fetch codg binary
+        env:
+          PLATFORM: ${{ matrix.platform }}
+        run: |
+          set -euo pipefail
+          if [ -z "${CODG_RELEASE_REPO}" ]; then
+            echo "CODG_RELEASE_REPO unset; skipping codg download" >&2
+            exit 0
+          fi
+          os="${PLATFORM%/*}"; arch="${PLATFORM#*/}"
+          base="codg_${os}_${arch}"
+          bin="$base"; [ "$os" = "windows" ] && bin="${bin}.exe"
+          asset="${base}.zip"
+          backend_tag="${{ steps.ver.outputs.backend_tag }}"
+          url="https://github.com/${CODG_RELEASE_REPO}/releases/download/${backend_tag}/${asset}"
+          mkdir -p .codg-bin
+          echo "Downloading $url"
+          curl -fSL --retry 3 -o ".codg-bin/${asset}" "$url"
+          # The zip holds a single binary named like the asset (sans .zip);
+          # extract and resolve it. unzip (-o overwrite, -j flatten) where
+          # available; Git Bash on the Windows runner has no unzip, but
+          # Windows' bsdtar (and macOS tar) extracts zip archives natively.
+          if command -v unzip >/dev/null 2>&1; then
+            unzip -o -j ".codg-bin/${asset}" -d .codg-bin
+          else
+            tar -xf ".codg-bin/${asset}" -C .codg-bin
+          fi
+          if [ ! -f ".codg-bin/${bin}" ]; then
+            echo "expected ${bin} inside ${asset}; archive contents:" >&2
+            ls -la .codg-bin >&2
+            exit 1
+          fi
+          chmod +x ".codg-bin/${bin}" || true
+          echo "CODG_PREBUILT_BIN=$PWD/.codg-bin/${bin}" >> "$GITHUB_ENV"
+
+      - name: Build and package
+        env:
+          # The shipped app gets its real UI from the bundled `codg web`, so a
+          # missing codg binary means a UI-less app. Make that a hard failure
+          # rather than a silent PATH-fallback that only "works" on the build
+          # box. desktop-release.sh honours this flag (build_codg).
+          CODG_REQUIRE_BUNDLE: "1"
+        run: bash scripts/desktop-release.sh "${{ matrix.platform }}" "${{ steps.ver.outputs.version }}"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist-${{ matrix.name }}
+          # codg-desktop-* are the shell packages (required); codg-<os>-<arch>
+          # is the optional standalone CLI shipped alongside.
+          path: |
+            dist/codg-desktop-*
+            dist/codg-${{ matrix.name }}*
+          if-no-files-found: error
+
+  publish:
+    name: publish release
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          pattern: dist-*
+          merge-multiple: true
+
+      - name: Resolve version
+        id: ver
+        run: |
+          tag="${{ inputs.tag || github.ref_name }}"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+
+      - name: Checksums
+        run: |
+          cd dist
+          sha256sum codg-* > checksums.txt
+          cat checksums.txt
+
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${{ steps.ver.outputs.tag }}" dist/* \
+            --title "Codg Desktop ${{ steps.ver.outputs.tag }}" \
+            --generate-notes
