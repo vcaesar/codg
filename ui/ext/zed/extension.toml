@@ -1,0 +1,38 @@
+id = "codg"
+name = "Codg"
+description = "Codg — an AI coding agent for your terminal and editor."
+version = "2.5.10"
+schema_version = 1
+authors = ["Atom <codg@atomai.cc>"]
+repository = "https://github.com/vcaesar/codg"
+
+# Codg integrates with Zed as an ACP (Agent Client Protocol) agent
+# server: Zed spawns `codg acp`, which speaks JSON-RPC over stdio.
+[agent_servers.codg]
+name = "Codg"
+icon = "icon.svg"
+
+[agent_servers.codg.targets.darwin-aarch64]
+archive = "https://github.com/vcaesar/codg/releases/download/v2.5.10/codg_darwin_arm64.zip"
+cmd = "./codg_darwin_arm64"
+args = ["acp"]
+
+[agent_servers.codg.targets.darwin-x86_64]
+archive = "https://github.com/vcaesar/codg/releases/download/v2.5.10/codg_darwin_amd64.zip"
+cmd = "./codg_darwin_amd64"
+args = ["acp"]
+
+[agent_servers.codg.targets.linux-aarch64]
+archive = "https://github.com/vcaesar/codg/releases/download/v2.5.10/codg_linux_arm64.zip"
+cmd = "./codg_linux_arm64"
+args = ["acp"]
+
+[agent_servers.codg.targets.linux-x86_64]
+archive = "https://github.com/vcaesar/codg/releases/download/v2.5.10/codg_linux_amd64.zip"
+cmd = "./codg_linux_amd64"
+args = ["acp"]
+
+[agent_servers.codg.targets.windows-x86_64]
+archive = "https://github.com/vcaesar/codg/releases/download/v2.5.10/codg_windows_amd64.zip"
+cmd = "./codg_windows_amd64.exe"
+args = ["acp"]

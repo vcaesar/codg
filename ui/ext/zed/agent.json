@@ -1,0 +1,38 @@
+{
+  "id": "codg",
+  "name": "Codg",
+  "version": "2.5.10",
+  "description": "Codg — an AI coding agent for your terminal and editor.",
+  "repository": "https://github.com/vcaesar/codg",
+  "authors": ["Atom <codg@atomai.cc>"],
+  "license": "Apache-2.0",
+  "distribution": {
+    "binary": {
+      "darwin-aarch64": {
+        "archive": "https://github.com/vcaesar/codg/releases/download/v2.5.10/codg_darwin_arm64.zip",
+        "cmd": "./codg_darwin_arm64",
+        "args": ["acp"]
+      },
+      "darwin-x86_64": {
+        "archive": "https://github.com/vcaesar/codg/releases/download/v2.5.10/codg_darwin_amd64.zip",
+        "cmd": "./codg_darwin_amd64",
+        "args": ["acp"]
+      },
+      "linux-aarch64": {
+        "archive": "https://github.com/vcaesar/codg/releases/download/v2.5.10/codg_linux_arm64.zip",
+        "cmd": "./codg_linux_arm64",
+        "args": ["acp"]
+      },
+      "linux-x86_64": {
+        "archive": "https://github.com/vcaesar/codg/releases/download/v2.5.10/codg_linux_amd64.zip",
+        "cmd": "./codg_linux_amd64",
+        "args": ["acp"]
+      },
+      "windows-x86_64": {
+        "archive": "https://github.com/vcaesar/codg/releases/download/v2.5.10/codg_windows_amd64.zip",
+        "cmd": "./codg_windows_amd64.exe",
+        "args": ["acp"]
+      }
+    }
+  }
+}
