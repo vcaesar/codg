@@ -30,7 +30,7 @@ CODG_MAIN_PKG="${CODG_MAIN_PKG:-./}"
 
 command -v wails >/dev/null || {
 	echo "Wails v2 CLI not found. Install:" >&2
-	echo "  go install github.com/wailsapp/wails/v2/cmd/wails@v2.13.0" >&2
+	echo "  go install github.com/wailsapp/wails/v2/cmd/wails@v2.14.0" >&2
 	exit 1
 }
 

@@ -11,7 +11,7 @@ on:
     inputs:
       tag:
         description: "Tag to publish (e.g. desktop-v1.2.0)"
-        required: false
+        required: true
         type: string
 
 permissions:
@@ -55,8 +55,8 @@ jobs:
 
       - uses: actions/setup-go@v5
         with:
-          # The wails shell module pins the newest Go (>= root go.mod), so use
-          # its go.mod: setup-go then installs a toolchain that satisfies both.
+          # Only the wails shell (and the shared pub module it depends on) is
+          # compiled here; codg itself is a prebuilt download.
           go-version-file: ui/desktop/wails2/go.mod
           cache: true
           cache-dependency-path: ui/desktop/wails2/go.sum
@@ -87,12 +87,16 @@ jobs:
         run: brew install create-dmg
 
       - name: Install Wails v2 CLI
-        run: go install github.com/wailsapp/wails/v2/cmd/wails@v2.13.0
+        run: go install github.com/wailsapp/wails/v2/cmd/wails@v2.14.0
 
       - name: Resolve version
         id: ver
         run: |
           tag="${{ inputs.tag || github.ref_name }}"
+          case "$tag" in
+            desktop-v*) ;;
+            *) echo "tag must look like desktop-vX.Y.Z, got '$tag'" >&2; exit 1 ;;
+          esac
           version="${tag#desktop-v}"
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "backend_tag=v$version" >> "$GITHUB_OUTPUT"
@@ -132,12 +136,15 @@ jobs:
           curl -fSL --retry 3 -o ".codg-bin/${asset}" "$url"
           # The zip holds a single binary named like the asset (sans .zip);
           # extract and resolve it. unzip (-o overwrite, -j flatten) where
-          # available; Git Bash on the Windows runner has no unzip, but
-          # Windows' bsdtar (and macOS tar) extracts zip archives natively.
+          # available; Git Bash on the Windows runner has no unzip and its
+          # `tar` is GNU tar (cannot read zip), but 7-Zip is preinstalled.
           if command -v unzip >/dev/null 2>&1; then
             unzip -o -j ".codg-bin/${asset}" -d .codg-bin
+          elif command -v 7z >/dev/null 2>&1; then
+            7z x -y -o.codg-bin ".codg-bin/${asset}"
           else
-            tar -xf ".codg-bin/${asset}" -C .codg-bin
+            echo "neither unzip nor 7z available to extract ${asset}" >&2
+            exit 1
           fi
           if [ ! -f ".codg-bin/${bin}" ]; then
             echo "expected ${bin} inside ${asset}; archive contents:" >&2
@@ -183,6 +190,10 @@ jobs:
         id: ver
         run: |
           tag="${{ inputs.tag || github.ref_name }}"
+          case "$tag" in
+            desktop-v*) ;;
+            *) echo "tag must look like desktop-vX.Y.Z, got '$tag'" >&2; exit 1 ;;
+          esac
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
 
       - name: Checksums
@@ -191,10 +202,17 @@ jobs:
           sha256sum codg-* > checksums.txt
           cat checksums.txt
 
+      # Re-runs (e.g. one platform retried) must not fail on an existing
+      # release: upload into it with --clobber instead.
       - name: Publish GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "${{ steps.ver.outputs.tag }}" dist/* \
-            --title "Codg Desktop ${{ steps.ver.outputs.tag }}" \
-            --generate-notes
+          tag="${{ steps.ver.outputs.tag }}"
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release upload "$tag" dist/* --clobber
+          else
+            gh release create "$tag" dist/* \
+              --title "Codg Desktop $tag" \
+              --generate-notes
+          fi
