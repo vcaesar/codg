@@ -1,10 +1,12 @@
 package main
 
 import (
+	"bytes"
 	"testing"
 
 	"github.com/vcaesar/codg/ui/desktop/pub"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
+	"github.com/wailsapp/wails/v2/pkg/options/linux"
 )
 
 func TestNewApplicationOptions(t *testing.T) {
@@ -30,6 +32,15 @@ func TestNewApplicationOptions(t *testing.T) {
 	if app.Mac == nil || app.Mac.TitleBar == nil ||
 		!app.Mac.TitleBar.FullSizeContent || !app.Mac.TitleBar.UseToolbar {
 		t.Fatal("hidden-inset macOS title bar must be configured")
+	}
+	if len(appIcon) == 0 || app.Mac.About == nil || !bytes.Equal(app.Mac.About.Icon, appIcon) {
+		t.Fatal("macOS About must use the packaged Codg icon")
+	}
+	if app.Linux == nil || !bytes.Equal(app.Linux.Icon, appIcon) || app.Linux.ProgramName != "codg-desktop" {
+		t.Fatal("Linux window icon must match the packaged desktop entry")
+	}
+	if app.Linux.WebviewGpuPolicy != linux.WebviewGpuPolicyNever {
+		t.Fatal("setting the Linux icon must preserve Wails' default GPU policy")
 	}
 	if app.Debug.OpenInspectorOnStartup {
 		t.Fatal("production builds must not open DevTools")

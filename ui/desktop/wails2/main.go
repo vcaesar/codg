@@ -22,13 +22,14 @@ import (
 	"github.com/wailsapp/wails/v2/pkg/menu/keys"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
+	"github.com/wailsapp/wails/v2/pkg/options/linux"
 	"github.com/wailsapp/wails/v2/pkg/options/mac"
 	wailsruntime "github.com/wailsapp/wails/v2/pkg/runtime"
 )
 
 // appMode is set via -ldflags for release builds. The shared app metadata
-// (pub.AppName, pub.AppVersion, window geometry) and the embedded web UI;
-// override the version with -ldflags "-X github.com/vcaesar/codg/ui/desktop/pub.AppVersion=…".
+// live in the sibling pub package; override the
+// version with -ldflags "-X github.com/vcaesar/codg/ui/desktop/pub.AppVersion=…".
 var appMode string
 
 func isProMode() bool { return appMode == "pro" }
@@ -196,7 +197,17 @@ func newApplicationOptions(
 				desktopSvc.ShowWindow()
 			},
 		},
+		Linux: &linux.Options{
+			Icon:             appIcon,
+			ProgramName:      "codg-desktop",
+			WebviewGpuPolicy: linux.WebviewGpuPolicyNever,
+		},
 		Mac: &mac.Options{
+			About: &mac.AboutInfo{
+				Title:   pub.AppName,
+				Message: "AI-powered coding assistant",
+				Icon:    appIcon,
+			},
 			// Wails v2 has no TitleBarHiddenInsetUnified() constructor; this
 			// literal is TitleBarHiddenInset() plus UseToolbar, reproducing
 			// the v3 shell's MacTitleBarHiddenInsetUnified (taller unified

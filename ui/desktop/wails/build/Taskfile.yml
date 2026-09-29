@@ -103,7 +103,7 @@ tasks:
     dir: build
     sources:
       - "appicon.png"
-      - "appicon.icon"
+      - "appicon.icon/**/*"
     generates:
       - "darwin/icons.icns"
       - "windows/icon.ico"

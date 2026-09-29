@@ -230,6 +230,9 @@ linux)
 	if [ -f "$linux_binary" ]; then
 		staging=$(mktemp -d)
 		cp "$linux_binary" "$staging/$APPNAME"
+		mkdir -p "$staging/share/icons/hicolor/1024x1024/apps" "$staging/share/applications"
+		cp build/appicon.png "$staging/share/icons/hicolor/1024x1024/apps/$APPNAME.png"
+		cp "build/linux/$APPNAME.desktop" "$staging/share/applications/"
 		bundle_codg "$CODG_BUILT" "$staging"
 		tar -czf "$DIST/${APPNAME}-linux-${arch}.tar.gz" -C "$staging" .
 		rm -rf "$staging"

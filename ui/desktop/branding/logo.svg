@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">Codg</title>
+  <desc id="desc">A mint C embracing a bright terminal chevron on a rounded graphite tile.</desc>
+  <defs>
+    <linearGradient id="graphite" x1="160" y1="80" x2="832" y2="944" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#263D46"/>
+      <stop offset="0.48" stop-color="#132830"/>
+      <stop offset="1" stop-color="#09171F"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="310" cy="220" r="740" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#70F2C3" stop-opacity="0.13"/>
+      <stop offset="1" stop-color="#70F2C3" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="rim" x1="260" y1="80" x2="730" y2="944" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#DAFFF1" stop-opacity="0.38"/>
+      <stop offset="0.5" stop-color="#DAFFF1" stop-opacity="0.06"/>
+      <stop offset="1" stop-color="#DAFFF1" stop-opacity="0.14"/>
+    </linearGradient>
+    <linearGradient id="mint" x1="340" y1="282" x2="646" y2="744" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#B6FFE0"/>
+      <stop offset="0.45" stop-color="#67E8B7"/>
+      <stop offset="1" stop-color="#22B8B0"/>
+    </linearGradient>
+    <linearGradient id="pearl" x1="556" y1="426" x2="708" y2="604" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F2FFF9"/>
+      <stop offset="1" stop-color="#B8F9E7"/>
+    </linearGradient>
+  </defs>
+  <g id="tile">
+    <rect x="80" y="88" width="864" height="864" rx="196" fill="#031015" fill-opacity="0.18"/>
+    <rect x="80" y="80" width="864" height="864" rx="196" fill="url(#graphite)"/>
+    <rect x="80" y="80" width="864" height="864" rx="196" fill="url(#halo)"/>
+    <rect x="82" y="82" width="860" height="860" rx="194" fill="none" stroke="url(#rim)" stroke-width="4"/>
+  </g>
+  <g id="mark" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 674 326 H 480 C 367 326 298 397 298 512 C 298 627 367 698 480 698 H 674" stroke="url(#mint)" stroke-width="100"/>
+    <path d="m 554 428 100 84 -100 84" stroke="url(#pearl)" stroke-width="64"/>
+  </g>
+</svg>
