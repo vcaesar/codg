@@ -135,7 +135,7 @@ func TestPluginToolRunWithPermission(t *testing.T) {
 	}
 
 	// Context needs session ID.
-	ctx := context.WithValue(context.Background(), sessionIDContextKey("session_id"), "test-session")
+	ctx := context.WithValue(context.Background(), SessionIDContextKey, "test-session")
 	resp, err := pt.Run(ctx, codgpkg.ToolCall{
 		ID:     "call-1",
 		Name:   "plugin_test_greet",
@@ -182,7 +182,7 @@ func TestPluginToolRunNilExecute(t *testing.T) {
 		},
 	}
 
-	ctx := context.WithValue(context.Background(), sessionIDContextKey("session_id"), "test-session")
+	ctx := context.WithValue(context.Background(), SessionIDContextKey, "test-session")
 	resp, err := pt.Run(ctx, codgpkg.ToolCall{
 		ID:     "call-1",
 		Name:   "plugin_test_broken",
@@ -280,7 +280,7 @@ func TestBuiltinSourcePathFallback(t *testing.T) {
 				},
 			}
 
-			initSinglePlugin(context.Background(), cfg, "my-demo", cfg.Plugins["my-demo"])
+			initSinglePlugin(context.Background(), initCur.Load(), cfg, nil, "my-demo", cfg.Plugins["my-demo"])
 
 			state := GetStates()
 			info, ok := state["my-demo"]
@@ -665,7 +665,7 @@ func TestPluginToolRunExecuteError(t *testing.T) {
 		},
 	}
 
-	ctx := context.WithValue(context.Background(), sessionIDContextKey("session_id"), "test-session")
+	ctx := context.WithValue(context.Background(), SessionIDContextKey, "test-session")
 	resp, err := pt.Run(ctx, codgpkg.ToolCall{
 		ID:     "call-1",
 		Name:   "plugin_test_failing",

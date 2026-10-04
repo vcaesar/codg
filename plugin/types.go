@@ -34,6 +34,13 @@ func (s *syncMap[K, V]) Get(key K) (V, bool) {
 	return v, ok
 }
 
+// Reset removes all entries.
+func (s *syncMap[K, V]) Reset() {
+	s.mu.Lock()
+	clear(s.m)
+	s.mu.Unlock()
+}
+
 // Copy returns a shallow copy of the map.
 func (s *syncMap[K, V]) Copy() map[K]V {
 	s.mu.RLock()
@@ -61,9 +68,10 @@ func (s *syncMap[K, V]) Seq2() iter.Seq2[K, V] {
 // eventBus is a simple generic pub/sub broker. It replaces the
 // internal pubsub package dependency.
 type eventBus[T any] struct {
-	mu   sync.RWMutex
-	subs map[chan T]struct{}
-	done chan struct{}
+	mu       sync.RWMutex
+	subs     map[chan T]struct{}
+	done     chan struct{}
+	doneOnce sync.Once
 }
 
 func newEventBus[T any]() *eventBus[T] {
@@ -105,8 +113,11 @@ func (b *eventBus[T]) Subscribe(ctx context.Context) <-chan T {
 		case <-b.done:
 		}
 		b.mu.Lock()
-		delete(b.subs, ch)
-		close(ch)
+		// Shutdown may have already closed and removed the channel.
+		if _, ok := b.subs[ch]; ok {
+			delete(b.subs, ch)
+			close(ch)
+		}
 		b.mu.Unlock()
 	}()
 
@@ -114,12 +125,7 @@ func (b *eventBus[T]) Subscribe(ctx context.Context) <-chan T {
 }
 
 func (b *eventBus[T]) Shutdown() {
-	select {
-	case <-b.done:
-		return
-	default:
-		close(b.done)
-	}
+	b.doneOnce.Do(func() { close(b.done) })
 
 	b.mu.Lock()
 	defer b.mu.Unlock()

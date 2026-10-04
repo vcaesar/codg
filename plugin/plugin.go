@@ -39,6 +39,7 @@ package plugin
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"iter"
 	"log/slog"
@@ -49,6 +50,7 @@ import (
 	"sort"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"time"
 
 	codgpkg "github.com/vcaesar/codg/codgpkg"
@@ -531,50 +533,69 @@ func (f PluginFunc) Init(ctx context.Context, input PluginInput) (*Hooks, error)
 
 // --- Package-level state (mirrors mcp package pattern) ---
 
+// initState tracks completion of one Initialize round. It is swapped
+// atomically by Close so concurrent WaitForInit calls never race.
+type initState struct {
+	done chan struct{}
+	once sync.Once
+}
+
+func newInitState() *initState {
+	return &initState{done: make(chan struct{})}
+}
+
+func (s *initState) finish() {
+	s.once.Do(func() { close(s.done) })
+}
+
 var (
-	plugins   = newSyncMap[string, *PluginInfo]()
-	allTools  = newSyncMap[string, []ToolDefinition]()
-	broker    = newEventBus[Event]()
-	initOnce  sync.Once
-	initDone  = make(chan struct{})
-	initPerms PermissionService
+	plugins  = newSyncMap[string, *PluginInfo]()
+	allTools = newSyncMap[string, []ToolDefinition]()
+	broker   atomic.Pointer[eventBus[Event]]
+	initCur  atomic.Pointer[initState]
+
+	// stateMu serializes init-round commits with Close so a stale round
+	// can never write state after a reset.
+	stateMu sync.Mutex
 )
+
+func init() {
+	broker.Store(newEventBus[Event]())
+	initCur.Store(newInitState())
+}
 
 // Initialize loads and initializes all configured plugins in parallel.
 // It should be called once during application startup (typically from
-// app.go). The function blocks until all plugins have been initialized
-// or failed.
+// app.go). It returns immediately; use [WaitForInit] to block until all
+// plugins have been initialized or failed.
 func Initialize(ctx context.Context, cfg *InitConfig, perms PermissionService) {
+	st := initCur.Load()
 	if cfg == nil || len(cfg.Plugins) == 0 {
-		initOnce.Do(func() { close(initDone) })
+		st.finish()
 		return
 	}
-
-	// Store permissions for passing to plugins.
-	initPerms = perms
 
 	var wg sync.WaitGroup
 	for name, pluginCfg := range cfg.Plugins {
 		if pluginCfg.Disabled {
-			updateState(name, StateDisabled, nil, nil)
+			updateState(st, name, StateDisabled, nil, nil)
 			continue
 		}
-		wg.Add(1)
-		go func(name string, pluginCfg PluginConfig) {
-			defer wg.Done()
-			initSinglePlugin(ctx, cfg, name, pluginCfg)
-		}(name, pluginCfg)
+		wg.Go(func() {
+			initSinglePlugin(ctx, st, cfg, perms, name, pluginCfg)
+		})
 	}
 
 	go func() {
 		wg.Wait()
-		initOnce.Do(func() { close(initDone) })
+		st.finish()
 	}()
 }
 
-// initSinglePlugin loads and initializes a single plugin by name.
-func initSinglePlugin(ctx context.Context, cfg *InitConfig, name string, pluginCfg PluginConfig) {
-	updateState(name, StateLoading, nil, nil)
+// initSinglePlugin loads and initializes a single plugin by name. State
+// is only committed while st is still the current init round.
+func initSinglePlugin(ctx context.Context, st *initState, cfg *InitConfig, perms PermissionService, name string, pluginCfg PluginConfig) {
+	updateState(st, name, StateLoading, nil, nil)
 
 	// Auto-detect type when not set explicitly.
 	if pluginCfg.Type == "" {
@@ -598,10 +619,9 @@ func initSinglePlugin(ctx context.Context, cfg *InitConfig, name string, pluginC
 		}
 		if p == nil {
 			available := availableBuiltinNames()
-			hint := fmt.Sprintf("unknown built-in plugin %q; available: [%s]", source, strings.Join(available, ", "))
-			err := fmt.Errorf("%s", hint)
+			err := fmt.Errorf("unknown built-in plugin %q; available: [%s]", source, strings.Join(available, ", "))
 			slog.Error("Failed to load plugin", "name", name, "error", err, "available", available)
-			updateState(name, StateError, err, nil)
+			updateState(st, name, StateError, err, nil)
 			return
 		}
 	case PluginTypeShared:
@@ -613,13 +633,13 @@ func initSinglePlugin(ctx context.Context, cfg *InitConfig, name string, pluginC
 		if soPath == "" {
 			err := fmt.Errorf("shared plugin .so not found for %q in %s", name, cfg.PluginDir)
 			slog.Error("Failed to load plugin", "name", name, "error", err)
-			updateState(name, StateError, err, nil)
+			updateState(st, name, StateError, err, nil)
 			return
 		}
 		loaded, err := loadSharedPlugin(soPath)
 		if err != nil {
 			slog.Error("Failed to load shared plugin", "name", name, "path", soPath, "error", err)
-			updateState(name, StateError, err, nil)
+			updateState(st, name, StateError, err, nil)
 			return
 		}
 		p = loaded
@@ -628,59 +648,114 @@ func initSinglePlugin(ctx context.Context, cfg *InitConfig, name string, pluginC
 	default:
 		err := fmt.Errorf("unsupported plugin type: %s", pluginCfg.Type)
 		slog.Error("Failed to load plugin", "name", name, "error", err)
-		updateState(name, StateError, err, nil)
+		updateState(st, name, StateError, err, nil)
 		return
 	}
 
 	input := PluginInput{
 		WorkingDir:  cfg.WorkingDir,
-		Permissions: initPerms,
+		Permissions: perms,
 	}
 
-	hooks, err := p.Init(ctx, input)
+	timeout := time.Duration(pluginCfg.Timeout) * time.Second
+	hooks, err := runInit(ctx, p, input, timeout)
 	if err != nil {
 		slog.Error("Failed to initialize plugin", "name", name, "error", err)
-		updateState(name, StateError, err, nil)
+		updateState(st, name, StateError, err, nil)
 		return
 	}
 
+	info := newInfo(name, StateReady, nil, hooks)
 	// Extract optional metadata via PluginMetaProvider.
 	if mp, ok := p.(PluginMetaProvider); ok {
-		meta := mp.Meta()
-		info := &PluginInfo{
-			Name:        name,
-			State:       StateReady,
-			Hooks:       hooks,
-			Meta:        &meta,
-			Priority:    hooks.Priority,
-			ConnectedAt: time.Now(),
+		if err := safeCall(func() error {
+			meta := mp.Meta()
+			info.Meta = &meta
+			return nil
+		}); err != nil {
+			slog.Warn("Failed to read plugin metadata", "name", name, "error", err)
 		}
-		plugins.Set(name, info)
-		broker.Publish(Event{
-			Type:  EventStateChanged,
-			Name:  name,
-			State: StateReady,
-		})
-	} else {
-		updateState(name, StateReady, nil, hooks)
 	}
 
-	// Register plugin tools.
-	if len(hooks.Tools) > 0 {
-		defs := make([]ToolDefinition, 0, len(hooks.Tools))
-		for toolName, def := range hooks.Tools {
-			def.Name = toolName
-			defs = append(defs, def)
-		}
-		allTools.Set(name, defs)
-		broker.Publish(Event{
-			Type:  EventToolsChanged,
-			Name:  name,
-			State: StateReady,
-		})
+	defs := make([]ToolDefinition, 0, len(hooks.Tools))
+	for toolName, def := range hooks.Tools {
+		def.Name = toolName
+		defs = append(defs, def)
+	}
+	slices.SortFunc(defs, func(a, b ToolDefinition) int {
+		return strings.Compare(a.Name, b.Name)
+	})
+	if !commit(st, info, defs) {
+		slog.Debug("Discarded stale plugin initialization", "name", name)
+		return
 	}
 
 	slog.Info("Plugin initialized", "name", name, "type", pluginCfg.Type, "tools", len(hooks.Tools))
+}
+
+// runInit calls p.Init, recovering from panics and enforcing the
+// optional timeout. On timeout or failure the context passed to Init is
+// cancelled so cooperative plugins stop; on success it stays alive for
+// the parent's lifetime so plugins may retain it. A nil hook set from a
+// successful Init is normalized to an empty one.
+func runInit(ctx context.Context, p Plugin, input PluginInput, timeout time.Duration) (*Hooks, error) {
+	cancel := func(error) {}
+	stop := func() bool { return true }
+	if timeout > 0 {
+		ctx, cancel = context.WithCancelCause(ctx)
+		timer := time.AfterFunc(timeout, func() {
+			cancel(fmt.Errorf("plugin init timed out after %s", timeout))
+		})
+		stop = timer.Stop
+	}
+
+	type result struct {
+		hooks *Hooks
+		err   error
+	}
+	ch := make(chan result, 1)
+	go func() {
+		var r result
+		r.err = safeCall(func() (err error) {
+			r.hooks, err = p.Init(ctx, input)
+			return err
+		})
+		ch <- r
+	}()
+
+	select {
+	case r := <-ch:
+		if !stop() {
+			// The timer fired; ctx is already cancelled.
+			return nil, context.Cause(ctx)
+		}
+		if r.err != nil {
+			if errors.Is(r.err, ctx.Err()) {
+				// Init gave up because of our context; report why.
+				r.err = context.Cause(ctx)
+			}
+			cancel(r.err)
+			return nil, r.err
+		}
+		if r.hooks == nil {
+			r.hooks = &Hooks{}
+		}
+		return r.hooks, nil
+	case <-ctx.Done():
+		stop()
+		return nil, context.Cause(ctx)
+	}
+}
+
+// safeCall runs fn and converts a panic into an error so a misbehaving
+// plugin cannot crash the host.
+func safeCall(fn func() error) (err error) {
+	defer func() {
+		if r := recover(); r != nil {
+			err = fmt.Errorf("plugin panic: %v", r)
+		}
+	}()
+	return fn()
 }
 
 // --- Shared plugin (.so) loading ---
@@ -785,7 +860,7 @@ func DefaultPluginDir() string {
 // context is cancelled.
 func WaitForInit(ctx context.Context) error {
 	select {
-	case <-initDone:
+	case <-initCur.Load().done:
 		return nil
 	case <-ctx.Done():
 		return ctx.Err()
@@ -796,24 +871,23 @@ func WaitForInit(ctx context.Context) error {
 // package-level state so that [Initialize] can be called again (e.g.
 // in tests or after a hot-reload).
 func Close(_ context.Context) error {
-	broker.Shutdown()
-	allTools = newSyncMap[string, []ToolDefinition]()
-	plugins = newSyncMap[string, *PluginInfo]()
-	broker = newEventBus[Event]()
-	initOnce = sync.Once{}
-	initDone = make(chan struct{})
-	initPerms = nil
+	stateMu.Lock()
+	defer stateMu.Unlock()
+	initCur.Store(newInitState())
+	broker.Swap(newEventBus[Event]()).Shutdown()
+	allTools.Reset()
+	plugins.Reset()
 	return nil
 }
 
 // --- State management ---
 
-func updateState(name string, state State, err error, hooks *Hooks) {
+func newInfo(name string, state State, err error, hooks *Hooks) *PluginInfo {
 	priority := 0
 	if hooks != nil {
 		priority = hooks.Priority
 	}
-	info := &PluginInfo{
+	return &PluginInfo{
 		Name:        name,
 		State:       state,
 		Error:       err,
@@ -821,13 +895,40 @@ func updateState(name string, state State, err error, hooks *Hooks) {
 		Priority:    priority,
 		ConnectedAt: time.Now(),
 	}
-	plugins.Set(name, info)
-	broker.Publish(Event{
+}
+
+func setInfo(info *PluginInfo) {
+	plugins.Set(info.Name, info)
+	broker.Load().Publish(Event{
 		Type:  EventStateChanged,
-		Name:  name,
-		State: state,
-		Error: err,
+		Name:  info.Name,
+		State: info.State,
+		Error: info.Error,
 	})
+}
+
+// commit stores info and registers tools unless Close has started a new
+// init round since st was captured. It reports whether it committed.
+func commit(st *initState, info *PluginInfo, tools []ToolDefinition) bool {
+	stateMu.Lock()
+	defer stateMu.Unlock()
+	if initCur.Load() != st {
+		return false
+	}
+	setInfo(info)
+	if len(tools) > 0 {
+		allTools.Set(info.Name, tools)
+		broker.Load().Publish(Event{
+			Type:  EventToolsChanged,
+			Name:  info.Name,
+			State: StateReady,
+		})
+	}
+	return true
+}
+
+func updateState(st *initState, name string, state State, err error, hooks *Hooks) {
+	commit(st, newInfo(name, state, err, hooks), nil)
 }
 
 // GetStates returns a snapshot of all plugin states.
@@ -842,7 +943,7 @@ func GetState(name string) (*PluginInfo, bool) {
 
 // SubscribeEvents returns a channel that receives plugin events.
 func SubscribeEvents(ctx context.Context) <-chan Event {
-	return broker.Subscribe(ctx)
+	return broker.Load().Subscribe(ctx)
 }
 
 // --- Tool access ---
@@ -879,7 +980,7 @@ func TriggerChatParams(ctx context.Context, input ChatParamsInput, output *ChatP
 		if info.Hooks.ChatParams == nil {
 			continue
 		}
-		if err := info.Hooks.ChatParams(ctx, input, output); err != nil {
+		if err := safeCall(func() error { return info.Hooks.ChatParams(ctx, input, output) }); err != nil {
 			slog.Warn("Plugin chat.params hook error", "plugin", info.Name, "error", err)
 		}
 	}
@@ -891,7 +992,7 @@ func TriggerChatHeaders(ctx context.Context, input ChatHeadersInput, output *Cha
 		if info.Hooks.ChatHeaders == nil {
 			continue
 		}
-		if err := info.Hooks.ChatHeaders(ctx, input, output); err != nil {
+		if err := safeCall(func() error { return info.Hooks.ChatHeaders(ctx, input, output) }); err != nil {
 			slog.Warn("Plugin chat.headers hook error", "plugin", info.Name, "error", err)
 		}
 	}
@@ -903,7 +1004,7 @@ func TriggerPermissionAsk(ctx context.Context, input PermissionInput, output *Pe
 		if info.Hooks.PermissionAsk == nil {
 			continue
 		}
-		if err := info.Hooks.PermissionAsk(ctx, input, output); err != nil {
+		if err := safeCall(func() error { return info.Hooks.PermissionAsk(ctx, input, output) }); err != nil {
 			slog.Warn("Plugin permission.ask hook error", "plugin", info.Name, "error", err)
 		}
 	}
@@ -915,7 +1016,7 @@ func TriggerShellEnv(ctx context.Context, input ShellEnvInput, output *ShellEnvO
 		if info.Hooks.ShellEnv == nil {
 			continue
 		}
-		if err := info.Hooks.ShellEnv(ctx, input, output); err != nil {
+		if err := safeCall(func() error { return info.Hooks.ShellEnv(ctx, input, output) }); err != nil {
 			slog.Warn("Plugin shell.env hook error", "plugin", info.Name, "error", err)
 		}
 	}
@@ -928,7 +1029,7 @@ func TriggerToolExecuteBefore(ctx context.Context, input ToolExecuteBeforeInput,
 		if info.Hooks.ToolExecuteBefore == nil {
 			continue
 		}
-		if err := info.Hooks.ToolExecuteBefore(ctx, input, output); err != nil {
+		if err := safeCall(func() error { return info.Hooks.ToolExecuteBefore(ctx, input, output) }); err != nil {
 			slog.Warn("Plugin tool.execute.before hook error", "plugin", info.Name, "error", err)
 		}
 	}
@@ -941,7 +1042,7 @@ func TriggerToolExecuteAfter(ctx context.Context, input ToolExecuteAfterInput, o
 		if info.Hooks.ToolExecuteAfter == nil {
 			continue
 		}
-		if err := info.Hooks.ToolExecuteAfter(ctx, input, output); err != nil {
+		if err := safeCall(func() error { return info.Hooks.ToolExecuteAfter(ctx, input, output) }); err != nil {
 			slog.Warn("Plugin tool.execute.after hook error", "plugin", info.Name, "error", err)
 		}
 	}
@@ -954,7 +1055,7 @@ func TriggerSystemPromptTransform(ctx context.Context, input SystemPromptInput, 
 		if info.Hooks.SystemPromptTransform == nil {
 			continue
 		}
-		if err := info.Hooks.SystemPromptTransform(ctx, input, output); err != nil {
+		if err := safeCall(func() error { return info.Hooks.SystemPromptTransform(ctx, input, output) }); err != nil {
 			slog.Warn("Plugin system.prompt.transform hook error", "plugin", info.Name, "error", err)
 		}
 	}
@@ -968,7 +1069,7 @@ func TriggerOAuthToken(ctx context.Context, input OAuthTokenInput, output *OAuth
 		if info.Hooks.OAuthToken == nil {
 			continue
 		}
-		if err := info.Hooks.OAuthToken(ctx, input, output); err != nil {
+		if err := safeCall(func() error { return info.Hooks.OAuthToken(ctx, input, output) }); err != nil {
 			slog.Warn("Plugin oauth.token hook error", "plugin", info.Name, "error", err)
 		}
 		if output.Handled {
@@ -984,7 +1085,7 @@ func TriggerConfigTransform(ctx context.Context, input ConfigTransformInput, out
 		if info.Hooks.ConfigTransform == nil {
 			continue
 		}
-		if err := info.Hooks.ConfigTransform(ctx, input, output); err != nil {
+		if err := safeCall(func() error { return info.Hooks.ConfigTransform(ctx, input, output) }); err != nil {
 			slog.Warn("Plugin config.transform hook error", "plugin", info.Name, "error", err)
 		}
 	}
@@ -997,7 +1098,7 @@ func TriggerProviderResolve(ctx context.Context, input ProviderResolveInput, out
 		if info.Hooks.ProviderResolve == nil {
 			continue
 		}
-		if err := info.Hooks.ProviderResolve(ctx, input, output); err != nil {
+		if err := safeCall(func() error { return info.Hooks.ProviderResolve(ctx, input, output) }); err != nil {
 			slog.Warn("Plugin provider.resolve hook error", "plugin", info.Name, "error", err)
 		}
 		if output.Handled {
@@ -1012,7 +1113,7 @@ func TriggerSessionStart(ctx context.Context, input SessionLifecycleInput, outpu
 		if info.Hooks.SessionStart == nil {
 			continue
 		}
-		if err := info.Hooks.SessionStart(ctx, input, output); err != nil {
+		if err := safeCall(func() error { return info.Hooks.SessionStart(ctx, input, output) }); err != nil {
 			slog.Warn("Plugin session.start hook error", "plugin", info.Name, "error", err)
 		}
 	}
@@ -1024,7 +1125,7 @@ func TriggerSessionEnd(ctx context.Context, input SessionLifecycleInput, output 
 		if info.Hooks.SessionEnd == nil {
 			continue
 		}
-		if err := info.Hooks.SessionEnd(ctx, input, output); err != nil {
+		if err := safeCall(func() error { return info.Hooks.SessionEnd(ctx, input, output) }); err != nil {
 			slog.Warn("Plugin session.end hook error", "plugin", info.Name, "error", err)
 		}
 	}
@@ -1037,7 +1138,7 @@ func TriggerMessageTransform(ctx context.Context, input MessageTransformInput, o
 		if info.Hooks.MessageTransform == nil {
 			continue
 		}
-		if err := info.Hooks.MessageTransform(ctx, input, output); err != nil {
+		if err := safeCall(func() error { return info.Hooks.MessageTransform(ctx, input, output) }); err != nil {
 			slog.Warn("Plugin message.transform hook error", "plugin", info.Name, "error", err)
 		}
 	}
@@ -1050,7 +1151,7 @@ func TriggerErrorHandle(ctx context.Context, input ErrorHandleInput, output *Err
 		if info.Hooks.ErrorHandle == nil {
 			continue
 		}
-		if err := info.Hooks.ErrorHandle(ctx, input, output); err != nil {
+		if err := safeCall(func() error { return info.Hooks.ErrorHandle(ctx, input, output) }); err != nil {
 			slog.Warn("Plugin error.handle hook error", "plugin", info.Name, "error", err)
 		}
 		if output.Handled {
@@ -1194,9 +1295,13 @@ func (t *PluginTool) Info() codgpkg.ToolInfo {
 
 // Run implements [codgpkg.AgentTool].
 func (t *PluginTool) Run(ctx context.Context, params codgpkg.ToolCall) (codgpkg.ToolResponse, error) {
-	sessionID, ok := ctx.Value(sessionIDContextKey("session_id")).(string)
+	sessionID, ok := ctx.Value(SessionIDContextKey).(string)
 	if !ok || sessionID == "" {
 		return codgpkg.ToolResponse{}, fmt.Errorf("session ID is required")
+	}
+
+	if t.def.Execute == nil {
+		return codgpkg.NewTextErrorResponse("plugin tool has no execute function"), nil
 	}
 
 	// Request permission.
@@ -1217,11 +1322,11 @@ func (t *PluginTool) Run(ctx context.Context, params codgpkg.ToolCall) (codgpkg.
 		return codgpkg.ToolResponse{}, ErrPermissionDenied
 	}
 
-	if t.def.Execute == nil {
-		return codgpkg.NewTextErrorResponse("plugin tool has no execute function"), nil
-	}
-
-	result, err := t.def.Execute(ctx, params.Params)
+	var result string
+	err = safeCall(func() (err error) {
+		result, err = t.def.Execute(ctx, params.Params)
+		return err
+	})
 	if err != nil {
 		return codgpkg.NewTextErrorResponse(err.Error()), nil
 	}
@@ -1229,8 +1334,19 @@ func (t *PluginTool) Run(ctx context.Context, params codgpkg.ToolCall) (codgpkg.
 	return codgpkg.NewTextResponse(result), nil
 }
 
-// sessionIDContextKey matches the type in agent/tools/tools.go.
 type sessionIDContextKey string
+
+// SessionIDContextKey is the context key [PluginTool.Run] reads the
+// session ID from. Context keys are compared by type, so the host must
+// set this key explicitly (see [WithSessionID]); keys from other
+// packages never match.
+const SessionIDContextKey sessionIDContextKey = "session_id"
+
+// WithSessionID returns a context carrying the session ID for plugin
+// tool execution.
+func WithSessionID(ctx context.Context, sessionID string) context.Context {
+	return context.WithValue(ctx, SessionIDContextKey, sessionID)
+}
 
 // GetPluginTools returns all currently registered plugin tools as
 // [*PluginTool] instances ready to be used as [codgpkg.AgentTool].
