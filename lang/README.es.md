@@ -55,7 +55,8 @@ Usa «/yolo» para alternar entre el modo automático y el modo de confirmación
 ## Características
 
 - Sistema de agentes automático y asíncrono, con alta concurrencia y rendimiento, y bajo uso de memoria
-- Proveedores multi-modelo (40+ proveedores API y Pro, Custom URL API) y modelos locales vía openai-compat o claude-compat; soporte para los modelos gratuitos de Openrouter, Ollama, Nvidia y otros; úsalos con «/connect», «/models» o «codg auth»
+- Proveedores multi-modelo (60-100+ proveedores API y Pro, Custom URL API) y modelos locales vía openai-compat o claude-compat
+- Soporte para los modelos gratuitos de Openrouter, OpenCode, Ollama, Nvidia y otros; úsalos con «/connect», «/models» o «codg auth»
 - Reglas asíncronas y de modelo para los multi-agentes
 - Compresión de entrada/salida, contexto y prompts para ahorrar tokens; caché y reglas para reducir el costo
 - Compatible con cualquier terminal y SO, también con terminales web
@@ -67,8 +68,10 @@ Usa «/yolo» para alternar entre el modo automático y el modo de confirmación
 - Soporte de canales y funciones similar a OpenClaw
 - Soporte completo de la interfaz web, la TUI remota y la aplicación de escritorio
 - Soporte de plugins de Claude Code/Codex
+- Control total del ordenador, móvil y navegador
+- Soporte de equipos de agentes
 
-App Desktop (BETA); algunas funciones aún requieren pruebas y corrección de errores antes de publicarla.
+App Desktop y extensiones (BETA); algunas funciones aún requieren pruebas y corrección de errores antes de publicarla.
 
 ## Proveedores
 
@@ -277,5 +280,8 @@ token    = "$DISCORD_BOT_TOKEN"
 ```toml
 [permissions]
 allowed_tools = ["bash", "edit", "view", "glob", "grep"]
+[tools.bash]
+allowed_cmds = ["git"]
+[tools.file_access]
 allowed_dirs = ["**x"] # todos los directorios
 ```

@@ -57,7 +57,8 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 ## الميزات
 
 - نظام وكلاء تلقائي وغير متزامن، عالي التزامن والأداء، مع استهلاك منخفض للذاكرة
-- دعم مزودي نماذج متعددين (أكثر من 40 مزود API و Pro، و Custom URL API) ونماذج محلية عبر openai-compat أو claude-compat، مع دعم نماذج Openrouter و Ollama و Nvidia وغيرها المجانية، استخدمها عبر "/connect" أو "/models" أو "codg auth"
+- دعم مزودي نماذج متعددين (60-100+ مزود API و Pro، و Custom URL API) ونماذج محلية عبر openai-compat أو claude-compat
+- دعم نماذج Openrouter و OpenCode و Ollama و Nvidia وغيرها المجانية، استخدمها عبر "/connect" أو "/models" أو "codg auth"
 - قواعد غير متزامنة وقواعد نموذج للوكلاء المتعددين
 - ضغط المدخلات والمخرجات والسياق والمطالبات لتوفير الرموز (tokens)؛ التخزين المؤقت والقواعد لتقليل التكلفة
 - دعم أي طرفية ونظام تشغيل، بالإضافة إلى دعم طرفيات الويب
@@ -69,8 +70,10 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 - دعم القنوات والميزات على غرار OpenClaw
 - دعم كامل لواجهة الويب وTUI عن بُعد وتطبيق سطح المكتب
 - دعم إضافات Claude Code/Codex
+- تحكم كامل في الحاسوب والجوال والمتصفح
+- دعم فرق الوكلاء
 
-تطبيق سطح المكتب (BETA)، بعض الميزات لا تزال بحاجة إلى اختبار وإصلاح للأخطاء ثم إصدارها.
+تطبيق سطح المكتب والإضافات (BETA)، بعض الميزات لا تزال بحاجة إلى اختبار وإصلاح للأخطاء ثم إصدارها.
 
 ## المزودون
 
@@ -279,6 +282,9 @@ token    = "$DISCORD_BOT_TOKEN"
 ```toml
 [permissions]
 allowed_tools = ["bash", "edit", "view", "glob", "grep"]
+[tools.bash]
+allowed_cmds = ["git"]
+[tools.file_access]
 allowed_dirs = ["**x"] # جميع المجلدات
 ```
 

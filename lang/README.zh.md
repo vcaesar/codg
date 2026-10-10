@@ -55,7 +55,8 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 ## 功能特性
 
 - 自动化、异步化、高并发、高性能的智能体系统，内存占用低
-- 多模型提供商（40+ API 与 Pro 提供商、Custom URL API）及本地模型（通过 openai-compat 或 claude-compat），支持 Openrouter、Ollama、Nvidia 等免费模型，可通过 “/connect” “/models” 或 “codg auth” 使用
+- 多模型提供商（60-100+ API 与 Pro 提供商、Custom URL API）及本地模型（通过 openai-compat 或 claude-compat）
+- 支持 Openrouter、OpenCode、Ollama、Nvidia 等免费模型，可通过 “/connect” “/models” 或 “codg auth” 使用
 - 多智能体的异步化和模型规则
 - 压缩输入输出、上下文与提示以节省 token，利用缓存和规则降低成本
 - 支持任何终端和操作系统，同时支持 Web 终端
@@ -67,8 +68,10 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 - 类似 OpenClaw 的频道与功能支持
 - 完整的 Web UI、远程 TUI 和桌面应用支持
 - 支持 Claude Code/Codex 插件
+- 完整的电脑、移动设备与浏览器操控
+- 支持智能体团队
 
-桌面应用（BETA），部分功能仍需等待测试与修复 bug 后再发布。
+桌面应用与扩展（BETA），部分功能仍需等待测试与修复 bug 后再发布。
 
 ## 提供商
 
@@ -277,5 +280,8 @@ token    = "$DISCORD_BOT_TOKEN"
 ```toml
 [permissions]
 allowed_tools = ["bash", "edit", "view", "glob", "grep"]
+[tools.bash]
+allowed_cmds = ["git"]
+[tools.file_access]
 allowed_dirs = ["**x"] # 所有目录
 ```

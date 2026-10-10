@@ -55,7 +55,8 @@ Mit „/yolo“ können Sie zwischen Auto- und Bestätigungsmodus wechseln; Bere
 ## Funktionen
 
 - Automatisches und asynchrones, hochparalleles und leistungsstarkes Agentensystem mit geringem Speicherverbrauch
-- Mehrere Modellanbieter (40+ API- und Pro-Anbieter, Custom URL API) sowie lokale Modelle über openai-compat oder claude-compat; Unterstützung der kostenlosen Modelle von Openrouter, Ollama, Nvidia und weiteren; Nutzung via „/connect“, „/models“ oder „codg auth“
+- Mehrere Modellanbieter (60-100+ API- und Pro-Anbieter, Custom URL API) sowie lokale Modelle über openai-compat oder claude-compat
+- Unterstützung der kostenlosen Modelle von Openrouter, OpenCode, Ollama, Nvidia und weiteren; Nutzung via „/connect“, „/models“ oder „codg auth“
 - Asynchrone Regeln und Modellregeln für Multi-Agenten
 - Komprimierung von Ein-/Ausgabe, Kontext und Prompts spart Tokens; Cache und Regeln senken die Kosten
 - Unterstützung für jedes Terminal und Betriebssystem, auch für Web-Terminals
@@ -67,8 +68,10 @@ Mit „/yolo“ können Sie zwischen Auto- und Bestätigungsmodus wechseln; Bere
 - Kanal- und Funktionsunterstützung wie OpenClaw
 - Vollständige Unterstützung für Web-UI, Remote-TUI und Desktop-App
 - Unterstützung für Claude Code/Codex-Plugins
+- Vollständige Computer-, Mobil- und Browser-Steuerung
+- Unterstützung für Agenten-Teams
 
-Desktop-App (BETA); einige Funktionen müssen noch getestet und Bugs behoben werden, dann freigegeben.
+Desktop-App und Erweiterungen (BETA); einige Funktionen müssen noch getestet und Bugs behoben werden, dann freigegeben.
 
 ## Anbieter
 
@@ -277,5 +280,8 @@ token    = "$DISCORD_BOT_TOKEN"
 ```toml
 [permissions]
 allowed_tools = ["bash", "edit", "view", "glob", "grep"]
+[tools.bash]
+allowed_cmds = ["git"]
+[tools.file_access]
 allowed_dirs = ["**x"] # alle Verzeichnisse
 ```

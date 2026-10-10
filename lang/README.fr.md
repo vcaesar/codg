@@ -55,7 +55,8 @@ Utilisez « /yolo » pour basculer entre le mode automatique et le mode de con
 ## Fonctionnalités
 
 - Système d'agents automatique et asynchrone, à haute concurrence et haute performance, avec faible consommation mémoire
-- Fournisseurs multi-modèles (40+ fournisseurs API et Pro, Custom URL API) et modèles locaux via openai-compat ou claude-compat, prise en charge des modèles gratuits d'Openrouter, Ollama, Nvidia et d'autres, utilisez-les via « /connect », « /models » ou « codg auth »
+- Fournisseurs multi-modèles (60-100+ fournisseurs API et Pro, Custom URL API) et modèles locaux via openai-compat ou claude-compat
+- Prise en charge des modèles gratuits d'Openrouter, OpenCode, Ollama, Nvidia et d'autres, utilisez-les via « /connect », « /models » ou « codg auth »
 - Règles asynchrones et de modèle pour les multi-agents
 - Compression des entrées/sorties, du contexte et des prompts pour économiser les tokens ; cache et règles pour réduire les coûts
 - Compatible avec tout terminal et OS, y compris les terminaux web
@@ -67,8 +68,10 @@ Utilisez « /yolo » pour basculer entre le mode automatique et le mode de con
 - Prise en charge des canaux et fonctionnalités comme OpenClaw
 - Prise en charge complète de l'interface Web, du TUI distant et de l'application de bureau
 - Prise en charge des plugins Claude Code/Codex
+- Contrôle complet de l'ordinateur, du mobile et du navigateur
+- Prise en charge des équipes d'agents
 
-Application Desktop (BETA), certaines fonctionnalités nécessitent encore des tests et des corrections de bugs avant sa publication.
+Application Desktop et extensions (BETA), certaines fonctionnalités nécessitent encore des tests et des corrections de bugs avant sa publication.
 
 ## Fournisseurs
 
@@ -277,5 +280,8 @@ token    = "$DISCORD_BOT_TOKEN"
 ```toml
 [permissions]
 allowed_tools = ["bash", "edit", "view", "glob", "grep"]
+[tools.bash]
+allowed_cmds = ["git"]
+[tools.file_access]
 allowed_dirs = ["**x"] # tous les répertoires
 ```

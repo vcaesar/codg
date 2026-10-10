@@ -55,7 +55,8 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 ## 機能
 
 - 自動かつ非同期、高並行・高性能なエージェントシステムで、メモリ使用量も少ない
-- マルチモデルプロバイダー（40+ の API・Pro プロバイダー、Custom URL API）およびローカルモデル（openai-compat または claude-compat 経由）、Openrouter、Ollama、Nvidia などの無料モデルに対応。「/connect」「/models」または「codg auth」から利用可能
+- マルチモデルプロバイダー（60-100+ の API・Pro プロバイダー、Custom URL API）およびローカルモデル（openai-compat または claude-compat 経由）
+- Openrouter、OpenCode、Ollama、Nvidia などの無料モデルに対応。「/connect」「/models」または「codg auth」から利用可能
 - マルチエージェント向けの非同期処理とモデルルール
 - 入出力・コンテキスト・プロンプトを圧縮してトークンを節約、キャッシュとルールでコストを削減
 - あらゆるターミナルと OS をサポート、Web ターミナルにも対応
@@ -67,8 +68,10 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 - OpenClaw のようなチャンネルと機能サポート
 - 完全な Web UI、リモート TUI、デスクトップアプリをサポート
 - Claude Code/Codex プラグインのサポート
+- コンピューター、モバイル、ブラウザの完全な操作
+- エージェントチームのサポート
 
-デスクトップアプリ(BETA)、一部の機能はテストとバグ修正後にリリース予定。
+デスクトップアプリと拡張機能(BETA)、一部の機能はテストとバグ修正後にリリース予定。
 
 ## プロバイダー
 
@@ -277,5 +280,8 @@ token    = "$DISCORD_BOT_TOKEN"
 ```toml
 [permissions]
 allowed_tools = ["bash", "edit", "view", "glob", "grep"]
+[tools.bash]
+allowed_cmds = ["git"]
+[tools.file_access]
 allowed_dirs = ["**x"] # すべてのディレクトリ
 ```
