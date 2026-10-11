@@ -1,6 +1,10 @@
 // stage-dist.mjs — populate the shared pub/frontend/dist with the web UI
 // for Wails to embed.
 //
+// A real build already in pub/frontend/dist that is NEWER than the ui/web
+// source is kept, so a directly updated pub frontend is never rolled back to
+// an older ui/web/dist.
+//
 // Cross-platform: pure Node, no shell-specific commands.
 import {
   cpSync,
@@ -8,6 +12,7 @@ import {
   readFileSync,
   rmSync,
   mkdirSync,
+  statSync,
   writeFileSync,
 } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -42,10 +47,24 @@ function isRealBuild(dir) {
   }
 }
 
+// indexMtime returns the mtime of dir/index.html in ms, or 0 when absent.
+function indexMtime(dir) {
+  try {
+    return statSync(join(dir, "index.html")).mtimeMs;
+  } catch {
+    return 0;
+  }
+}
+
 function stage(src) {
+  if (isRealBuild(dest) && indexMtime(dest) > indexMtime(src)) {
+    console.log(`kept newer web UI in ${dest} (skipped older ${src})`);
+    return;
+  }
   rmSync(dest, { recursive: true, force: true });
   mkdirSync(dest, { recursive: true });
-  cpSync(src, dest, { recursive: true });
+  // Keep source mtimes so a later direct update of dest is detectably newer.
+  cpSync(src, dest, { recursive: true, preserveTimestamps: true });
   console.log(`staged web UI: ${src} -> ${dest}`);
 }
 

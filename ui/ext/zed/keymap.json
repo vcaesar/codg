@@ -1,0 +1,8 @@
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      "cmd-escape": ["agent::NewExternalAgentThread", { "agent": "codg" }]
+    }
+  }
+]

@@ -1,0 +1,1 @@
+function e(e){if(e.length!==1)return e;if(e===` `)return`\0`;if(e===`?`)return``;let t=e.toUpperCase().charCodeAt(0);return t>=64&&t<=95?String.fromCharCode(t&31):e}function t(){return typeof globalThis.matchMedia==`function`&&globalThis.matchMedia(`(pointer: coarse)`).matches}export{e as n,t};

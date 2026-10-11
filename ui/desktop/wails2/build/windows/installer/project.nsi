@@ -5,6 +5,12 @@ Unicode true
 !define WAILS_INSTALL_SCOPE "user"
 !define REQUEST_EXECUTION_LEVEL "user"
 
+# wails.json "name" is "Codg" (macOS bundle Codg.app). Pin the Windows names
+# to the binary so the shell is not installed as Codg.exe, which collides
+# with the bundled codg.exe on case-insensitive NTFS.
+!define INFO_PROJECTNAME "codg-desktop"
+!define PRODUCT_EXECUTABLE "codg-desktop.exe"
+
 # Wails writes this generated include before invoking makensis.
 !include "wails_tools.nsh"
 

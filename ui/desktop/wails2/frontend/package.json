@@ -1,7 +1,7 @@
 {
   "name": "codg-desktop-wails2-frontend",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.20.0",
   "description": "Stages the shared Codg web UI for the Wails v2 shell",
   "type": "module",
   "scripts": {

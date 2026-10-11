@@ -1,0 +1,1 @@
+[data-component=tui-terminal] .xterm-viewport{overflow-y:hidden!important;scrollbar-width:none}[data-component=tui-terminal] .xterm-viewport::-webkit-scrollbar{display:none}
