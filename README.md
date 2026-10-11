@@ -55,7 +55,8 @@ Use "/yolo" to toggle the auto and ask mode, and you can set permissions by codg
 ## Features
 
 - Auto and asynchronous, concurrency and high performance agents system, and low memory use
-- Multi models providers (40+ API and Pro providers, Custom URL API) and local models via by openai-compat or claude-compat, Support Openrouter, Ollama, Nvidia and others free models, use it by "/connect" "/models" or "codg auth"
+- Multi models providers (60-100+ API and Pro providers, Custom URL API) and local models via by openai-compat or claude-compat,
+- Support Openrouter, OpenCode, Ollama, Nvidia and others free models, use it by "/connect" "/models" or "codg auth"
 - Asynchronous and model rules for the multi agents
 - Compression input-output, context and prompts to save the tokens, cache and rules to reduce the cost
 - Any terminal and OS support, also web terminal support
@@ -67,8 +68,10 @@ Use "/yolo" to toggle the auto and ask mode, and you can set permissions by codg
 - Channel and features support like OpenClaw
 - Full Web UI and remote TUI support, and desktop app support
 - Claude Code/Codex Plugin support
+- Full computer, mobile and browser use
+- Agent teams support
 
-Desktop App (BETA), Some features need wait for the test and fix bugs then release it.
+Desktop App and Extensions (BETA), Some features need wait for the test and fix bugs then release it.
 
 ## Providers
 
@@ -282,5 +285,8 @@ token    = "$DISCORD_BOT_TOKEN"
 ```toml
 [permissions]
 allowed_tools = ["bash", "edit", "view", "glob", "grep"]
+[tools.bash]
+allowed_cmds = ["git"]
+[tools.file_access]
 allowed_dirs = ["**x"] # all directories
 ```

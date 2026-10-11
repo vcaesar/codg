@@ -4,7 +4,7 @@ go 1.26.3
 
 require (
 	github.com/vcaesar/codg/ui/desktop/pub v0.0.0
-	github.com/wailsapp/wails/v2 v2.14.0
+	github.com/wailsapp/wails/v2 v2.16.0
 )
 
 // The shared desktop process-management code lives in the sibling pub
