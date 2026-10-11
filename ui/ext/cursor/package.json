@@ -1,0 +1,190 @@
+{
+  "name": "codg-cursor",
+  "displayName": "Codg for Cursor",
+  "description": "Chat with the Codg AI coding agent inside Cursor in a side panel or terminal, sharing file and selection context.",
+  "version": "0.20.0",
+  "publisher": "atomai",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vcaesar/codg"
+  },
+  "engines": {
+    "vscode": "^1.94.0"
+  },
+  "categories": [
+    "AI",
+    "Chat",
+    "Other"
+  ],
+  "keywords": [
+    "codg",
+    "cursor",
+    "ai",
+    "agent",
+    "assistant"
+  ],
+  "icon": "images/icon.png",
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "codg.openChat",
+        "title": "Codg: Open Chat",
+        "icon": {
+          "light": "images/button-dark.svg",
+          "dark": "images/button-light.svg"
+        }
+      },
+      {
+        "command": "codg.newChat",
+        "title": "Codg: New Chat",
+        "icon": "$(add)"
+      },
+      {
+        "command": "codg.history",
+        "title": "Codg: Chat History",
+        "icon": "$(history)"
+      },
+      {
+        "command": "codg.openChatInEditor",
+        "title": "Codg: Open Chat in Editor Tab",
+        "icon": "$(link-external)"
+      },
+      {
+        "command": "codg.openTerminal",
+        "title": "Codg: Open Codg",
+        "icon": "$(terminal)"
+      },
+      {
+        "command": "codg.openNewTerminal",
+        "title": "Codg: Open Codg in New Terminal",
+        "icon": {
+          "light": "images/button-dark.svg",
+          "dark": "images/button-light.svg"
+        }
+      },
+      {
+        "command": "codg.addFilepathToTerminal",
+        "title": "Codg: Insert File Reference"
+      },
+      {
+        "command": "codg.addToChat",
+        "title": "Codg: Add File/Selection to Chat"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "codg.openChat",
+          "group": "navigation"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "codg.newChat",
+          "when": "view == codg.chat",
+          "group": "navigation@1"
+        },
+        {
+          "command": "codg.history",
+          "when": "view == codg.chat",
+          "group": "navigation@2"
+        },
+        {
+          "command": "codg.openChatInEditor",
+          "when": "view == codg.chat",
+          "group": "navigation@3"
+        },
+        {
+          "command": "codg.openTerminal",
+          "when": "view == codg.chat",
+          "group": "navigation@4"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "codg.addToChat",
+          "when": "resourceScheme == file",
+          "group": "codg@1"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "codg.openTerminal",
+        "key": "ctrl+escape",
+        "mac": "cmd+escape"
+      },
+      {
+        "command": "codg.openNewTerminal",
+        "key": "ctrl+shift+escape",
+        "mac": "cmd+shift+escape"
+      },
+      {
+        "command": "codg.addFilepathToTerminal",
+        "key": "ctrl+alt+k",
+        "mac": "cmd+alt+k",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "codg.addToChat",
+        "key": "ctrl+alt+l",
+        "mac": "cmd+alt+l",
+        "when": "editorTextFocus"
+      }
+    ],
+    "configuration": {
+      "title": "Codg",
+      "properties": {
+        "codg.command": {
+          "type": "string",
+          "default": "codg",
+          "description": "Path to the codg executable."
+        },
+        "codg.args": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Extra arguments passed to codg on launch."
+        }
+      }
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "codg",
+          "title": "Codg",
+          "icon": "images/codg.svg"
+        }
+      ]
+    },
+    "views": {
+      "codg": [
+        {
+          "type": "webview",
+          "id": "codg.chat",
+          "name": "Chat",
+          "icon": "images/codg.svg"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build": "node esbuild.js --production",
+    "compile": "node esbuild.js",
+    "watch": "node esbuild.js --watch",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/vscode": "^1.94.0",
+    "@vscode/vsce": "^3.9.2",
+    "esbuild": "^0.25.0",
+    "typescript": "^5.7.0"
+  }
+}
