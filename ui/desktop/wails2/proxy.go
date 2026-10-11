@@ -9,13 +9,13 @@ import (
 
 // desktopMarkerMiddleware injects the desktop marker without a backend.
 func desktopMarkerMiddleware() assetserver.Middleware {
-	return assetserver.Middleware(pub.DesktopMarkerMiddleware())
+	return assetserver.Middleware(pub.DesktopMarkerMiddleware(documentScripts()...))
 }
 
 // backendProxyMiddleware adapts pub.BackendProxyMiddlewareWithRelay to the
 // Wails v2 asset-server middleware type (same underlying func signature).
 func backendProxyMiddleware(backendURL string) (assetserver.Middleware, func(), error) {
-	mw, stop, err := pub.BackendProxyMiddlewareWithRelay(backendURL)
+	mw, stop, err := pub.BackendProxyMiddlewareWithRelay(backendURL, documentScripts()...)
 	if err != nil {
 		return nil, nil, err
 	}
