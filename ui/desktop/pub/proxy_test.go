@@ -286,6 +286,23 @@ func TestDesktopMarkerMiddlewareWithoutBackend(t *testing.T) {
 	}
 }
 
+func TestDesktopMarkerMiddlewareExtraScripts(t *testing.T) {
+	t.Parallel()
+	handler := DesktopMarkerMiddleware([]byte("<script>extra()</script>"))(assetHandler(map[string]string{
+		"/": "<html><head></head><body>ui</body></html>",
+	}))
+	recorder := httptest.NewRecorder()
+	request := httptest.NewRequest(http.MethodGet, "/", nil)
+	request.Header.Set("Accept", "text/html")
+	handler.ServeHTTP(recorder, request)
+	body := recorder.Body.String()
+	marker := strings.Index(body, `platform: "desktop"`)
+	extra := strings.Index(body, "<script>extra()</script>")
+	if marker < 0 || extra < marker || extra > strings.Index(body, "</head>") {
+		t.Fatalf("extra script must follow the marker inside <head>: %s", body)
+	}
+}
+
 func TestWSRedirectShim(t *testing.T) {
 	t.Parallel()
 

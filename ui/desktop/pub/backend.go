@@ -84,19 +84,29 @@ func ProbeBackend(baseURL string) string {
 }
 
 // ResolveWorkdir returns a sane working directory for the child backend.
-// Finder launches .app bundles with CWD set to "/", which is not writable
-// and not a meaningful project dir — fall back to $HOME.
+// Finder launches .app bundles with CWD set to "/", which is not a
+// meaningful project dir.
 func ResolveWorkdir() string {
+	home, herr := os.UserHomeDir()
 	cwd, err := os.Getwd()
-	if err != nil || cwd == "/" {
-		if home, herr := os.UserHomeDir(); herr == nil {
-			return home
-		}
+	if err == nil && cwd != "/" && (herr != nil || cwd != home) {
+		return cwd
 	}
-	if cwd == "" {
+	if herr != nil {
 		return "."
 	}
-	return cwd
+	ws := DesktopWorkspace(home)
+	if mkErr := os.MkdirAll(ws, 0o755); mkErr != nil {
+		slog.Warn("Create desktop workspace", "dir", ws, "err", mkErr)
+		return "."
+	}
+	return ws
+}
+
+// DesktopWorkspace is the default project dir for a GUI-launched backend:
+// inside the codg data dir, outside every macOS privacy-protected folder.
+func DesktopWorkspace(home string) string {
+	return filepath.Join(home, ".codg", "workspace")
 }
 
 // ResolveCodgBinary locates the codg CLI binary the shell will launch.
@@ -181,6 +191,7 @@ func BackendCommand(defaultSpec string) ([]string, int, error) {
 // that gracefully terminates the child, or an error when the binary could
 // not be found or did not become healthy.
 func StartBackendProcess(ctx context.Context, defaultSpec string) (string, func(), error) {
+	EnsureUserPath()
 	bin, err := ResolveCodgBinary()
 	if err != nil {
 		return "", nil, err

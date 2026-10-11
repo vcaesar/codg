@@ -28,9 +28,9 @@ type Middleware func(http.Handler) http.Handler
 
 // DesktopMarkerMiddleware injects only the desktop marker (no backend, no
 // websocket redirect) into served HTML documents. Used when the shell runs
-// without a backend.
-func DesktopMarkerMiddleware() Middleware {
-	return documentMiddleware(nil, nil)
+// without a backend. Optional extra scripts are injected after the marker.
+func DesktopMarkerMiddleware(extra ...[]byte) Middleware {
+	return documentMiddleware(nil, nil, extra...)
 }
 
 // BackendProxyMiddleware returns an asset-server middleware that serves
@@ -68,8 +68,8 @@ func parseBackendTarget(backendURL string) (*url.URL, error) {
 	return target, nil
 }
 
-func documentMiddleware(proxy *httputil.ReverseProxy, backend *url.URL) Middleware {
-	shim := WSRedirectShim(backend)
+func documentMiddleware(proxy *httputil.ReverseProxy, backend *url.URL, extra ...[]byte) Middleware {
+	shim := bytes.Join(append([][]byte{WSRedirectShim(backend)}, extra...), nil)
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			if proxy != nil && wantsBackend(r) {

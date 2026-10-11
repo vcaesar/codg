@@ -47,6 +47,13 @@ func StartWSRelay(target *url.URL) (*url.URL, func(), error) {
 			http.NotFound(w, r)
 			return
 		}
+		// Stripping Origin disables the backend's cross-site check, so the
+		// relay must enforce it: only the webview may use it, never an
+		// arbitrary web page in a browser that found the loopback port.
+		if !webviewOrigin(r.Header.Get("Origin")) {
+			http.Error(w, "forbidden origin", http.StatusForbidden)
+			return
+		}
 		proxy.ServeHTTP(w, r)
 	})}
 	go func() {
@@ -67,12 +74,33 @@ func StartWSRelay(target *url.URL) (*url.URL, func(), error) {
 	return relayURL, stop, nil
 }
 
+// webviewOrigin reports whether origin belongs to the desktop webview
+// (wails://wails on macOS/Linux, http://wails.localhost on Windows) or is
+// absent (non-browser local clients, which could dial the backend anyway).
+func webviewOrigin(origin string) bool {
+	if origin == "" {
+		return true
+	}
+	u, err := url.Parse(origin)
+	if err != nil {
+		return false
+	}
+	switch u.Scheme {
+	case "wails":
+		return true
+	case "http", "https":
+		return u.Host == "wails.localhost"
+	}
+	return false
+}
+
 // BackendProxyMiddlewareWithRelay is BackendProxyMiddleware plus the
 // websocket relay: the injected shim targets the relay instead of the
 // backend, so webview origins the backend would 403 never reach it. When
 // the relay cannot start, it degrades to the direct-backend shim. The
 // returned stop func shuts the relay down and is always safe to call.
-func BackendProxyMiddlewareWithRelay(backendURL string) (Middleware, func(), error) {
+// Optional extra scripts are injected into documents after the shim.
+func BackendProxyMiddlewareWithRelay(backendURL string, extra ...[]byte) (Middleware, func(), error) {
 	target, err := parseBackendTarget(backendURL)
 	if err != nil {
 		return nil, nil, err
@@ -82,7 +110,7 @@ func BackendProxyMiddlewareWithRelay(backendURL string) (Middleware, func(), err
 	relayURL, stop, err := StartWSRelay(target)
 	if err != nil {
 		slog.Warn("WS relay unavailable; websockets dial the backend directly", "err", err)
-		return documentMiddleware(proxy, target), func() {}, nil
+		return documentMiddleware(proxy, target, extra...), func() {}, nil
 	}
-	return documentMiddleware(proxy, relayURL), stop, nil
+	return documentMiddleware(proxy, relayURL, extra...), stop, nil
 }

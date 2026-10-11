@@ -60,8 +60,14 @@ func wsEchoBackend(t *testing.T, sawOrigin *atomic.Value) *httptest.Server {
 }
 
 // dialUpgrade performs a raw websocket-style handshake against host with the
-// hostile webview Origin and returns the connection and parsed response.
+// webview Origin and returns the connection and parsed response.
 func dialUpgrade(t *testing.T, host, path string) (net.Conn, *bufio.Reader, *http.Response) {
+	t.Helper()
+	return dialUpgradeOrigin(t, host, path, "wails://wails")
+}
+
+// dialUpgradeOrigin is dialUpgrade with an explicit Origin header.
+func dialUpgradeOrigin(t *testing.T, host, path, origin string) (net.Conn, *bufio.Reader, *http.Response) {
 	t.Helper()
 	conn, err := net.DialTimeout("tcp", host, 5*time.Second)
 	if err != nil {
@@ -74,9 +80,9 @@ func dialUpgrade(t *testing.T, host, path string) (net.Conn, *bufio.Reader, *htt
 	})
 	_, err = fmt.Fprintf(conn, "GET %s HTTP/1.1\r\nHost: %s\r\n"+
 		"Connection: Upgrade\r\nUpgrade: websocket\r\n"+
-		"Origin: wails://wails\r\n"+
+		"Origin: %s\r\n"+
 		"Sec-WebSocket-Version: 13\r\nSec-WebSocket-Key: x3JJHMbDL1EzLkh9GBhXDw==\r\n\r\n",
-		path, host)
+		path, host, origin)
 	if err != nil {
 		t.Fatalf("write handshake: %v", err)
 	}
@@ -129,6 +135,54 @@ func TestStartWSRelay_StripsOriginAndRelaysUpgrade(t *testing.T) {
 	stop()
 	if _, err := net.DialTimeout("tcp", relayURL.Host, time.Second); err == nil {
 		t.Fatal("relay still accepting connections after stop")
+	}
+}
+
+func TestStartWSRelay_RejectsBrowserOrigin(t *testing.T) {
+	t.Parallel()
+
+	var sawOrigin atomic.Value
+	backend := wsEchoBackend(t, &sawOrigin)
+	target, err := url.Parse(backend.URL)
+	if err != nil {
+		t.Fatalf("parse backend URL: %v", err)
+	}
+
+	relayURL, stop, err := StartWSRelay(target)
+	if err != nil {
+		t.Fatalf("StartWSRelay: %v", err)
+	}
+	t.Cleanup(stop)
+
+	for _, origin := range []string{"https://evil.example", "http://127.0.0.1:8080", "null"} {
+		_, _, resp := dialUpgradeOrigin(t, relayURL.Host, "/pty?id=x", origin)
+		if resp.StatusCode != http.StatusForbidden {
+			t.Fatalf("origin %q: status = %d, want 403", origin, resp.StatusCode)
+		}
+	}
+	if got := sawOrigin.Load(); got != nil {
+		t.Fatal("browser-origin upgrade must not reach the backend")
+	}
+}
+
+func TestWebviewOrigin(t *testing.T) {
+	t.Parallel()
+
+	cases := map[string]bool{
+		"":                                    true,
+		"wails://wails":                       true,
+		"http://wails.localhost":              true,
+		"https://wails.localhost":             true,
+		"http://localhost:3000":               false,
+		"https://evil.example":                false,
+		"http://wails.localhost.evil.example": false,
+		"null":                                false,
+		"file://":                             false,
+	}
+	for origin, want := range cases {
+		if got := webviewOrigin(origin); got != want {
+			t.Errorf("webviewOrigin(%q) = %v, want %v", origin, got, want)
+		}
 	}
 }
 

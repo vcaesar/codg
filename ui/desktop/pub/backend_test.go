@@ -20,28 +20,47 @@ func TestProbeBackend_NoServer(t *testing.T) {
 }
 
 func TestResolveWorkdir(t *testing.T) {
-	// CWD inside a temp dir resolves to itself.
-	dir := t.TempDir()
-	// macOS tempdirs are symlinked (/var -> /private/var); resolve so
-	// the comparison with os.Getwd output matches.
-	dir, err := filepath.EvalSymlinks(dir)
+	// Mutates env and CWD; no t.Parallel.
+	home, err := filepath.EvalSymlinks(t.TempDir())
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Chdir(dir)
+	t.Setenv("HOME", home)
+	ws := DesktopWorkspace(home)
 
+	// CWD inside a project dir resolves to itself.
+	dir := filepath.Join(home, "proj")
+	if err := os.Mkdir(dir, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	t.Chdir(dir)
 	if got := ResolveWorkdir(); got != dir {
 		t.Fatalf("got %q, want %q", got, dir)
 	}
 
-	// CWD "/" (Finder launch) falls back to the home directory.
-	t.Chdir("/")
-	home, err := os.UserHomeDir()
-	if err != nil {
-		t.Skip("no home dir in test env")
+	// CWD "/" (Finder launch) and $HOME must NOT become the project dir:
+	// indexing $HOME triggers macOS Desktop/Documents/Photos/Music prompts.
+	for _, cwd := range []string{"/", home} {
+		t.Chdir(cwd)
+		if got := ResolveWorkdir(); got != ws {
+			t.Fatalf("cwd %q: got %q, want workspace %q", cwd, got, ws)
+		}
+		if fi, serr := os.Stat(ws); serr != nil || !fi.IsDir() {
+			t.Fatalf("workspace %q not created: %v", ws, serr)
+		}
 	}
-	if got := ResolveWorkdir(); got != home {
-		t.Fatalf("got %q, want home %q", got, home)
+}
+
+func TestDesktopWorkspace_OutsideProtectedDirs(t *testing.T) {
+	t.Parallel()
+
+	home := "/Users/someone"
+	ws := DesktopWorkspace(home)
+	for _, protected := range []string{"Desktop", "Documents", "Downloads", "Pictures", "Music", "Movies", "Library"} {
+		p := filepath.Join(home, protected)
+		if ws == p || strings.HasPrefix(ws, p+string(filepath.Separator)) {
+			t.Fatalf("workspace %q is inside protected dir %q", ws, p)
+		}
 	}
 }
 
