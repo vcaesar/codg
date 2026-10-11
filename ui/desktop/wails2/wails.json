@@ -1,6 +1,6 @@
 {
   "$schema": "https://wails.io/schemas/config.v2.json",
-  "name": "codg-desktop",
+  "name": "Codg",
   "outputfilename": "codg-desktop",
   "frontend:dir": "frontend",
   "assetdir": "../pub/frontend/dist",
@@ -15,7 +15,7 @@
   "info": {
     "companyName": "Atom AI",
     "productName": "Codg Desktop",
-    "productVersion": "0.1.0",
+    "productVersion": "0.20.0",
     "copyright": "Copyright 2025-2026 Atom AI",
     "comments": "AI-powered coding assistant"
   }

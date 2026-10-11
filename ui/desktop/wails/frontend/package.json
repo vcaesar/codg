@@ -1,0 +1,17 @@
+{
+  "name": "codg-desktop-frontend",
+  "private": true,
+  "version": "0.20.0",
+  "description": "Frontend wrapper for Codg Desktop — stages the prebuilt ui/web/dist into ./dist for Wails to embed",
+  "type": "module",
+  "scripts": {
+    "dev": "node ./stage-dist.mjs && node ./serve-dist.mjs",
+    "build:dev": "node ./stage-dist.mjs",
+    "build": "node ./stage-dist.mjs",
+    "preview": "node ./stage-dist.mjs && node ./serve-dist.mjs",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@wailsio/runtime": "latest"
+  }
+}
