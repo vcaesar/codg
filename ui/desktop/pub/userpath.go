@@ -58,7 +58,8 @@ func extraBinDirs() []string {
 	if home, err := os.UserHomeDir(); err == nil {
 		dirs = append(dirs,
 			filepath.Join(home, ".local", "bin"),
-			filepath.Join(home, "go", "bin"))
+			filepath.Join(home, "go", "bin"),
+			filepath.Join(home, ".codg", "bin"))
 	}
 	if gopath := os.Getenv("GOPATH"); gopath != "" {
 		dirs = append(dirs, filepath.Join(gopath, "bin"))

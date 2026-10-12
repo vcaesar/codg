@@ -192,7 +192,7 @@ func BackendCommand(defaultSpec string) ([]string, int, error) {
 // not be found or did not become healthy.
 func StartBackendProcess(ctx context.Context, defaultSpec string) (string, func(), error) {
 	EnsureUserPath()
-	bin, err := ResolveCodgBinary()
+	bin, err := EnsureCodgBinary(ctx, AppVersion)
 	if err != nil {
 		return "", nil, err
 	}

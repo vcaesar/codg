@@ -10,7 +10,7 @@ import (
 // AppVersion is a variable (not a const) so release builds can override it:
 //
 //	-ldflags "-X github.com/vcaesar/codg/ui/desktop/pub.AppVersion=1.2.3"
-var AppVersion = "0.10.0"
+var AppVersion = "2.6.1"
 
 // Shared application metadata and window geometry for both desktop shells.
 const (
