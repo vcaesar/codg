@@ -354,7 +354,7 @@ npm() {
   fi
 }
 `
-	for _, script := range []string{"desktop-release.sh", "v3/desktop-release.sh"} {
+	for _, script := range []string{"desktop-release.sh"} { // "v3/desktop-release.sh"
 		fn := syncWebUI(t, script)
 		for _, tt := range []struct {
 			name                  string

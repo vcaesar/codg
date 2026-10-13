@@ -1,0 +1,20 @@
+# Keep the Docker build context small. The Dockerfile only needs ./dist
+# (for a locally-built binary; it downloads the release otherwise).
+.git
+.github
+test
+v0
+demo
+lang
+docs
+brew
+scripts
+ui
+plugin
+codgpkg
+pkg
+i18n
+standone
+bm
+*_test.go
+*.md
