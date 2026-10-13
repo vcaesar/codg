@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Codg
+Comment=AI-powered coding assistant
+Exec=codg-desktop
+Icon=codg-desktop
+Terminal=false
+Categories=Development;IDE;
+MimeType=x-scheme-handler/codg;
+StartupWMClass=codg-desktop

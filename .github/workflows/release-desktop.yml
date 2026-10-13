@@ -1,21 +1,25 @@
-# Codg desktop release line. Tag namespace `desktop-v<semver>` triggers
-# this; plain `v*` tags stay the CLI release and do NOT match here.
-#   git tag desktop-vX.Y.Z && git push origin desktop-vX.Y.Z
-#
+# Publish desktop packages on normal v<semver> tags, alongside the CLI assets.
+# Legacy desktop-v<semver> tags and manual retries remain supported.
 name: Release desktop
 
 on:
   push:
-    tags: ["desktop-v*"]
+    # Digit after the v keeps unrelated tags (e.g. vscode-*) from starting a
+    # run that prepare would reject.
+    tags: ["v[0-9]*", "desktop-v[0-9]*"]
   workflow_dispatch:
     inputs:
       tag:
-        description: "Tag to publish (e.g. desktop-v1.2.0)"
+        description: "Existing tag to publish (e.g. v1.2.0 or desktop-v1.2.0)"
         required: true
         type: string
 
 permissions:
   contents: write # create the release and upload artifacts
+
+concurrency:
+  group: release-desktop-${{ inputs.tag || github.ref_name }}
+  cancel-in-progress: false
 
 # The desktop shell launches the standalone `codg` binary at runtime, so each
 # package bundles it as a sibling. It is downloaded from the PUBLIC codg
@@ -24,8 +28,40 @@ env:
   CODG_RELEASE_REPO: "vcaesar/codg"
 
 jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.ver.outputs.tag }}
+      version: ${{ steps.ver.outputs.version }}
+      backend_tag: ${{ steps.ver.outputs.backend_tag }}
+      prerelease: ${{ steps.ver.outputs.prerelease }}
+    steps:
+      - name: Resolve version
+        id: ver
+        env:
+          TAG: ${{ inputs.tag || github.ref_name }}
+        run: |
+          case "$TAG" in
+            desktop-v*) version="${TAG#desktop-v}" ;;
+            v*) version="${TAG#v}" ;;
+            *) echo "tag must look like vX.Y.Z or desktop-vX.Y.Z, got '$TAG'" >&2; exit 1 ;;
+          esac
+          if [[ ! "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$ ]]; then
+            echo "invalid desktop version: $version" >&2
+            exit 1
+          fi
+          prerelease=false
+          if [[ "$version" == *-* ]]; then prerelease=true; fi
+          {
+            echo "tag=$TAG"
+            echo "version=$version"
+            echo "backend_tag=v$version"
+            echo "prerelease=$prerelease"
+          } >> "$GITHUB_OUTPUT"
+
   build:
     name: build (${{ matrix.name }})
+    needs: [prepare]
     strategy:
       fail-fast: false
       matrix:
@@ -52,6 +88,8 @@ jobs:
         shell: bash # desktop-release.sh is bash; windows defaults to pwsh
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: refs/tags/${{ needs.prepare.outputs.tag }}
 
       - uses: actions/setup-go@v5
         with:
@@ -86,32 +124,12 @@ jobs:
         if: runner.os == 'macOS'
         run: brew install create-dmg
 
+      # Keep the CLI on the same Wails version the shell's go.mod builds with.
       - name: Install Wails v2 CLI
-        run: go install github.com/wailsapp/wails/v2/cmd/wails@v2.14.0
-
-      - name: Resolve version
-        id: ver
+        working-directory: ui/desktop/wails2
         run: |
-          tag="${{ inputs.tag || github.ref_name }}"
-          case "$tag" in
-            desktop-v*) ;;
-            *) echo "tag must look like desktop-vX.Y.Z, got '$tag'" >&2; exit 1 ;;
-          esac
-          version="${tag#desktop-v}"
-          echo "version=$version" >> "$GITHUB_OUTPUT"
-          echo "backend_tag=v$version" >> "$GITHUB_OUTPUT"
-          echo "tag=$tag" >> "$GITHUB_OUTPUT"
-
-      # Build the shared React app once; the wails shell embeds the prebuilt
-      # ui/web/dist (staged via frontend/stage-dist.mjs) instead of rebuilding
-      # from source during packaging.
-      - name: Build web UI
-        run: |
-          if [ -f ui/web/package.json ]; then
-            (cd ui/web && (npm ci || npm install) && npm run build)
-          else
-            echo "ui/web/package.json absent; skipping web UI build" >&2
-          fi
+          version="$(go list -m -f '{{.Version}}' github.com/wailsapp/wails/v2)"
+          go install "github.com/wailsapp/wails/v2/cmd/wails@${version}"
 
       # Download the matching codg CLI from the PUBLIC codg releases so the
       # packager can bundle it next to the shell. No token: public release
@@ -119,6 +137,7 @@ jobs:
       - name: Fetch codg binary
         env:
           PLATFORM: ${{ matrix.platform }}
+          BACKEND_TAG: ${{ needs.prepare.outputs.backend_tag }}
         run: |
           set -euo pipefail
           if [ -z "${CODG_RELEASE_REPO}" ]; then
@@ -129,11 +148,21 @@ jobs:
           base="codg_${os}_${arch}"
           bin="$base"; [ "$os" = "windows" ] && bin="${bin}.exe"
           asset="${base}.zip"
-          backend_tag="${{ steps.ver.outputs.backend_tag }}"
-          url="https://github.com/${CODG_RELEASE_REPO}/releases/download/${backend_tag}/${asset}"
+          url="https://github.com/${CODG_RELEASE_REPO}/releases/download/${BACKEND_TAG}/${asset}"
           mkdir -p .codg-bin
-          echo "Downloading $url"
-          curl -fSL --retry 3 -o ".codg-bin/${asset}" "$url"
+          # A v* tag can start this build before the matching CLI asset is
+          # uploaded. Retry 404s too; curl --retry alone does not retry them.
+          for attempt in {1..30}; do
+            if curl -fSL --connect-timeout 10 --max-time 120 -o ".codg-bin/${asset}" "$url"; then
+              break
+            fi
+            if [ "$attempt" -eq 30 ]; then
+              echo "CLI asset unavailable after 30 attempts: $url" >&2
+              exit 1
+            fi
+            echo "Waiting for matching CLI asset ($attempt/30): $url" >&2
+            sleep 30
+          done
           # The zip holds a single binary named like the asset (sans .zip);
           # extract and resolve it. unzip (-o overwrite, -j flatten) where
           # available; Git Bash on the Windows runner has no unzip and its
@@ -156,12 +185,15 @@ jobs:
 
       - name: Build and package
         env:
-          # The shipped app gets its real UI from the bundled `codg web`, so a
-          # missing codg binary means a UI-less app. Make that a hard failure
-          # rather than a silent PATH-fallback that only "works" on the build
-          # box. desktop-release.sh honours this flag (build_codg).
+          # The binary embeds the web UI from ui/desktop/pub/frontend/dist
+          # (pub/assets.go); desktop-release.sh syncs it, building ui/web from
+          # source when present. The UI's API calls go to the bundled
+          # `codg web`, so a missing codg binary is a hard failure rather than
+          # a silent PATH-fallback. desktop-release.sh honours this flag.
           CODG_REQUIRE_BUNDLE: "1"
-        run: bash scripts/desktop-release.sh "${{ matrix.platform }}" "${{ steps.ver.outputs.version }}"
+          PLATFORM: ${{ matrix.platform }}
+          VERSION: ${{ needs.prepare.outputs.version }}
+        run: bash scripts/desktop-release.sh "$PLATFORM" "$VERSION"
 
       - uses: actions/upload-artifact@v4
         with:
@@ -175,10 +207,12 @@ jobs:
 
   publish:
     name: publish release
-    needs: build
+    needs: [prepare, build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: refs/tags/${{ needs.prepare.outputs.tag }}
 
       - uses: actions/download-artifact@v4
         with:
@@ -186,33 +220,28 @@ jobs:
           pattern: dist-*
           merge-multiple: true
 
-      - name: Resolve version
-        id: ver
-        run: |
-          tag="${{ inputs.tag || github.ref_name }}"
-          case "$tag" in
-            desktop-v*) ;;
-            *) echo "tag must look like desktop-vX.Y.Z, got '$tag'" >&2; exit 1 ;;
-          esac
-          echo "tag=$tag" >> "$GITHUB_OUTPUT"
-
       - name: Checksums
         run: |
           cd dist
-          sha256sum codg-* > checksums.txt
-          cat checksums.txt
+          # Do not overwrite the CLI release's checksum manifest.
+          sha256sum codg-* > desktop-checksums.txt
+          cat desktop-checksums.txt
 
       # Re-runs (e.g. one platform retried) must not fail on an existing
       # release: upload into it with --clobber instead.
       - name: Publish GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
+          TAG: ${{ needs.prepare.outputs.tag }}
+          PRERELEASE: ${{ needs.prepare.outputs.prerelease }}
         run: |
-          tag="${{ steps.ver.outputs.tag }}"
-          if gh release view "$tag" >/dev/null 2>&1; then
-            gh release upload "$tag" dist/* --clobber
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" dist/* --clobber
           else
-            gh release create "$tag" dist/* \
-              --title "Codg Desktop $tag" \
-              --generate-notes
+            args=()
+            if [ "$PRERELEASE" = "true" ]; then args+=(--prerelease); fi
+            gh release create "$TAG" dist/* \
+              --verify-tag --latest=false \
+              --title "Codg Desktop $TAG" \
+              --generate-notes "${args[@]}"
           fi
