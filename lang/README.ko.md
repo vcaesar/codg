@@ -54,24 +54,26 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 
 ## 주요 기능
 
-- 자동·비동기, 높은 동시성과 성능을 지닌 에이전트 시스템이며 메모리 사용량도 적음
+- 자동·비동기, 높은 동시성과 성능을 지닌 에이전트 시스템이며 메모리와 CPU 사용량이 적고 토큰 사용량도 최소화(70%~90% 이상 절감)
 - 다중 모델 제공자(60-100+ API 및 Pro 제공자, Custom URL API) 및 로컬 모델(openai-compat 또는 claude-compat을 통해)
 - Openrouter, OpenCode, Ollama, Nvidia 등의 무료 모델 지원. "/connect", "/models" 또는 "codg auth"로 사용
 - 다중 에이전트를 위한 비동기 및 모델 규칙
 - 입출력, 컨텍스트와 프롬프트를 압축해 토큰 절약, 캐시와 규칙으로 비용 절감
+
 - 모든 터미널과 OS 지원, 웹 터미널도 지원
 - 사용 편의성: TUI는 어디서나 GUI처럼 사용 가능하며, 데스크톱/웹 버전은 BETA 제공 중
 - 클릭 또는 "/xxx" 로 세션 전환, TUI 어디서나 클릭 가능
 - "Modified Files" 클릭 또는 "/diff", "/diff git" 으로 VSCode처럼 TUI 내에서 diff 파일 확인
 - 영문 글자 및 짧은 문장 자동 완성
+
 - 더 쉽고 간편한 Agents, Skills 및 MCP 시스템, 사용자 정의 Agents 및 Skills 지원
 - OpenClaw와 유사한 채널 및 기능 지원
-- 완전한 웹 UI, 원격 TUI 및 데스크톱 앱 지원
+- 완전한 웹 UI, 원격 TUI 및 데스크톱 앱 지원, vscode/zed 확장 프로그램 지원
 - Claude Code/Codex 플러그인 지원
 - 컴퓨터, 모바일 및 브라우저 완전 제어
 - 에이전트 팀 지원
 
-데스크톱 앱 및 확장 프로그램(BETA), 일부 기능은 테스트 및 버그 수정 후 릴리스 예정.
+음성(Beta), 일부 기능은 테스트 및 버그 수정 후 릴리스 예정.
 
 ## 제공자
 
@@ -284,4 +286,10 @@ allowed_tools = ["bash", "edit", "view", "glob", "grep"]
 allowed_cmds = ["git"]
 [tools.file_access]
 allowed_dirs = ["**x"] # 모든 디렉터리
+
+# Yolo(전체), 모든 파일과 명령 허용
+[tools.bash.full]
+allowed_cmds = ["**x"]
+[tools.file_access.full]
+allowed_dirs = ["**x"]
 ```

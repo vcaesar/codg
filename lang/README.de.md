@@ -54,24 +54,26 @@ Mit „/yolo“ können Sie zwischen Auto- und Bestätigungsmodus wechseln; Bere
 
 ## Funktionen
 
-- Automatisches und asynchrones, hochparalleles und leistungsstarkes Agentensystem mit geringem Speicherverbrauch
+- Automatisches und asynchrones, hochparalleles und leistungsstarkes Agentensystem mit geringem Speicher- und CPU-Verbrauch sowie minimalem Token-Verbrauch (70 % bis 90 %+ Ersparnis)
 - Mehrere Modellanbieter (60-100+ API- und Pro-Anbieter, Custom URL API) sowie lokale Modelle über openai-compat oder claude-compat
 - Unterstützung der kostenlosen Modelle von Openrouter, OpenCode, Ollama, Nvidia und weiteren; Nutzung via „/connect“, „/models“ oder „codg auth“
 - Asynchrone Regeln und Modellregeln für Multi-Agenten
 - Komprimierung von Ein-/Ausgabe, Kontext und Prompts spart Tokens; Cache und Regeln senken die Kosten
+
 - Unterstützung für jedes Terminal und Betriebssystem, auch für Web-Terminals
 - Benutzerfreundlich: TUI überall einsetzbar, GUI-nah; Desktop- und Web-Version im BETA-Stadium
 - Klicken oder „/xxx" zum Sitzungswechsel, überall im TUI anklickbar
 - Klick auf „Modified Files" oder „/diff" bzw. „/diff git" zeigt Diff-Dateien im TUI wie in VSCode
 - Autovervollständigung englischer Buchstaben und kurzer Sätze
+
 - Einfacheres Agents-, Skills- und MCP-System, Unterstützung für benutzerdefinierte Agents und Skills
 - Kanal- und Funktionsunterstützung wie OpenClaw
-- Vollständige Unterstützung für Web-UI, Remote-TUI und Desktop-App
+- Vollständige Unterstützung für Web-UI, Remote-TUI und Desktop-App sowie vscode/zed-Erweiterungen
 - Unterstützung für Claude Code/Codex-Plugins
 - Vollständige Computer-, Mobil- und Browser-Steuerung
 - Unterstützung für Agenten-Teams
 
-Desktop-App und Erweiterungen (BETA); einige Funktionen müssen noch getestet und Bugs behoben werden, dann freigegeben.
+Sprachsteuerung (Beta); einige Funktionen müssen noch getestet und Bugs behoben werden, dann freigegeben.
 
 ## Anbieter
 
@@ -284,4 +286,10 @@ allowed_tools = ["bash", "edit", "view", "glob", "grep"]
 allowed_cmds = ["git"]
 [tools.file_access]
 allowed_dirs = ["**x"] # alle Verzeichnisse
+
+# Yolo (voll), erlaubt alle Dateien und Befehle
+[tools.bash.full]
+allowed_cmds = ["**x"]
+[tools.file_access.full]
+allowed_dirs = ["**x"]
 ```

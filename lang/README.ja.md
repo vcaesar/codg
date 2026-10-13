@@ -54,24 +54,26 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 
 ## 機能
 
-- 自動かつ非同期、高並行・高性能なエージェントシステムで、メモリ使用量も少ない
+- 自動かつ非同期、高並行・高性能なエージェントシステムで、メモリと CPU の使用量が少なく、トークン消費も最小限（70%〜90%以上削減）
 - マルチモデルプロバイダー（60-100+ の API・Pro プロバイダー、Custom URL API）およびローカルモデル（openai-compat または claude-compat 経由）
 - Openrouter、OpenCode、Ollama、Nvidia などの無料モデルに対応。「/connect」「/models」または「codg auth」から利用可能
 - マルチエージェント向けの非同期処理とモデルルール
 - 入出力・コンテキスト・プロンプトを圧縮してトークンを節約、キャッシュとルールでコストを削減
+
 - あらゆるターミナルと OS をサポート、Web ターミナルにも対応
 - 使いやすさ：TUI はどこでも GUI のように使え、デスクトップ版と Web 版は BETA 提供中
 - クリックまたは「/xxx」でセッション切り替え、TUI 内のあらゆる場所をクリック可能
 - 「Modified Files」をクリックするか「/diff」「/diff git」で VSCode のように差分ファイルを表示
 - 英文字と短文の自動補完
+
 - より使いやすいエージェント、スキル、MCP システム。カスタム Agents と Skills に対応
 - OpenClaw のようなチャンネルと機能サポート
-- 完全な Web UI、リモート TUI、デスクトップアプリをサポート
+- 完全な Web UI、リモート TUI、デスクトップアプリをサポート、vscode/zed 拡張機能にも対応
 - Claude Code/Codex プラグインのサポート
 - コンピューター、モバイル、ブラウザの完全な操作
 - エージェントチームのサポート
 
-デスクトップアプリと拡張機能(BETA)、一部の機能はテストとバグ修正後にリリース予定。
+音声(Beta)、一部の機能はテストとバグ修正後にリリース予定。
 
 ## プロバイダー
 
@@ -284,4 +286,10 @@ allowed_tools = ["bash", "edit", "view", "glob", "grep"]
 allowed_cmds = ["git"]
 [tools.file_access]
 allowed_dirs = ["**x"] # すべてのディレクトリ
+
+# Yolo（フル）、すべてのファイルとコマンドを許可
+[tools.bash.full]
+allowed_cmds = ["**x"]
+[tools.file_access.full]
+allowed_dirs = ["**x"]
 ```

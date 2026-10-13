@@ -54,24 +54,26 @@ Use "/yolo" to toggle the auto and ask mode, and you can set permissions by codg
 
 ## Features
 
-- Auto and asynchronous, concurrency and high performance agents system, and low memory use
+- Auto and asynchronous, concurrency and high performance agents system, low memory and cpu, lessest tokens use (saved 70% to 90%+)
 - Multi models providers (60-100+ API and Pro providers, Custom URL API) and local models via by openai-compat or claude-compat,
 - Support Openrouter, OpenCode, Ollama, Nvidia and others free models, use it by "/connect" "/models" or "codg auth"
 - Asynchronous and model rules for the multi agents
 - Compression input-output, context and prompts to save the tokens, cache and rules to reduce the cost
+
 - Any terminal and OS support, also web terminal support
 - Easy use: The TUI in everywhere like GUI and Easy, Desktop and Web in the BETA
 - Click or "/xxx" to switch sessions, Click to everywhere in TUI
 - Clcik "Modified Files" or "/diff" and "/diff git" to view the diff files in TUI same the vscode
 - Autocomplete the English letters and short sentences
+
 - More easy Agents, Skills and MCP system, custom Agents and Skills support
 - Channel and features support like OpenClaw
-- Full Web UI and remote TUI support, and desktop app support
+- Full Web UI and remote TUI support, and desktop app support, vscode/zed Extensions support
 - Claude Code/Codex Plugin support
 - Full computer, mobile and browser use
 - Agent teams support
 
-Desktop App and Extensions (BETA), Some features need wait for the test and fix bugs then release it.
+Voice (Beta), Some features need wait for the test and fix bugs then release it.
 
 ## Providers
 
@@ -289,4 +291,10 @@ allowed_tools = ["bash", "edit", "view", "glob", "grep"]
 allowed_cmds = ["git"]
 [tools.file_access]
 allowed_dirs = ["**x"] # all directories
+
+# Yolo (Full), allow the all files and cmds
+[tools.bash.full]
+allowed_cmds = ["**x"]
+[tools.file_access.full]
+allowed_dirs = ["**x"]
 ```

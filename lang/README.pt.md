@@ -54,24 +54,26 @@ Use "/yolo" para alternar entre o modo automático e o modo de confirmação; as
 
 ## Recursos
 
-- Sistema de agentes automático e assíncrono, com alta concorrência e desempenho, e baixo consumo de memória
+- Sistema de agentes automático e assíncrono, com alta concorrência e desempenho, baixo consumo de memória e CPU, e uso mínimo de tokens (economia de 70% a 90%+)
 - Provedores multi-modelo (60-100+ provedores API e Pro, Custom URL API) e modelos locais via openai-compat ou claude-compat
 - Suporte aos modelos gratuitos do Openrouter, OpenCode, Ollama, Nvidia e outros; use-os via "/connect", "/models" ou "codg auth"
 - Regras assíncronas e de modelo para os multi-agentes
 - Compressão de entrada/saída, contexto e prompts para economizar tokens; cache e regras para reduzir o custo
+
 - Compatível com qualquer terminal e SO, incluindo terminais web
 - Fácil de usar: TUI disponível em todos os lugares, próxima de uma GUI; versões Desktop e Web em BETA
 - Clique ou use "/xxx" para alternar sessões; tudo é clicável na TUI
 - Clique em "Modified Files" ou use "/diff" e "/diff git" para ver arquivos de diff na TUI, como no VSCode
 - Autocompletar letras e frases curtas em inglês
+
 - Sistema de Agents, Skills e MCP mais fácil, com suporte a Agents e Skills personalizados
 - Suporte a canais e funcionalidades semelhante ao OpenClaw
-- Suporte completo à interface web, TUI remota e aplicativo para desktop
+- Suporte completo à interface web, TUI remota e aplicativo para desktop, além de extensões para vscode/zed
 - Suporte a plugins do Claude Code/Codex
 - Controle completo de computador, dispositivos móveis e navegador
 - Suporte a equipes de agentes
 
-App Desktop e extensões (BETA); alguns recursos ainda aguardam testes e correções de bugs antes do lançamento.
+Voz (Beta); alguns recursos ainda aguardam testes e correções de bugs antes do lançamento.
 
 ## Provedores
 
@@ -284,4 +286,10 @@ allowed_tools = ["bash", "edit", "view", "glob", "grep"]
 allowed_cmds = ["git"]
 [tools.file_access]
 allowed_dirs = ["**x"] # todos os diretórios
+
+# Yolo (completo), permite todos os arquivos e comandos
+[tools.bash.full]
+allowed_cmds = ["**x"]
+[tools.file_access.full]
+allowed_dirs = ["**x"]
 ```
