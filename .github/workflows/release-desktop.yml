@@ -76,6 +76,14 @@ jobs:
               platform: windows/amd64,
               name: windows-amd64,
             }
+          # Wails on Windows (WebView2 via go-webview2) needs no CGO, so the
+          # amd64 runner cross-compiles the arm64 shell; NSIS emits an
+          # ARM64-only installer from the same project.nsi.
+          - {
+              runner: windows-latest,
+              platform: windows/arm64,
+              name: windows-arm64,
+            }
           - { runner: ubuntu-22.04, platform: linux/amd64, name: linux-amd64 }
           - {
               runner: ubuntu-22.04-arm,
