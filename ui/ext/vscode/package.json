@@ -2,7 +2,7 @@
   "name": "codg",
   "displayName": "Codg",
   "description": "Launch the Codg AI coding agent in your editor and share file and selection context with it.",
-  "version": "0.22.0",
+  "version": "0.23.0",
   "publisher": "atomai",
   "license": "MIT",
   "repository": {

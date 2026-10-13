@@ -16,11 +16,12 @@ import (
 )
 
 type releaseStep struct {
-	Name string
-	Uses string
-	With map[string]string
-	Env  map[string]string
-	Run  string
+	Name             string
+	Uses             string
+	With             map[string]string
+	Env              map[string]string
+	Run              string
+	WorkingDirectory string `yaml:"working-directory"`
 }
 
 type releaseJob struct {
@@ -87,7 +88,7 @@ func readReleaseFile(t *testing.T, dir, name string) string {
 func TestDesktopReleaseWorkflow(t *testing.T) {
 	t.Parallel()
 	workflow := readReleaseWorkflow(t)
-	require.ElementsMatch(t, []string{"v*", "desktop-v*"}, workflow.On.Push.Tags)
+	require.ElementsMatch(t, []string{"v[0-9]*", "desktop-v[0-9]*"}, workflow.On.Push.Tags)
 	require.True(t, workflow.On.WorkflowDispatch.Inputs["tag"].Required)
 	require.Equal(t, "string", workflow.On.WorkflowDispatch.Inputs["tag"].Type)
 	require.Equal(t, "release-desktop-${{ inputs.tag || github.ref_name }}", workflow.Concurrency.Group)
@@ -173,6 +174,25 @@ func TestDesktopReleaseVersion(t *testing.T) {
 				tt.tag, tt.version, tt.version, tt.prerelease), readReleaseFile(t, dir, "outputs"))
 		})
 	}
+}
+
+func TestDesktopReleaseWailsCLI(t *testing.T) {
+	t.Parallel()
+	step := releaseStepByName(t, readReleaseWorkflow(t).Jobs["build"], "Install Wails v2 CLI")
+	require.Equal(t, "ui/desktop/wails2", step.WorkingDirectory)
+	require.Contains(t, readReleaseFile(t, "..", step.WorkingDirectory+"/go.mod"), "github.com/wailsapp/wails/v2 ")
+
+	const mocks = `
+go() {
+  printf '%s\n' "$*" >> go-calls
+  if [ "$1" = list ]; then echo v2.16.0; fi
+}
+`
+	dir := t.TempDir()
+	output, err := runReleaseScript(t, dir, mocks+step.Run)
+	require.NoError(t, err, output)
+	require.Equal(t, "list -m -f {{.Version}} github.com/wailsapp/wails/v2\n"+
+		"install github.com/wailsapp/wails/v2/cmd/wails@v2.16.0\n", readReleaseFile(t, dir, "go-calls"))
 }
 
 func TestDesktopReleaseFetch(t *testing.T) {
