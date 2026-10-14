@@ -59,18 +59,16 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 - Openrouter, OpenCode, Ollama, Nvidia 등의 무료 모델 지원. "/connect", "/models" 또는 "codg auth"로 사용
 - 다중 에이전트를 위한 비동기 및 모델 규칙
 - 입출력, 컨텍스트와 프롬프트를 압축해 토큰 절약, 캐시와 규칙으로 비용 절감
-
 - 모든 터미널과 OS 지원, 웹 터미널도 지원
 - 사용 편의성: TUI는 어디서나 GUI처럼 사용 가능하며, 데스크톱/웹 버전은 BETA 제공 중
 - 클릭 또는 "/xxx" 로 세션 전환, TUI 어디서나 클릭 가능
 - "Modified Files" 클릭 또는 "/diff", "/diff git" 으로 VSCode처럼 TUI 내에서 diff 파일 확인
 - 영문 글자 및 짧은 문장 자동 완성
-
 - 더 쉽고 간편한 Agents, Skills 및 MCP 시스템, 사용자 정의 Agents 및 Skills 지원
 - OpenClaw와 유사한 채널 및 기능 지원
 - 완전한 웹 UI, 원격 TUI 및 데스크톱 앱 지원, vscode/zed 확장 프로그램 지원
-- Claude Code/Codex 플러그인 지원
-- 컴퓨터, 모바일 및 브라우저 완전 제어
+- Claude Code 및 Codex 플러그인 지원
+- 컴퓨터, 모바일 및 브라우저 완전 제어, 에이전트가 모든 것을 처리
 - 에이전트 팀 지원
 
 음성(Beta), 일부 기능은 테스트 및 버그 수정 후 릴리스 예정.

@@ -59,18 +59,16 @@ Mit „/yolo“ können Sie zwischen Auto- und Bestätigungsmodus wechseln; Bere
 - Unterstützung der kostenlosen Modelle von Openrouter, OpenCode, Ollama, Nvidia und weiteren; Nutzung via „/connect“, „/models“ oder „codg auth“
 - Asynchrone Regeln und Modellregeln für Multi-Agenten
 - Komprimierung von Ein-/Ausgabe, Kontext und Prompts spart Tokens; Cache und Regeln senken die Kosten
-
 - Unterstützung für jedes Terminal und Betriebssystem, auch für Web-Terminals
 - Benutzerfreundlich: TUI überall einsetzbar, GUI-nah; Desktop- und Web-Version im BETA-Stadium
 - Klicken oder „/xxx" zum Sitzungswechsel, überall im TUI anklickbar
 - Klick auf „Modified Files" oder „/diff" bzw. „/diff git" zeigt Diff-Dateien im TUI wie in VSCode
 - Autovervollständigung englischer Buchstaben und kurzer Sätze
-
 - Einfacheres Agents-, Skills- und MCP-System, Unterstützung für benutzerdefinierte Agents und Skills
 - Kanal- und Funktionsunterstützung wie OpenClaw
 - Vollständige Unterstützung für Web-UI, Remote-TUI und Desktop-App sowie vscode/zed-Erweiterungen
-- Unterstützung für Claude Code/Codex-Plugins
-- Vollständige Computer-, Mobil- und Browser-Steuerung
+- Unterstützung für Claude Code- und Codex-Plugins
+- Vollständige Computer-, Mobil- und Browser-Steuerung, Agenten erledigen alles
 - Unterstützung für Agenten-Teams
 
 Sprachsteuerung (Beta); einige Funktionen müssen noch getestet und Bugs behoben werden, dann freigegeben.

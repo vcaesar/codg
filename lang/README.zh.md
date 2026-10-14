@@ -59,18 +59,16 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 - 支持 Openrouter、OpenCode、Ollama、Nvidia 等免费模型，可通过 “/connect” “/models” 或 “codg auth” 使用
 - 多智能体的异步化和模型规则
 - 压缩输入输出、上下文与提示以节省 token，利用缓存和规则降低成本
-
 - 支持任何终端和操作系统，同时支持 Web 终端
 - 易用性：TUI 随处可用，体验接近 GUI，桌面版和 Web 版处于 BETA 阶段
 - 点击或输入 “/xxx” 切换会话，TUI 中任意位置可点击
 - 点击 “Modified Files” 或输入 “/diff”、“/diff git” 在 TUI 中查看差异文件，体验与 VSCode 相似
 - 自动补全英文字母和短句
-
 - 更易用的 Agents、Skills 与 MCP 系统，支持自定义 Agents 与 Skills
 - 类似 OpenClaw 的频道与功能支持
 - 完整的 Web UI、远程 TUI 和桌面应用支持，支持 vscode/zed 扩展
-- 支持 Claude Code/Codex 插件
-- 完整的电脑、移动设备与浏览器操控
+- 支持 Claude Code 和 Codex 插件
+- 完整的电脑、移动设备与浏览器操控，智能体无所不能
 - 支持智能体团队
 
 语音（Beta），部分功能仍需等待测试与修复 bug 后再发布。

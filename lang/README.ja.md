@@ -59,18 +59,16 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 - Openrouter、OpenCode、Ollama、Nvidia などの無料モデルに対応。「/connect」「/models」または「codg auth」から利用可能
 - マルチエージェント向けの非同期処理とモデルルール
 - 入出力・コンテキスト・プロンプトを圧縮してトークンを節約、キャッシュとルールでコストを削減
-
 - あらゆるターミナルと OS をサポート、Web ターミナルにも対応
 - 使いやすさ：TUI はどこでも GUI のように使え、デスクトップ版と Web 版は BETA 提供中
 - クリックまたは「/xxx」でセッション切り替え、TUI 内のあらゆる場所をクリック可能
 - 「Modified Files」をクリックするか「/diff」「/diff git」で VSCode のように差分ファイルを表示
 - 英文字と短文の自動補完
-
 - より使いやすいエージェント、スキル、MCP システム。カスタム Agents と Skills に対応
 - OpenClaw のようなチャンネルと機能サポート
 - 完全な Web UI、リモート TUI、デスクトップアプリをサポート、vscode/zed 拡張機能にも対応
-- Claude Code/Codex プラグインのサポート
-- コンピューター、モバイル、ブラウザの完全な操作
+- Claude Code および Codex プラグインのサポート
+- コンピューター、モバイル、ブラウザの完全な操作、エージェントが何でもこなす
 - エージェントチームのサポート
 
 音声(Beta)、一部の機能はテストとバグ修正後にリリース予定。

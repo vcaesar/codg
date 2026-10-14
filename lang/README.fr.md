@@ -59,18 +59,16 @@ Utilisez « /yolo » pour basculer entre le mode automatique et le mode de con
 - Prise en charge des modèles gratuits d'Openrouter, OpenCode, Ollama, Nvidia et d'autres, utilisez-les via « /connect », « /models » ou « codg auth »
 - Règles asynchrones et de modèle pour les multi-agents
 - Compression des entrées/sorties, du contexte et des prompts pour économiser les tokens ; cache et règles pour réduire les coûts
-
 - Compatible avec tout terminal et OS, y compris les terminaux web
 - Facile à utiliser : TUI disponible partout, proche d'une GUI ; versions Desktop et Web en BETA
 - Cliquez ou utilisez « /xxx » pour changer de session, tout est cliquable dans le TUI
 - Cliquez sur « Modified Files » ou utilisez « /diff » et « /diff git » pour visualiser les diffs dans le TUI, comme dans VSCode
 - Autocomplétion des lettres anglaises et phrases courtes
-
 - Système d’Agents, Skills et MCP plus simple, prise en charge des Agents et Skills personnalisés
 - Prise en charge des canaux et fonctionnalités comme OpenClaw
 - Prise en charge complète de l'interface Web, du TUI distant et de l'application de bureau, extensions vscode/zed
-- Prise en charge des plugins Claude Code/Codex
-- Contrôle complet de l'ordinateur, du mobile et du navigateur
+- Prise en charge des plugins Claude Code et Codex
+- Contrôle complet de l'ordinateur, du mobile et du navigateur, les agents s'occupent de tout
 - Prise en charge des équipes d'agents
 
 Voix (Beta), certaines fonctionnalités nécessitent encore des tests et des corrections de bugs avant leur publication.
