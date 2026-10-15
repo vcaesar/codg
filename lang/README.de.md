@@ -65,13 +65,14 @@ Mit „/yolo“ können Sie zwischen Auto- und Bestätigungsmodus wechseln; Bere
 - Klick auf „Modified Files" oder „/diff" bzw. „/diff git" zeigt Diff-Dateien im TUI wie in VSCode
 - Autovervollständigung englischer Buchstaben und kurzer Sätze
 - Einfacheres Agents-, Skills- und MCP-System, Unterstützung für benutzerdefinierte Agents und Skills
+- Unterstützung für Agenten-Teams, mehrere Haupt-Agenten
 - Kanal- und Funktionsunterstützung wie OpenClaw
 - Vollständige Unterstützung für Web-UI, Remote-TUI und Desktop-App sowie vscode/zed-Erweiterungen
 - Unterstützung für Claude Code- und Codex-Plugins
 - Vollständige Computer-, Mobil- und Browser-Steuerung, Agenten erledigen alles
-- Unterstützung für Agenten-Teams
+- Vollständige Sprachunterstützung mit Online- und lokalen Engines (whisper.cpp, funasr und qwen3-asr), „/run install" installiert die lokale Engine
 
-Sprachsteuerung (Beta); einige Funktionen müssen noch getestet und Bugs behoben werden, dann freigegeben.
+Einige Beta-Funktionen müssen noch getestet und Bugs behoben werden, dann werden sie freigegeben.
 
 ## Anbieter
 

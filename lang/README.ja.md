@@ -65,13 +65,14 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 - 「Modified Files」をクリックするか「/diff」「/diff git」で VSCode のように差分ファイルを表示
 - 英文字と短文の自動補完
 - より使いやすいエージェント、スキル、MCP システム。カスタム Agents と Skills に対応
+- エージェントチームのサポート、複数のメインエージェント
 - OpenClaw のようなチャンネルと機能サポート
 - 完全な Web UI、リモート TUI、デスクトップアプリをサポート、vscode/zed 拡張機能にも対応
 - Claude Code および Codex プラグインのサポート
 - コンピューター、モバイル、ブラウザの完全な操作、エージェントが何でもこなす
-- エージェントチームのサポート
+- 完全な音声サポート、オンラインおよびローカルエンジン(whisper.cpp、funasr、qwen3-asr)に対応、「/run install」でローカルエンジンをインストール
 
-音声(Beta)、一部の機能はテストとバグ修正後にリリース予定。
+一部のベータ機能はテストとバグ修正後にリリース予定。
 
 ## プロバイダー
 

@@ -65,13 +65,14 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 - 點擊 “Modified Files” 或輸入 “/diff”、“/diff git” 在 TUI 中檢視差異檔案，體驗與 VSCode 相似
 - 自動補全英文字母與短句
 - 更易用的 Agents、Skills 與 MCP 系統，支援自訂 Agents 與 Skills
+- 支援智慧體團隊，多主智慧體
 - 類似 OpenClaw 的頻道與功能支援
 - 完整的 Web UI、遠端 TUI 與桌面應用支援，支援 vscode/zed 擴充功能
 - 支援 Claude Code 與 Codex 外掛
 - 完整的電腦、行動裝置與瀏覽器操控，智慧體無所不能
-- 支援智慧體團隊
+- 完整的語音支援，支援線上與本地引擎（whisper.cpp、funasr 與 qwen3-asr），使用 “/run install” 安裝本地引擎
 
-語音（Beta），部分功能仍需等待測試與修復 bug 後再發佈。
+部分 Beta 功能仍需等待測試與修復 bug 後再發佈。
 
 ## 提供商
 

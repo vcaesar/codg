@@ -65,13 +65,14 @@ Use "/yolo" para alternar entre o modo automático e o modo de confirmação; as
 - Clique em "Modified Files" ou use "/diff" e "/diff git" para ver arquivos de diff na TUI, como no VSCode
 - Autocompletar letras e frases curtas em inglês
 - Sistema de Agents, Skills e MCP mais fácil, com suporte a Agents e Skills personalizados
+- Suporte a equipes de agentes, com múltiplos agentes principais
 - Suporte a canais e funcionalidades semelhante ao OpenClaw
 - Suporte completo à interface web, TUI remota e aplicativo para desktop, além de extensões para vscode/zed
 - Suporte a plugins do Claude Code e Codex
 - Controle completo de computador, dispositivos móveis e navegador; os agentes fazem tudo
-- Suporte a equipes de agentes
+- Suporte completo a voz, com motores online e locais (whisper.cpp, funasr e qwen3-asr); use "/run install" para instalar o motor local
 
-Voz (Beta); alguns recursos ainda aguardam testes e correções de bugs antes do lançamento.
+Alguns recursos beta ainda aguardam testes e correções de bugs antes do lançamento.
 
 ## Provedores
 

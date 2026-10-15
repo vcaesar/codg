@@ -65,13 +65,14 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 - "Modified Files" 클릭 또는 "/diff", "/diff git" 으로 VSCode처럼 TUI 내에서 diff 파일 확인
 - 영문 글자 및 짧은 문장 자동 완성
 - 더 쉽고 간편한 Agents, Skills 및 MCP 시스템, 사용자 정의 Agents 및 Skills 지원
+- 에이전트 팀 지원, 다중 메인 에이전트
 - OpenClaw와 유사한 채널 및 기능 지원
 - 완전한 웹 UI, 원격 TUI 및 데스크톱 앱 지원, vscode/zed 확장 프로그램 지원
 - Claude Code 및 Codex 플러그인 지원
 - 컴퓨터, 모바일 및 브라우저 완전 제어, 에이전트가 모든 것을 처리
-- 에이전트 팀 지원
+- 완전한 음성 지원, 온라인 및 로컬 엔진(whisper.cpp, funasr, qwen3-asr) 지원, "/run install" 로 로컬 엔진 설치
 
-음성(Beta), 일부 기능은 테스트 및 버그 수정 후 릴리스 예정.
+일부 베타 기능은 테스트 및 버그 수정 후 릴리스 예정.
 
 ## 제공자
 

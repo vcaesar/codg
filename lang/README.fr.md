@@ -65,13 +65,14 @@ Utilisez « /yolo » pour basculer entre le mode automatique et le mode de con
 - Cliquez sur « Modified Files » ou utilisez « /diff » et « /diff git » pour visualiser les diffs dans le TUI, comme dans VSCode
 - Autocomplétion des lettres anglaises et phrases courtes
 - Système d’Agents, Skills et MCP plus simple, prise en charge des Agents et Skills personnalisés
+- Prise en charge des équipes d'agents, plusieurs agents principaux
 - Prise en charge des canaux et fonctionnalités comme OpenClaw
 - Prise en charge complète de l'interface Web, du TUI distant et de l'application de bureau, extensions vscode/zed
 - Prise en charge des plugins Claude Code et Codex
 - Contrôle complet de l'ordinateur, du mobile et du navigateur, les agents s'occupent de tout
-- Prise en charge des équipes d'agents
+- Prise en charge complète de la voix, moteurs en ligne et locaux (whisper.cpp, funasr et qwen3-asr), « /run install » pour installer le moteur local
 
-Voix (Beta), certaines fonctionnalités nécessitent encore des tests et des corrections de bugs avant leur publication.
+Certaines fonctionnalités bêta nécessitent encore des tests et des corrections de bugs avant leur publication.
 
 ## Fournisseurs
 
