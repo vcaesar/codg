@@ -76,6 +76,9 @@ func main() {
 		// Placeholder embed — the backend's own (embedded) UI is all we have.
 		windowURL = strings.TrimRight(serverURL, "/") + windowURL
 	}
+	if assetMiddleware != nil {
+		windowURL = embeddedWindowURL(runtime.GOOS, transparentWebview)
+	}
 
 	app := application.New(application.Options{
 		Name:        pub.AppName,
@@ -195,6 +198,18 @@ func main() {
 	if runErr != nil {
 		log.Fatal(runErr)
 	}
+}
+
+// embeddedWindowURL is the start URL when the proxy middleware serves the
+// UI; its injected shim already sets window.__CODG__. The codg_desktop query
+// also sets data-platform, which on macOS switches the glass theme to native
+// vibrancy (transparent page). That only shows through a transparent webview,
+// so otherwise omit it and keep the CSS glass, like the Wails v2 shell.
+func embeddedWindowURL(goos string, transparent bool) string {
+	if goos == "darwin" && !transparent {
+		return "/"
+	}
+	return "/?codg_desktop=" + goos
 }
 
 // setupSystemTray creates a system tray icon with a context menu.

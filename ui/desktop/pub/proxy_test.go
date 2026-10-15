@@ -124,6 +124,42 @@ func TestBackendProxyMiddleware_NonGETGoesStraightToBackend(t *testing.T) {
 	}
 }
 
+func TestBackendProxyMiddleware_ForwardsBodyWithoutContentLength(t *testing.T) {
+	t.Parallel()
+
+	const payload = "--b\r\nContent-Disposition: form-data; name=\"audio\"\r\n\r\nRIFF\r\n--b--\r\n"
+	got := make(chan string, 1)
+	backend := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		b, err := io.ReadAll(r.Body)
+		if err != nil {
+			t.Errorf("read body: %v", err)
+		}
+		got <- string(b)
+	}))
+	t.Cleanup(backend.Close)
+
+	mw, err := BackendProxyMiddleware(backend.URL)
+	if err != nil {
+		t.Fatalf("BackendProxyMiddleware: %v", err)
+	}
+	// Wails v3 builds the request from an opaque body reader and leaves
+	// ContentLength 0 when WebKit sends no Content-Length header.
+	req := httptest.NewRequest(http.MethodPost, "/v1/voice/transcribe",
+		io.NopCloser(strings.NewReader(payload)))
+	req.ContentLength = 0
+	req.Header.Set("Content-Type", "multipart/form-data; boundary=b")
+
+	rec := httptest.NewRecorder()
+	mw(assetHandler(nil)).ServeHTTP(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("status = %d, want 200", rec.Code)
+	}
+	if body := <-got; body != payload {
+		t.Fatalf("backend body = %q, want %q", body, payload)
+	}
+}
+
 func TestBackendProxyMiddleware_SSEGoesStraightToBackend(t *testing.T) {
 	t.Parallel()
 

@@ -72,6 +72,13 @@ func documentMiddleware(proxy *httputil.ReverseProxy, backend *url.URL, extra ..
 	shim := bytes.Join(append([][]byte{WSRedirectShim(backend)}, extra...), nil)
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			// Wails v3 reports a body without Content-Length (WebKit
+			// omits it for FormData/ArrayBuffer) as ContentLength 0, and
+			// ReverseProxy drops bodies of such requests. Mark it unknown
+			// (as Wails v2 does) so the body reaches the backend.
+			if r.ContentLength == 0 && r.Body != nil && r.Body != http.NoBody {
+				r.ContentLength = -1
+			}
 			if proxy != nil && wantsBackend(r) {
 				proxy.ServeHTTP(w, r)
 				return

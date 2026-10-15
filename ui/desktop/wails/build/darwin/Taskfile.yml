@@ -46,7 +46,10 @@ tasks:
       # Task gives task-level vars precedence over CLI vars, so BUILD_FLAGS
       # itself cannot be overridden from the command line; this is the hole
       # scripts/v3/desktop-release.sh injects the release version through.
-      BUILD_FLAGS: '{{if eq .DEV "true"}}{{if .EXTRA_TAGS}}-tags {{.EXTRA_TAGS}} {{end}}-buildvcs=false -gcflags=all="-l"{{else}}{{if .EXTRA_TAGS}}-tags {{.EXTRA_TAGS}} {{end}}-trimpath -buildvcs=false -ldflags="-w -s -X main.appMode=pro{{if .EXTRA_LDFLAGS}} {{.EXTRA_LDFLAGS}}{{end}}"{{end}}'
+      # private_mac_apis makes the WKWebView transparent so the translucent
+      # backdrop (glass theme) shows through; see webview_private_darwin.go.
+      MAC_TAGS: 'private_mac_apis{{if .EXTRA_TAGS}},{{.EXTRA_TAGS}}{{end}}'
+      BUILD_FLAGS: '{{if eq .DEV "true"}}-tags {{.MAC_TAGS}} -buildvcs=false -gcflags=all="-l"{{else}}-tags {{.MAC_TAGS}} -trimpath -buildvcs=false -ldflags="-w -s -X main.appMode=pro{{if .EXTRA_LDFLAGS}} {{.EXTRA_LDFLAGS}}{{end}}"{{end}}'
       DEFAULT_OUTPUT: '{{.BIN_DIR}}/{{.APP_NAME}}'
       OUTPUT: '{{ .OUTPUT | default .DEFAULT_OUTPUT }}'
     env:
@@ -71,7 +74,7 @@ tasks:
           Docker image '{{.CROSS_IMAGE}}' not found.
           Build it first: wails3 task setup:docker
     cmds:
-      - docker run --rm -v "{{.ROOT_DIR}}:/app" {{.GO_CACHE_MOUNT}} {{.REPLACE_MOUNTS}} -e APP_NAME="{{.APP_NAME}}" {{if .EXTRA_TAGS}}-e EXTRA_TAGS="{{.EXTRA_TAGS}}"{{end}} {{.CROSS_IMAGE}} darwin {{.DOCKER_ARCH}}
+      - docker run --rm -v "{{.ROOT_DIR}}:/app" {{.GO_CACHE_MOUNT}} {{.REPLACE_MOUNTS}} -e APP_NAME="{{.APP_NAME}}" -e EXTRA_TAGS="private_mac_apis{{if .EXTRA_TAGS}},{{.EXTRA_TAGS}}{{end}}" {{.CROSS_IMAGE}} darwin {{.DOCKER_ARCH}}
       - docker run --rm -v "{{.ROOT_DIR}}:/app" alpine chown -R $(id -u):$(id -g) /app/bin
       - mkdir -p {{.BIN_DIR}}
       - mv "bin/{{.APP_NAME}}-darwin-{{.DOCKER_ARCH}}" "{{.OUTPUT}}"
