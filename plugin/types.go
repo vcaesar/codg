@@ -48,8 +48,9 @@ func (s *syncMap[K, V]) Copy() map[K]V {
 	return maps.Clone(s.m)
 }
 
-// Seq2 returns an iterator over key-value pairs. The iteration holds
-// a read lock for each step and is safe for concurrent modification.
+// Seq2 returns an iterator over a snapshot of the key-value pairs, so
+// it is safe for concurrent modification and never holds the lock
+// while yielding.
 func (s *syncMap[K, V]) Seq2() iter.Seq2[K, V] {
 	return func(yield func(K, V) bool) {
 		s.mu.RLock()

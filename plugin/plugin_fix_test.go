@@ -186,3 +186,87 @@ func TestCloseConcurrentWithWaitAndSubscribe(t *testing.T) {
 	wg.Wait()
 	require.NoError(t, Close(context.Background()))
 }
+
+func TestPluginToolRunNilPermissionsDenied(t *testing.T) {
+	t.Parallel()
+
+	pt := &PluginTool{pluginName: "test", def: ToolDefinition{
+		Name:    "x",
+		Execute: func(context.Context, string) (string, error) { return "ran", nil },
+	}}
+	require.NotPanics(t, func() {
+		_, err := pt.Run(WithSessionID(context.Background(), "s"), codgpkg.ToolCall{ID: "c", Params: `{}`})
+		require.ErrorIs(t, err, ErrPermissionDenied)
+	})
+}
+
+func TestGetPluginToolsDeterministicOrder(t *testing.T) {
+	require.NoError(t, Close(context.Background()))
+	defer func() { require.NoError(t, Close(context.Background())) }()
+
+	for _, name := range []string{"zeta", "alpha", "mid", "beta"} {
+		allTools.Set(name, []ToolDefinition{{Name: "a"}, {Name: "b"}})
+	}
+	cfgs := map[string]PluginConfig{"mid": {DisabledTools: []string{"a"}}}
+
+	var want []string
+	for range 5 {
+		var got []string
+		for _, tool := range GetPluginTools(newMockPermissions(), cfgs, "") {
+			got = append(got, tool.Name())
+		}
+		if want == nil {
+			want = got
+		}
+		require.Equal(t, want, got)
+	}
+	require.Equal(t, []string{
+		"plugin_alpha_a", "plugin_alpha_b", "plugin_beta_a", "plugin_beta_b",
+		"plugin_mid_b", "plugin_zeta_a", "plugin_zeta_b",
+	}, want)
+}
+
+func TestInitSinglePluginUnknownBuiltinNamesPlugin(t *testing.T) {
+	orig := builtinPlugins
+	builtinPlugins = map[string]Plugin{}
+	defer func() { builtinPlugins = orig }()
+	require.NoError(t, Close(context.Background()))
+	defer func() { require.NoError(t, Close(context.Background())) }()
+
+	Initialize(context.Background(), &InitConfig{Plugins: map[string]PluginConfig{
+		"missing": {Type: PluginTypeBuiltin},
+	}}, nil)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	require.NoError(t, WaitForInit(ctx))
+
+	info, ok := GetState("missing")
+	require.True(t, ok)
+	require.Equal(t, StateError, info.State)
+	require.ErrorContains(t, info.Error, `unknown built-in plugin "missing"`)
+}
+
+func TestTriggerHandledShortCircuitAndPriority(t *testing.T) {
+	require.NoError(t, Close(context.Background()))
+	defer func() { require.NoError(t, Close(context.Background())) }()
+
+	var order []string
+	mk := func(name string, prio int, handle bool) {
+		plugins.Set(name, &PluginInfo{Name: name, State: StateReady, Priority: prio, Hooks: &Hooks{
+			ErrorHandle: func(_ context.Context, _ ErrorHandleInput, out *ErrorHandleOutput) error {
+				order = append(order, name)
+				out.Handled = handle
+				return nil
+			},
+		}})
+	}
+	mk("c", 5, false)
+	mk("a", 1, false)
+	mk("b", 3, true)
+	mk("d", 9, false)
+
+	out := &ErrorHandleOutput{}
+	TriggerErrorHandle(context.Background(), ErrorHandleInput{}, out)
+	require.True(t, out.Handled)
+	require.Equal(t, []string{"a", "b"}, order)
+}

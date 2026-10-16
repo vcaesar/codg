@@ -6,7 +6,7 @@
 //
 // Install with:
 //
-//	codg install ./pkg/plugin/demo/standalone
+//	codg install ./plugin/demo/standalone
 //
 // The resulting .so file exports a CodgPlugin symbol that the Codg
 // plugin system loads at runtime. This allows the demo plugin to run

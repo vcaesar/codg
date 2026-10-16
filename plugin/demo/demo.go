@@ -25,6 +25,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"strings"
 
 	"github.com/vcaesar/codg/plugin"
 )
@@ -35,6 +36,16 @@ func init() {
 
 // Plugin implements the demo built-in plugin.
 type Plugin struct{}
+
+// Meta implements [plugin.PluginMetaProvider].
+func (p *Plugin) Meta() plugin.PluginMeta {
+	return plugin.PluginMeta{
+		Version:     "1.0.0",
+		Author:      "codg",
+		Description: "Demo plugin: hello tool, shell env and system prompt hooks.",
+		Tags:        []string{"demo", "example"},
+	}
+}
 
 // Init initializes the demo plugin and returns its hooks.
 func (p *Plugin) Init(_ context.Context, input plugin.PluginInput) (*plugin.Hooks, error) {
@@ -78,9 +89,10 @@ func executeHello(_ context.Context, input string) (string, error) {
 		return "", fmt.Errorf("invalid input: %w", err)
 	}
 
-	if args.Name == "" {
+	name := strings.TrimSpace(args.Name)
+	if name == "" {
 		return "", fmt.Errorf("name is required")
 	}
 
-	return fmt.Sprintf("Hello, %s! 👋 This message is from the Codg demo plugin.", args.Name), nil
+	return fmt.Sprintf("Hello, %s! 👋 This message is from the Codg demo plugin.", name), nil
 }

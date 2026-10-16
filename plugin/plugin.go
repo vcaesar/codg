@@ -43,6 +43,7 @@ import (
 	"fmt"
 	"iter"
 	"log/slog"
+	"maps"
 	"os"
 	"path/filepath"
 	"plugin"
@@ -618,6 +619,9 @@ func initSinglePlugin(ctx context.Context, st *initState, cfg *InitConfig, perms
 			p = builtinPlugins[name]
 		}
 		if p == nil {
+			if source == "" {
+				source = name
+			}
 			available := availableBuiltinNames()
 			err := fmt.Errorf("unknown built-in plugin %q; available: [%s]", source, strings.Join(available, ", "))
 			slog.Error("Failed to load plugin", "name", name, "error", err, "available", available)
@@ -974,190 +978,118 @@ func sortedPlugins() []*PluginInfo {
 	return result
 }
 
-// TriggerChatParams invokes the chat.params hook on all loaded plugins.
-func TriggerChatParams(ctx context.Context, input ChatParamsInput, output *ChatParamsOutput) {
+// trigger runs one hook across all ready plugins in priority order.
+// Hook errors and panics are logged and never stop the chain; when
+// handled is non-nil the chain stops as soon as it reports true.
+func trigger[I, O any](ctx context.Context, name string, hook func(*Hooks) func(context.Context, I, *O) error, input I, output *O, handled func(*O) bool) {
 	for _, info := range sortedPlugins() {
-		if info.Hooks.ChatParams == nil {
+		fn := hook(info.Hooks)
+		if fn == nil {
 			continue
 		}
-		if err := safeCall(func() error { return info.Hooks.ChatParams(ctx, input, output) }); err != nil {
-			slog.Warn("Plugin chat.params hook error", "plugin", info.Name, "error", err)
+		if err := safeCall(func() error { return fn(ctx, input, output) }); err != nil {
+			slog.Warn("Plugin hook error", "hook", name, "plugin", info.Name, "error", err)
+		}
+		if handled != nil && handled(output) {
+			return
 		}
 	}
+}
+
+// TriggerChatParams invokes the chat.params hook on all loaded plugins.
+func TriggerChatParams(ctx context.Context, input ChatParamsInput, output *ChatParamsOutput) {
+	trigger(ctx, "chat.params", func(h *Hooks) func(context.Context, ChatParamsInput, *ChatParamsOutput) error { return h.ChatParams }, input, output, nil)
 }
 
 // TriggerChatHeaders invokes the chat.headers hook on all loaded plugins.
 func TriggerChatHeaders(ctx context.Context, input ChatHeadersInput, output *ChatHeadersOutput) {
-	for _, info := range sortedPlugins() {
-		if info.Hooks.ChatHeaders == nil {
-			continue
-		}
-		if err := safeCall(func() error { return info.Hooks.ChatHeaders(ctx, input, output) }); err != nil {
-			slog.Warn("Plugin chat.headers hook error", "plugin", info.Name, "error", err)
-		}
-	}
+	trigger(ctx, "chat.headers", func(h *Hooks) func(context.Context, ChatHeadersInput, *ChatHeadersOutput) error { return h.ChatHeaders }, input, output, nil)
 }
 
 // TriggerPermissionAsk invokes the permission.ask hook on all loaded plugins.
 func TriggerPermissionAsk(ctx context.Context, input PermissionInput, output *PermissionOutput) {
-	for _, info := range sortedPlugins() {
-		if info.Hooks.PermissionAsk == nil {
-			continue
-		}
-		if err := safeCall(func() error { return info.Hooks.PermissionAsk(ctx, input, output) }); err != nil {
-			slog.Warn("Plugin permission.ask hook error", "plugin", info.Name, "error", err)
-		}
-	}
+	trigger(ctx, "permission.ask", func(h *Hooks) func(context.Context, PermissionInput, *PermissionOutput) error { return h.PermissionAsk }, input, output, nil)
 }
 
 // TriggerShellEnv invokes the shell.env hook on all loaded plugins.
 func TriggerShellEnv(ctx context.Context, input ShellEnvInput, output *ShellEnvOutput) {
-	for _, info := range sortedPlugins() {
-		if info.Hooks.ShellEnv == nil {
-			continue
-		}
-		if err := safeCall(func() error { return info.Hooks.ShellEnv(ctx, input, output) }); err != nil {
-			slog.Warn("Plugin shell.env hook error", "plugin", info.Name, "error", err)
-		}
-	}
+	trigger(ctx, "shell.env", func(h *Hooks) func(context.Context, ShellEnvInput, *ShellEnvOutput) error { return h.ShellEnv }, input, output, nil)
 }
 
 // TriggerToolExecuteBefore invokes the tool.execute.before hook on all
 // loaded plugins.
 func TriggerToolExecuteBefore(ctx context.Context, input ToolExecuteBeforeInput, output *ToolExecuteBeforeOutput) {
-	for _, info := range sortedPlugins() {
-		if info.Hooks.ToolExecuteBefore == nil {
-			continue
-		}
-		if err := safeCall(func() error { return info.Hooks.ToolExecuteBefore(ctx, input, output) }); err != nil {
-			slog.Warn("Plugin tool.execute.before hook error", "plugin", info.Name, "error", err)
-		}
-	}
+	trigger(ctx, "tool.execute.before", func(h *Hooks) func(context.Context, ToolExecuteBeforeInput, *ToolExecuteBeforeOutput) error {
+		return h.ToolExecuteBefore
+	}, input, output, nil)
 }
 
 // TriggerToolExecuteAfter invokes the tool.execute.after hook on all
 // loaded plugins.
 func TriggerToolExecuteAfter(ctx context.Context, input ToolExecuteAfterInput, output *ToolExecuteAfterOutput) {
-	for _, info := range sortedPlugins() {
-		if info.Hooks.ToolExecuteAfter == nil {
-			continue
-		}
-		if err := safeCall(func() error { return info.Hooks.ToolExecuteAfter(ctx, input, output) }); err != nil {
-			slog.Warn("Plugin tool.execute.after hook error", "plugin", info.Name, "error", err)
-		}
-	}
+	trigger(ctx, "tool.execute.after", func(h *Hooks) func(context.Context, ToolExecuteAfterInput, *ToolExecuteAfterOutput) error {
+		return h.ToolExecuteAfter
+	}, input, output, nil)
 }
 
 // TriggerSystemPromptTransform invokes the system prompt transform hook
 // on all loaded plugins.
 func TriggerSystemPromptTransform(ctx context.Context, input SystemPromptInput, output *SystemPromptOutput) {
-	for _, info := range sortedPlugins() {
-		if info.Hooks.SystemPromptTransform == nil {
-			continue
-		}
-		if err := safeCall(func() error { return info.Hooks.SystemPromptTransform(ctx, input, output) }); err != nil {
-			slog.Warn("Plugin system.prompt.transform hook error", "plugin", info.Name, "error", err)
-		}
-	}
+	trigger(ctx, "system.prompt.transform", func(h *Hooks) func(context.Context, SystemPromptInput, *SystemPromptOutput) error {
+		return h.SystemPromptTransform
+	}, input, output, nil)
 }
 
 // TriggerOAuthToken invokes the oauth.token hook on all loaded plugins.
 // This integrates with internal/oauth by allowing plugins to provide
-// or override authentication tokens for any provider.
+// or override authentication tokens for any provider. It stops at the
+// first plugin that sets output.Handled.
 func TriggerOAuthToken(ctx context.Context, input OAuthTokenInput, output *OAuthTokenOutput) {
-	for _, info := range sortedPlugins() {
-		if info.Hooks.OAuthToken == nil {
-			continue
-		}
-		if err := safeCall(func() error { return info.Hooks.OAuthToken(ctx, input, output) }); err != nil {
-			slog.Warn("Plugin oauth.token hook error", "plugin", info.Name, "error", err)
-		}
-		if output.Handled {
-			return
-		}
-	}
+	trigger(ctx, "oauth.token", func(h *Hooks) func(context.Context, OAuthTokenInput, *OAuthTokenOutput) error { return h.OAuthToken }, input, output, func(o *OAuthTokenOutput) bool { return o.Handled })
 }
 
 // TriggerConfigTransform invokes the config.transform hook on all
 // loaded plugins.
 func TriggerConfigTransform(ctx context.Context, input ConfigTransformInput, output *ConfigTransformOutput) {
-	for _, info := range sortedPlugins() {
-		if info.Hooks.ConfigTransform == nil {
-			continue
-		}
-		if err := safeCall(func() error { return info.Hooks.ConfigTransform(ctx, input, output) }); err != nil {
-			slog.Warn("Plugin config.transform hook error", "plugin", info.Name, "error", err)
-		}
-	}
+	trigger(ctx, "config.transform", func(h *Hooks) func(context.Context, ConfigTransformInput, *ConfigTransformOutput) error {
+		return h.ConfigTransform
+	}, input, output, nil)
 }
 
 // TriggerProviderResolve invokes the provider.resolve hook on all
-// loaded plugins.
+// loaded plugins. It stops at the first plugin that sets output.Handled.
 func TriggerProviderResolve(ctx context.Context, input ProviderResolveInput, output *ProviderResolveOutput) {
-	for _, info := range sortedPlugins() {
-		if info.Hooks.ProviderResolve == nil {
-			continue
-		}
-		if err := safeCall(func() error { return info.Hooks.ProviderResolve(ctx, input, output) }); err != nil {
-			slog.Warn("Plugin provider.resolve hook error", "plugin", info.Name, "error", err)
-		}
-		if output.Handled {
-			return
-		}
-	}
+	trigger(ctx, "provider.resolve", func(h *Hooks) func(context.Context, ProviderResolveInput, *ProviderResolveOutput) error {
+		return h.ProviderResolve
+	}, input, output, func(o *ProviderResolveOutput) bool { return o.Handled })
 }
 
 // TriggerSessionStart invokes the session.start hook on all loaded plugins.
 func TriggerSessionStart(ctx context.Context, input SessionLifecycleInput, output *SessionLifecycleOutput) {
-	for _, info := range sortedPlugins() {
-		if info.Hooks.SessionStart == nil {
-			continue
-		}
-		if err := safeCall(func() error { return info.Hooks.SessionStart(ctx, input, output) }); err != nil {
-			slog.Warn("Plugin session.start hook error", "plugin", info.Name, "error", err)
-		}
-	}
+	trigger(ctx, "session.start", func(h *Hooks) func(context.Context, SessionLifecycleInput, *SessionLifecycleOutput) error {
+		return h.SessionStart
+	}, input, output, nil)
 }
 
 // TriggerSessionEnd invokes the session.end hook on all loaded plugins.
 func TriggerSessionEnd(ctx context.Context, input SessionLifecycleInput, output *SessionLifecycleOutput) {
-	for _, info := range sortedPlugins() {
-		if info.Hooks.SessionEnd == nil {
-			continue
-		}
-		if err := safeCall(func() error { return info.Hooks.SessionEnd(ctx, input, output) }); err != nil {
-			slog.Warn("Plugin session.end hook error", "plugin", info.Name, "error", err)
-		}
-	}
+	trigger(ctx, "session.end", func(h *Hooks) func(context.Context, SessionLifecycleInput, *SessionLifecycleOutput) error {
+		return h.SessionEnd
+	}, input, output, nil)
 }
 
 // TriggerMessageTransform invokes the message.transform hook on all
 // loaded plugins.
 func TriggerMessageTransform(ctx context.Context, input MessageTransformInput, output *MessageTransformOutput) {
-	for _, info := range sortedPlugins() {
-		if info.Hooks.MessageTransform == nil {
-			continue
-		}
-		if err := safeCall(func() error { return info.Hooks.MessageTransform(ctx, input, output) }); err != nil {
-			slog.Warn("Plugin message.transform hook error", "plugin", info.Name, "error", err)
-		}
-	}
+	trigger(ctx, "message.transform", func(h *Hooks) func(context.Context, MessageTransformInput, *MessageTransformOutput) error {
+		return h.MessageTransform
+	}, input, output, nil)
 }
 
 // TriggerErrorHandle invokes the error.handle hook on all loaded
-// plugins.
+// plugins. It stops at the first plugin that sets output.Handled.
 func TriggerErrorHandle(ctx context.Context, input ErrorHandleInput, output *ErrorHandleOutput) {
-	for _, info := range sortedPlugins() {
-		if info.Hooks.ErrorHandle == nil {
-			continue
-		}
-		if err := safeCall(func() error { return info.Hooks.ErrorHandle(ctx, input, output) }); err != nil {
-			slog.Warn("Plugin error.handle hook error", "plugin", info.Name, "error", err)
-		}
-		if output.Handled {
-			return
-		}
-	}
+	trigger(ctx, "error.handle", func(h *Hooks) func(context.Context, ErrorHandleInput, *ErrorHandleOutput) error { return h.ErrorHandle }, input, output, func(o *ErrorHandleOutput) bool { return o.Handled })
 }
 
 // --- Built-in plugin registry ---
@@ -1304,7 +1236,10 @@ func (t *PluginTool) Run(ctx context.Context, params codgpkg.ToolCall) (codgpkg.
 		return codgpkg.NewTextErrorResponse("plugin tool has no execute function"), nil
 	}
 
-	// Request permission.
+	if t.permissions == nil {
+		return codgpkg.ToolResponse{}, fmt.Errorf("plugin tool %s: no permission service configured: %w", t.Name(), ErrPermissionDenied)
+	}
+
 	desc := fmt.Sprintf("execute plugin tool %s with parameters:", t.Name())
 	granted, err := t.permissions.Request(ctx, PermissionRequest{
 		SessionID:   sessionID,
@@ -1351,17 +1286,14 @@ func WithSessionID(ctx context.Context, sessionID string) context.Context {
 // GetPluginTools returns all currently registered plugin tools as
 // [*PluginTool] instances ready to be used as [codgpkg.AgentTool].
 // Tools listed in a plugin's DisabledTools configuration are excluded.
+// The result is sorted by plugin name, then tool name, so the tool list
+// sent to the LLM is stable across calls.
 func GetPluginTools(perms PermissionService, pluginConfigs map[string]PluginConfig, wd string) []*PluginTool {
+	snapshot := allTools.Copy()
 	var result []*PluginTool
-	for pluginName, defs := range allTools.Seq2() {
-		// Look up disabled tools from the plugin's config.
-		var disabledTools []string
-		if pluginConfigs != nil {
-			if pc, ok := pluginConfigs[pluginName]; ok {
-				disabledTools = pc.DisabledTools
-			}
-		}
-		for _, def := range defs {
+	for _, pluginName := range slices.Sorted(maps.Keys(snapshot)) {
+		disabledTools := pluginConfigs[pluginName].DisabledTools
+		for _, def := range snapshot[pluginName] {
 			if slices.Contains(disabledTools, def.Name) {
 				continue
 			}
