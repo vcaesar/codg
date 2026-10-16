@@ -26,6 +26,9 @@ Mac и Linux:
 # Homebrew
 brew install vcaesar/tap/codg
 
+# Установка десктопного приложения через Brew
+brew install --cask vcaesar/tap/codg-desktop
+
 # NPM
 # npm install -g @vcaesar/codg
 ```
@@ -76,9 +79,10 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 
 ## Провайдеры
 
-Atom, Copilot, Anthropic, Anthropic API, OpenAI, OpenAI API, Gemini, Gemini API, OpenRouter, Antigravity, Cursor, Kiro, xAI, Azure, Bedrock, Vertex AI, Nvidia, HuggingFace, Vercel, Ollama Cloud, Cloudflare Workers, GitHub, Poe, Meta, Groq, IO.net, OpenCode Zen, OpenCode Go, Windsurf, Cerebras.
+Atom, Anthropic Pro, Anthropic API, OpenAI Pro, OpenAI API, Gemini Pro, Gemini API, xAI Pro, xAI API, Muse Code, Muse API, OpenRouter, Copilot, Antigravity, Cursor, Kiro, Azure, Bedrock, Vertex AI, Nvidia, HuggingFace, Vercel, Ollama Cloud, Cloudflare Workers, GitHub, Poe, Meta, Groq, IO.net, OpenCode Zen, OpenCode Go, Windsurf, Cerebras...
 
-Китай: Z.ai, Zhipu, Zhipu Coding, Kimi, Kimi Coding, DeepSeek, MiniMax, MiniMax China, Qwen, MiMo, Qiniu Cloud, Ali Coding, Ali Coding CN, Tencent Coding.
+Китай: Z.ai, Zhipu, Zhipu Coding, Kimi, Kimi Coding, DeepSeek, MiniMax, MiniMax China, Qwen, MiMo, Qiniu Cloud, Ali Coding, Ali Coding CN, Tencent Coding...
+Также можно использовать opencode models.dev и его бесплатные модели, а также другие бесплатные модели: бесплатные модели Nvidia и OpenRouter...
 
 ## Бенчмарк
 

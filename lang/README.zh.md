@@ -26,6 +26,9 @@ Mac 和 Linux：
 # Homebrew
 brew install vcaesar/tap/codg
 
+# Brew 安装桌面版
+brew install --cask vcaesar/tap/codg-desktop
+
 # NPM
 # npm install -g @vcaesar/codg
 ```
@@ -76,9 +79,10 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 
 ## 提供商
 
-Atom、Copilot、Anthropic、Anthropic API、OpenAI、OpenAI API、Gemini、Gemini API、OpenRouter、Antigravity、Cursor、Kiro、xAI、Azure、Bedrock、Vertex AI、Nvidia、HuggingFace、Vercel、Ollama Cloud、Cloudflare Workers、GitHub、Poe、Meta、Groq、IO.net、OpenCode Zen、OpenCode Go、Windsurf、Cerebras。
+Atom、Anthropic Pro、Anthropic API、OpenAI Pro、OpenAI API、Gemini Pro、Gemini API、xAI Pro、xAI API、Muse Code、Muse API、OpenRouter、Copilot、Antigravity、Cursor、Kiro、Azure、Bedrock、Vertex AI、Nvidia、HuggingFace、Vercel、Ollama Cloud、Cloudflare Workers、GitHub、Poe、Meta、Groq、IO.net、OpenCode Zen、OpenCode Go、Windsurf、Cerebras……
 
-中国：Z.ai、Zhipu、Zhipu Coding、Kimi、Kimi Coding、DeepSeek、MiniMax、MiniMax China、Qwen、MiMo、Qiniu Cloud、Ali Coding、Ali Coding CN、Tencent Coding。
+中国：Z.ai、Zhipu、Zhipu Coding、Kimi、Kimi Coding、DeepSeek、MiniMax、MiniMax China、Qwen、MiMo、Qiniu Cloud、Ali Coding、Ali Coding CN、Tencent Coding……
+你还可以使用 opencode models.dev 及其免费模型，以及其他免费模型：Nvidia 和 OpenRouter 免费模型……
 
 ## 基准测试
 

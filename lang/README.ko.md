@@ -26,6 +26,9 @@ Mac 및 Linux:
 # Homebrew
 brew install vcaesar/tap/codg
 
+# Brew로 데스크톱 앱 설치
+brew install --cask vcaesar/tap/codg-desktop
+
 # NPM
 # npm install -g @vcaesar/codg
 ```
@@ -76,9 +79,10 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 
 ## 제공자
 
-Atom, Copilot, Anthropic, Anthropic API, OpenAI, OpenAI API, Gemini, Gemini API, OpenRouter, Antigravity, Cursor, Kiro, xAI, Azure, Bedrock, Vertex AI, Nvidia, HuggingFace, Vercel, Ollama Cloud, Cloudflare Workers, GitHub, Poe, Meta, Groq, IO.net, OpenCode Zen, OpenCode Go, Windsurf, Cerebras.
+Atom, Anthropic Pro, Anthropic API, OpenAI Pro, OpenAI API, Gemini Pro, Gemini API, xAI Pro, xAI API, Muse Code, Muse API, OpenRouter, Copilot, Antigravity, Cursor, Kiro, Azure, Bedrock, Vertex AI, Nvidia, HuggingFace, Vercel, Ollama Cloud, Cloudflare Workers, GitHub, Poe, Meta, Groq, IO.net, OpenCode Zen, OpenCode Go, Windsurf, Cerebras...
 
-중국: Z.ai, Zhipu, Zhipu Coding, Kimi, Kimi Coding, DeepSeek, MiniMax, MiniMax China, Qwen, MiMo, Qiniu Cloud, Ali Coding, Ali Coding CN, Tencent Coding.
+중국: Z.ai, Zhipu, Zhipu Coding, Kimi, Kimi Coding, DeepSeek, MiniMax, MiniMax China, Qwen, MiMo, Qiniu Cloud, Ali Coding, Ali Coding CN, Tencent Coding...
+opencode models.dev 및 무료 모델, 그리고 기타 무료 모델(Nvidia 및 OpenRouter 무료 모델 등)도 사용할 수 있습니다...
 
 ## 벤치마크
 

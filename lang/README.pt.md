@@ -26,6 +26,9 @@ Mac e Linux:
 # Homebrew
 brew install vcaesar/tap/codg
 
+# Instalar o app desktop com Brew
+brew install --cask vcaesar/tap/codg-desktop
+
 # NPM
 # npm install -g @vcaesar/codg
 ```
@@ -76,9 +79,10 @@ Alguns recursos beta ainda aguardam testes e correções de bugs antes do lança
 
 ## Provedores
 
-Atom, Copilot, Anthropic, Anthropic API, OpenAI, OpenAI API, Gemini, Gemini API, OpenRouter, Antigravity, Cursor, Kiro, xAI, Azure, Bedrock, Vertex AI, Nvidia, HuggingFace, Vercel, Ollama Cloud, Cloudflare Workers, GitHub, Poe, Meta, Groq, IO.net, OpenCode Zen, OpenCode Go, Windsurf, Cerebras.
+Atom, Anthropic Pro, Anthropic API, OpenAI Pro, OpenAI API, Gemini Pro, Gemini API, xAI Pro, xAI API, Muse Code, Muse API, OpenRouter, Copilot, Antigravity, Cursor, Kiro, Azure, Bedrock, Vertex AI, Nvidia, HuggingFace, Vercel, Ollama Cloud, Cloudflare Workers, GitHub, Poe, Meta, Groq, IO.net, OpenCode Zen, OpenCode Go, Windsurf, Cerebras...
 
-China: Z.ai, Zhipu, Zhipu Coding, Kimi, Kimi Coding, DeepSeek, MiniMax, MiniMax China, Qwen, MiMo, Qiniu Cloud, Ali Coding, Ali Coding CN, Tencent Coding.
+China: Z.ai, Zhipu, Zhipu Coding, Kimi, Kimi Coding, DeepSeek, MiniMax, MiniMax China, Qwen, MiMo, Qiniu Cloud, Ali Coding, Ali Coding CN, Tencent Coding...
+Você também pode usar o opencode models.dev e seus modelos gratuitos, além de outros modelos gratuitos: os modelos gratuitos da Nvidia e da OpenRouter...
 
 ## Benchmark
 
