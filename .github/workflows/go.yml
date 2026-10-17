@@ -29,5 +29,9 @@ jobs:
       - name: Build
         run: go build -v ./...
       - name: Test
-        run: go test -v ./plugin ./scripts
+        run: go test -v ./scripts
+      # plugin/ is a separate module (plugin/go.mod).
+      - name: Test plugin
+        working-directory: plugin
+        run: go vet ./... && go test -v ./...
         # run: go test -v .
