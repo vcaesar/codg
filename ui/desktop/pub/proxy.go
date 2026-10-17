@@ -199,6 +199,7 @@ func (b *htmlBuffer) WriteHeader(code int) {
 		b.status = code
 	}
 }
+
 func (b *htmlBuffer) Write(body []byte) (int, error) {
 	if b.status == 0 {
 		b.status = http.StatusOK
@@ -249,11 +250,20 @@ func injectHeadScript(document, script []byte) []byte {
 	return result
 }
 
+// WebPreviewPathPrefix is where the codg backend serves project pages for
+// the web UI preview iframe. They are the user's own pages, never the
+// embedded SPA, so they go straight to the backend without the desktop
+// shim.
+const WebPreviewPathPrefix = "/v1/file/web/"
+
 // wantsBackend reports whether the request should bypass the asset server
 // entirely and go straight to the codg backend.
 func wantsBackend(r *http.Request) bool {
 	if r.Method != http.MethodGet && r.Method != http.MethodHead {
 		return true // mutations are API calls; static servers only GET
+	}
+	if strings.HasPrefix(strings.ToLower(r.URL.Path), WebPreviewPathPrefix) {
+		return true
 	}
 	// Upgrade = websocket (e.g. terminal PTY); event-stream = SSE.
 	return r.Header.Get("Upgrade") != "" || strings.Contains(r.Header.Get("Accept"), "text/event-stream")

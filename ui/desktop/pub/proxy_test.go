@@ -426,3 +426,42 @@ func TestWantsBackend(t *testing.T) {
 		t.Fatal("websocket upgrade must go to the backend")
 	}
 }
+
+// TestBackendProxyMiddleware_WebPreviewGoesToBackendWithoutShim verifies
+// the web UI preview iframe pages reach the backend directly and are not
+// rewritten with the desktop shim.
+func TestBackendProxyMiddleware_WebPreviewGoesToBackendWithoutShim(t *testing.T) {
+	t.Parallel()
+
+	page := "<html><head></head><body>page</body></html>"
+	backend := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/html")
+		if _, err := io.WriteString(w, page); err != nil {
+			t.Errorf("backend write: %v", err)
+		}
+	}))
+	t.Cleanup(backend.Close)
+	mw, err := BackendProxyMiddleware(backend.URL)
+	if err != nil {
+		t.Fatalf("BackendProxyMiddleware: %v", err)
+	}
+	// An embed that would answer every path must still be bypassed.
+	h := mw(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		t.Errorf("asset server hit for %s", r.URL.Path)
+	}))
+
+	req := httptest.NewRequest(http.MethodGet, WebPreviewPathPrefix+"tok/index.html", nil)
+	req.Header.Set("Accept", "text/html")
+	rec := httptest.NewRecorder()
+	h.ServeHTTP(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("status = %d, want 200", rec.Code)
+	}
+	if got := rec.Body.String(); got != page {
+		t.Fatalf("body = %q, want the untouched backend page", got)
+	}
+	if !wantsBackend(httptest.NewRequest(http.MethodGet, "/V1/File/Web/tok/a.css", nil)) {
+		t.Fatal("preview assets must go to the backend")
+	}
+}
