@@ -54,7 +54,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	codgpkg "github.com/vcaesar/codg/codgpkg"
+	codgpkg "github.com/vcaesar/codg/plugin/pkg"
 )
 
 // --- Plugin configuration types (standalone, no config import) ---

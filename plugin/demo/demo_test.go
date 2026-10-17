@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	codgpkg "github.com/vcaesar/codg/codgpkg"
 	"github.com/vcaesar/codg/plugin"
+	codgpkg "github.com/vcaesar/codg/plugin/pkg"
 
 	"github.com/stretchr/testify/require"
 )

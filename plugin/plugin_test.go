@@ -10,7 +10,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/require"
-	codgpkg "github.com/vcaesar/codg/codgpkg"
+	codgpkg "github.com/vcaesar/codg/plugin/pkg"
 )
 
 // --- Mock permission service ---
