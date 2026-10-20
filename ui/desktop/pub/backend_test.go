@@ -2,6 +2,8 @@ package pub
 
 import (
 	"fmt"
+	"net/http"
+	"net/http/httptest"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -16,6 +18,27 @@ func TestProbeBackend_NoServer(t *testing.T) {
 	// Nothing listens on this URL; probe must return "".
 	if got := ProbeBackend("http://127.0.0.1:1"); got != "" {
 		t.Fatalf("expected empty URL, got %q", got)
+	}
+}
+
+func TestRunningBackend_Rejects(t *testing.T) {
+	t.Parallel()
+
+	// A healthy server owned by the test binary (not codg) must not be
+	// attached to.
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+		w.WriteHeader(http.StatusOK)
+	}))
+	defer srv.Close()
+
+	for _, baseURL := range []string{
+		"http://127.0.0.1:1", // nothing listening
+		srv.URL,              // healthy but not a codg process
+		"http://example.com", // non-loopback
+	} {
+		if got := RunningBackend(baseURL); got != "" {
+			t.Fatalf("RunningBackend(%q) = %q, want empty", baseURL, got)
+		}
 	}
 }
 

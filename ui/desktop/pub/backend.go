@@ -83,6 +83,32 @@ func ProbeBackend(baseURL string) string {
 	return baseURL
 }
 
+// RunningBackend returns baseURL when an already-started codg backend
+// (`codg web` / `codg api`) answers /health there AND the listener on its
+// port is a codg process, or "" otherwise. Shells attach to it instead of
+// spawning a second backend; the ownership check keeps the privileged
+// WebView bridge off unrelated servers squatting on the port.
+func RunningBackend(baseURL string) string {
+	validated, err := ValidateBackendURL(baseURL)
+	if err != nil || ProbeBackend(validated) == "" {
+		return ""
+	}
+	port, err := PortFromBaseURL(validated)
+	if err != nil {
+		return ""
+	}
+	pids, err := CodgPidsOnPort(port)
+	if err != nil {
+		slog.Warn("Verify running codg backend", "url", validated, "err", err)
+		return ""
+	}
+	if len(pids) == 0 {
+		slog.Warn("Ignoring non-codg server on backend port", "url", validated)
+		return ""
+	}
+	return validated
+}
+
 // ResolveWorkdir returns a sane working directory for the child backend.
 // Finder launches .app bundles with CWD set to "/", which is not a
 // meaningful project dir.

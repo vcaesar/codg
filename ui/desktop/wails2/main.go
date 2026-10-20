@@ -112,6 +112,12 @@ func resolveBackend() (string, func()) {
 		}
 	}
 	if serverURL == "" {
+		if serverURL = pub.RunningBackend(pub.DefaultBackendURL); serverURL != "" {
+			apiShutdown = pub.ExternalBackendShutdown(serverURL)
+			slog.Info("Using running codg backend", "url", serverURL)
+		}
+	}
+	if serverURL == "" {
 		var err error
 		serverURL, apiShutdown, err = startBackendProcess(ctx)
 		if err != nil {

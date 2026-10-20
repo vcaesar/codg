@@ -90,6 +90,11 @@ func TestStopExternalBackend_E2E(t *testing.T) {
 		t.Fatalf("CodgPidsOnPort = %v, want [%d]", pids, cmd.Process.Pid)
 	}
 
+	// An already-running codg backend is reused instead of spawning one.
+	if got := RunningBackend(baseURL); got != baseURL {
+		t.Fatalf("RunningBackend = %q, want %q", got, baseURL)
+	}
+
 	StopExternalBackend(baseURL)
 
 	select {

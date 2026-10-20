@@ -42,7 +42,7 @@ func main() {
 	var apiShutdown func()
 	serverURL := os.Getenv("CODG_DESKTOP_SERVER_URL")
 	if serverURL == "" {
-		if serverURL = pub.ProbeBackend(pub.DefaultBackendURL); serverURL != "" {
+		if serverURL = pub.RunningBackend(pub.DefaultBackendURL); serverURL != "" {
 			slog.Info("Using running codg backend", "url", serverURL)
 			apiShutdown = pub.ExternalBackendShutdown(serverURL)
 		}
