@@ -58,7 +58,7 @@ Usa «/yolo» para alternar entre el modo automático y el modo de confirmación
 ## Características
 
 - Sistema de agentes automático y asíncrono, con alta concurrencia y rendimiento, bajo uso de memoria y CPU, y mínimo consumo de tokens (ahorro del 70 % al 90 %+)
-- Proveedores multi-modelo (60-100+ proveedores API y Pro, Custom URL API) y modelos locales vía openai-compat o claude-compat
+- Proveedores multi-modelo (100+ proveedores API y Pro, Custom URL API) y modelos locales vía openai-compat o claude-compat
 - Soporte para los modelos gratuitos de Openrouter, OpenCode, Ollama, Nvidia y otros; úsalos con «/connect», «/models» o «codg auth»
 - Reglas asíncronas y de modelo para los multi-agentes
 - Compresión de entrada/salida, contexto y prompts para ahorrar tokens; caché y reglas para reducir el costo

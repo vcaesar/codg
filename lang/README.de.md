@@ -58,7 +58,7 @@ Mit „/yolo“ können Sie zwischen Auto- und Bestätigungsmodus wechseln; Bere
 ## Funktionen
 
 - Automatisches und asynchrones, hochparalleles und leistungsstarkes Agentensystem mit geringem Speicher- und CPU-Verbrauch sowie minimalem Token-Verbrauch (70 % bis 90 %+ Ersparnis)
-- Mehrere Modellanbieter (60-100+ API- und Pro-Anbieter, Custom URL API) sowie lokale Modelle über openai-compat oder claude-compat
+- Mehrere Modellanbieter (100+ API- und Pro-Anbieter, Custom URL API) sowie lokale Modelle über openai-compat oder claude-compat
 - Unterstützung der kostenlosen Modelle von Openrouter, OpenCode, Ollama, Nvidia und weiteren; Nutzung via „/connect“, „/models“ oder „codg auth“
 - Asynchrone Regeln und Modellregeln für Multi-Agenten
 - Komprimierung von Ein-/Ausgabe, Kontext und Prompts spart Tokens; Cache und Regeln senken die Kosten

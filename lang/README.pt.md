@@ -58,7 +58,7 @@ Use "/yolo" para alternar entre o modo automático e o modo de confirmação; as
 ## Recursos
 
 - Sistema de agentes automático e assíncrono, com alta concorrência e desempenho, baixo consumo de memória e CPU, e uso mínimo de tokens (economia de 70% a 90%+)
-- Provedores multi-modelo (60-100+ provedores API e Pro, Custom URL API) e modelos locais via openai-compat ou claude-compat
+- Provedores multi-modelo (100+ provedores API e Pro, Custom URL API) e modelos locais via openai-compat ou claude-compat
 - Suporte aos modelos gratuitos do Openrouter, OpenCode, Ollama, Nvidia e outros; use-os via "/connect", "/models" ou "codg auth"
 - Regras assíncronas e de modelo para os multi-agentes
 - Compressão de entrada/saída, contexto e prompts para economizar tokens; cache e regras para reduzir o custo

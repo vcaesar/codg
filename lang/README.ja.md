@@ -58,7 +58,7 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 ## 機能
 
 - 自動かつ非同期、高並行・高性能なエージェントシステムで、メモリと CPU の使用量が少なく、トークン消費も最小限（70%〜90%以上削減）
-- マルチモデルプロバイダー（60-100+ の API・Pro プロバイダー、Custom URL API）およびローカルモデル（openai-compat または claude-compat 経由）
+- マルチモデルプロバイダー（100+ の API・Pro プロバイダー、Custom URL API）およびローカルモデル（openai-compat または claude-compat 経由）
 - Openrouter、OpenCode、Ollama、Nvidia などの無料モデルに対応。「/connect」「/models」または「codg auth」から利用可能
 - マルチエージェント向けの非同期処理とモデルルール
 - 入出力・コンテキスト・プロンプトを圧縮してトークンを節約、キャッシュとルールでコストを削減

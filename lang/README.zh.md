@@ -58,7 +58,7 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 ## 功能特性
 
 - 自动化、异步化、高并发、高性能的智能体系统，内存与 CPU 占用低，token 消耗极少（节省 70% 至 90%+）
-- 多模型提供商（60-100+ API 与 Pro 提供商、Custom URL API）及本地模型（通过 openai-compat 或 claude-compat）
+- 多模型提供商（100+ API 与 Pro 提供商、Custom URL API）及本地模型（通过 openai-compat 或 claude-compat）
 - 支持 Openrouter、OpenCode、Ollama、Nvidia 等免费模型，可通过 “/connect” “/models” 或 “codg auth” 使用
 - 多智能体的异步化和模型规则
 - 压缩输入输出、上下文与提示以节省 token，利用缓存和规则降低成本

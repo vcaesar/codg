@@ -58,7 +58,7 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 ## 주요 기능
 
 - 자동·비동기, 높은 동시성과 성능을 지닌 에이전트 시스템이며 메모리와 CPU 사용량이 적고 토큰 사용량도 최소화(70%~90% 이상 절감)
-- 다중 모델 제공자(60-100+ API 및 Pro 제공자, Custom URL API) 및 로컬 모델(openai-compat 또는 claude-compat을 통해)
+- 다중 모델 제공자(100+ API 및 Pro 제공자, Custom URL API) 및 로컬 모델(openai-compat 또는 claude-compat을 통해)
 - Openrouter, OpenCode, Ollama, Nvidia 등의 무료 모델 지원. "/connect", "/models" 또는 "codg auth"로 사용
 - 다중 에이전트를 위한 비동기 및 모델 규칙
 - 입출력, 컨텍스트와 프롬프트를 압축해 토큰 절약, 캐시와 규칙으로 비용 절감

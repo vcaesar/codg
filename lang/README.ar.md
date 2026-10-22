@@ -60,7 +60,7 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 ## الميزات
 
 - نظام وكلاء تلقائي وغير متزامن، عالي التزامن والأداء، مع استهلاك منخفض للذاكرة والمعالج وأقل استخدام للرموز (توفير من 70% إلى 90%+)
-- دعم مزودي نماذج متعددين (60-100+ مزود API و Pro، و Custom URL API) ونماذج محلية عبر openai-compat أو claude-compat
+- دعم مزودي نماذج متعددين (100+ مزود API و Pro، و Custom URL API) ونماذج محلية عبر openai-compat أو claude-compat
 - دعم نماذج Openrouter و OpenCode و Ollama و Nvidia وغيرها المجانية، استخدمها عبر "/connect" أو "/models" أو "codg auth"
 - قواعد غير متزامنة وقواعد نموذج للوكلاء المتعددين
 - ضغط المدخلات والمخرجات والسياق والمطالبات لتوفير الرموز (tokens)؛ التخزين المؤقت والقواعد لتقليل التكلفة

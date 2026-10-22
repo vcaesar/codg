@@ -58,7 +58,7 @@ Use "/yolo" to toggle the auto and ask mode, and you can set permissions by codg
 ## Features
 
 - Auto and asynchronous, concurrency and high performance agents system, low memory and cpu, lessest tokens use (saved 70% to 90%+)
-- Multi models providers (60-100+ API and Pro providers, Custom URL API) and local models via by openai-compat or claude-compat,
+- Multi models providers (100+ API and Pro providers, Custom URL API) and local models via by openai-compat or claude-compat,
 - Support Openrouter, OpenCode, Ollama, Nvidia and others free models, use it by "/connect" "/models" or "codg auth"
 - Asynchronous and model rules for the multi agents
 - Compression input-output, context and prompts to save the tokens, cache and rules to reduce the cost
