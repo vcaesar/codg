@@ -1,6 +1,6 @@
 module github.com/vcaesar/codg/ui/desktop/wails2
 
-go 1.27.2
+go 1.27.3
 
 require (
 	github.com/vcaesar/codg/ui/desktop/pub v0.0.0

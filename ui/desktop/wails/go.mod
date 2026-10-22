@@ -1,6 +1,6 @@
 module github/gogo/codg/ui/desktop/wails
 
-go 1.27.2
+go 1.27.3
 
 // The desktop shell is a thin Wails v3 wrapper that launches the standalone
 // `codg` binary as a child process (see backend.go). It deliberately does
