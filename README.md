@@ -63,10 +63,10 @@ Use "/yolo" to toggle the auto and ask mode, and you can set permissions by codg
 - Asynchronous and model rules for the multi agents
 - Compression input-output, context and prompts to save the tokens, cache and rules to reduce the cost
 - Any terminal and OS support, also web terminal support
-- Easy use: The TUI in everywhere like GUI and Easy, Desktop and Web in the BETA
+- Easy use: The TUI in everywhere like GUI and Easy, TUI editor, Web and desktop support
 - Click or "/xxx" to switch sessions, Click to everywhere in TUI
 - Clcik "Modified Files" or "/diff" and "/diff git" to view the diff files in TUI same the vscode
-- Autocomplete the English letters and short sentences
+- Autocomplete the multi languages letters and short sentences
 - More easy Agents, Skills and MCP system, custom Agents and Skills support
 - Agent teams support, multi main agents
 - Channel and features support like OpenClaw

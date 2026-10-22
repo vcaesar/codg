@@ -63,10 +63,10 @@ Mit „/yolo“ können Sie zwischen Auto- und Bestätigungsmodus wechseln; Bere
 - Asynchrone Regeln und Modellregeln für Multi-Agenten
 - Komprimierung von Ein-/Ausgabe, Kontext und Prompts spart Tokens; Cache und Regeln senken die Kosten
 - Unterstützung für jedes Terminal und Betriebssystem, auch für Web-Terminals
-- Benutzerfreundlich: TUI überall einsetzbar, GUI-nah; Desktop- und Web-Version im BETA-Stadium
+- Benutzerfreundlich: TUI überall einsetzbar, GUI-nah; TUI-Editor, Web- und Desktop-Unterstützung
 - Klicken oder „/xxx" zum Sitzungswechsel, überall im TUI anklickbar
 - Klick auf „Modified Files" oder „/diff" bzw. „/diff git" zeigt Diff-Dateien im TUI wie in VSCode
-- Autovervollständigung englischer Buchstaben und kurzer Sätze
+- Mehrsprachige Autovervollständigung von Buchstaben und kurzen Sätzen
 - Einfacheres Agents-, Skills- und MCP-System, Unterstützung für benutzerdefinierte Agents und Skills
 - Unterstützung für Agenten-Teams, mehrere Haupt-Agenten
 - Kanal- und Funktionsunterstützung wie OpenClaw

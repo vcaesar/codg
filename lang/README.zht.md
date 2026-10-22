@@ -63,10 +63,10 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 - 多智慧代理的非同步與模型規則
 - 壓縮輸入輸出、上下文與提示以節省 token，利用快取和規則降低成本
 - 支援任何終端機與作業系統，同時支援 Web 終端機
-- 易用性：TUI 隨處可用，體驗接近 GUI，桌面版與 Web 版處於 BETA 階段
+- 易用性：TUI 隨處可用，體驗接近 GUI，支援 TUI 編輯器、Web 與桌面版
 - 點擊或輸入 “/xxx” 切換會話，TUI 中任意位置皆可點擊
 - 點擊 “Modified Files” 或輸入 “/diff”、“/diff git” 在 TUI 中檢視差異檔案，體驗與 VSCode 相似
-- 自動補全英文字母與短句
+- 多語言字母與短句自動補全
 - 更易用的 Agents、Skills 與 MCP 系統，支援自訂 Agents 與 Skills
 - 支援智慧體團隊，多主智慧體
 - 類似 OpenClaw 的頻道與功能支援

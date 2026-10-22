@@ -63,10 +63,10 @@ Usa «/yolo» para alternar entre el modo automático y el modo de confirmación
 - Reglas asíncronas y de modelo para los multi-agentes
 - Compresión de entrada/salida, contexto y prompts para ahorrar tokens; caché y reglas para reducir el costo
 - Compatible con cualquier terminal y SO, también con terminales web
-- Fácil de usar: TUI disponible en todas partes, cercana a una GUI; versiones Desktop y Web en BETA
+- Fácil de usar: TUI disponible en todas partes, cercana a una GUI; editor TUI, soporte Web y Desktop
 - Haz clic o usa «/xxx» para cambiar de sesión; todo es cliqueable en la TUI
 - Haz clic en «Modified Files» o usa «/diff» y «/diff git» para ver los archivos de diff en la TUI, como en VSCode
-- Autocompletado de letras y frases cortas en inglés
+- Autocompletado multilingüe de letras y frases cortas
 - Sistema de Agents, Skills y MCP más sencillo, con soporte para Agents y Skills personalizados
 - Soporte de equipos de agentes, con múltiples agentes principales
 - Soporte de canales y funciones similar a OpenClaw

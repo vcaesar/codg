@@ -63,10 +63,10 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 - 다중 에이전트를 위한 비동기 및 모델 규칙
 - 입출력, 컨텍스트와 프롬프트를 압축해 토큰 절약, 캐시와 규칙으로 비용 절감
 - 모든 터미널과 OS 지원, 웹 터미널도 지원
-- 사용 편의성: TUI는 어디서나 GUI처럼 사용 가능하며, 데스크톱/웹 버전은 BETA 제공 중
+- 사용 편의성: TUI는 어디서나 GUI처럼 사용 가능하며, TUI 편집기, 웹 및 데스크톱 지원
 - 클릭 또는 "/xxx" 로 세션 전환, TUI 어디서나 클릭 가능
 - "Modified Files" 클릭 또는 "/diff", "/diff git" 으로 VSCode처럼 TUI 내에서 diff 파일 확인
-- 영문 글자 및 짧은 문장 자동 완성
+- 다국어 글자 및 짧은 문장 자동 완성
 - 더 쉽고 간편한 Agents, Skills 및 MCP 시스템, 사용자 정의 Agents 및 Skills 지원
 - 에이전트 팀 지원, 다중 메인 에이전트
 - OpenClaw와 유사한 채널 및 기능 지원
