@@ -92,6 +92,8 @@ type PluginConfig struct {
 	DisabledTools []string `json:"disabled_tools,omitempty"`
 	// Timeout is the initialization timeout in seconds.
 	Timeout int `json:"timeout,omitempty"`
+	// Options is passed to the plugin as [PluginInput.Options].
+	Options map[string]any `json:"options,omitempty"`
 }
 
 // InitConfig provides all the information the plugin system needs
@@ -494,6 +496,11 @@ type Hooks struct {
 	// error response.
 	ErrorHandle func(ctx context.Context, input ErrorHandleInput, output *ErrorHandleOutput) error
 
+	// Dispose is called by [Close] so the plugin can release resources
+	// (goroutines, connections, timers). Plugins are disposed in reverse
+	// hook order.
+	Dispose func(ctx context.Context) error
+
 	// Priority controls the execution order of hooks across plugins.
 	// Lower values run first. The default is 0.
 	Priority int
@@ -522,6 +529,8 @@ type PluginInput struct {
 	WorkingDir string
 	// Permissions is the permission service for requesting tool permissions.
 	Permissions PermissionService
+	// Options are the per-plugin options from [PluginConfig.Options].
+	Options map[string]any
 }
 
 // PluginFunc adapts a plain function to the [Plugin] interface.
@@ -659,6 +668,7 @@ func initSinglePlugin(ctx context.Context, st *initState, cfg *InitConfig, perms
 	input := PluginInput{
 		WorkingDir:  cfg.WorkingDir,
 		Permissions: perms,
+		Options:     pluginCfg.Options,
 	}
 
 	timeout := time.Duration(pluginCfg.Timeout) * time.Second
@@ -874,14 +884,28 @@ func WaitForInit(ctx context.Context) error {
 // Close shuts down all plugins and releases resources. It resets all
 // package-level state so that [Initialize] can be called again (e.g.
 // in tests or after a hot-reload).
-func Close(_ context.Context) error {
+func Close(ctx context.Context) error {
 	stateMu.Lock()
-	defer stateMu.Unlock()
+	ready := sortedPlugins()
 	initCur.Store(newInitState())
 	broker.Swap(newEventBus[Event]()).Shutdown()
 	allTools.Reset()
 	plugins.Reset()
-	return nil
+	stateMu.Unlock()
+
+	// Dispose outside the lock so plugin code can call back into this
+	// package without deadlocking.
+	var errs []error
+	for _, info := range slices.Backward(ready) {
+		dispose := info.Hooks.Dispose
+		if dispose == nil {
+			continue
+		}
+		if err := safeCall(func() error { return dispose(ctx) }); err != nil {
+			errs = append(errs, fmt.Errorf("plugin %s dispose: %w", info.Name, err))
+		}
+	}
+	return errors.Join(errs...)
 }
 
 // --- State management ---
@@ -1006,9 +1030,11 @@ func TriggerChatHeaders(ctx context.Context, input ChatHeadersInput, output *Cha
 	trigger(ctx, "chat.headers", func(h *Hooks) func(context.Context, ChatHeadersInput, *ChatHeadersOutput) error { return h.ChatHeaders }, input, output, nil)
 }
 
-// TriggerPermissionAsk invokes the permission.ask hook on all loaded plugins.
+// TriggerPermissionAsk invokes the permission.ask hook on all loaded
+// plugins. A "deny" is final: the chain stops so a later plugin cannot
+// flip it back to "allow".
 func TriggerPermissionAsk(ctx context.Context, input PermissionInput, output *PermissionOutput) {
-	trigger(ctx, "permission.ask", func(h *Hooks) func(context.Context, PermissionInput, *PermissionOutput) error { return h.PermissionAsk }, input, output, nil)
+	trigger(ctx, "permission.ask", func(h *Hooks) func(context.Context, PermissionInput, *PermissionOutput) error { return h.PermissionAsk }, input, output, func(o *PermissionOutput) bool { return o.Status == "deny" })
 }
 
 // TriggerShellEnv invokes the shell.env hook on all loaded plugins.
@@ -1201,8 +1227,19 @@ func (t *PluginTool) ProviderOptions() codgpkg.ProviderOptions {
 }
 
 // Name returns the fully qualified tool name (plugin_<plugin>_<tool>).
+// Characters LLM APIs reject in tool names (outside [A-Za-z0-9_-])
+// become '_'.
 func (t *PluginTool) Name() string {
-	return fmt.Sprintf("plugin_%s_%s", t.pluginName, t.def.Name)
+	return "plugin_" + sanitizeToolName(t.pluginName) + "_" + sanitizeToolName(t.def.Name)
+}
+
+func sanitizeToolName(s string) string {
+	return strings.Map(func(r rune) rune {
+		if r == '_' || r == '-' || ('a' <= r && r <= 'z') || ('A' <= r && r <= 'Z') || ('0' <= r && r <= '9') {
+			return r
+		}
+		return '_'
+	}, s)
 }
 
 // PluginName returns the source plugin name.

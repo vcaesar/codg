@@ -2,6 +2,7 @@ package plugin
 
 import (
 	"context"
+	"errors"
 	"sync"
 	"testing"
 	"time"
@@ -144,4 +145,87 @@ func TestMetaPanicIsolated(t *testing.T) {
 	require.True(t, ok)
 	require.Equal(t, StateReady, info.State)
 	require.Nil(t, info.Meta)
+}
+
+func TestCloseDisposesInReverseOrder(t *testing.T) {
+	require.NoError(t, Close(context.Background()))
+	t.Cleanup(func() { require.NoError(t, Close(context.Background())) })
+
+	var order []string
+	st := initCur.Load()
+	for _, tc := range []struct {
+		name     string
+		priority int
+		err      error
+	}{{"a", 0, nil}, {"b", 1, errors.New("boom")}, {"c", 2, nil}} {
+		commit(st, newInfo(tc.name, StateReady, nil, &Hooks{
+			Priority: tc.priority,
+			Dispose: func(context.Context) error {
+				order = append(order, tc.name)
+				// Calling back into the package must not deadlock.
+				GetStates()
+				return tc.err
+			},
+		}), nil)
+	}
+	commit(st, newInfo("panics", StateReady, nil, &Hooks{
+		Priority: 3,
+		Dispose:  func(context.Context) error { panic("dispose panic") },
+	}), nil)
+
+	err := Close(context.Background())
+	require.ErrorContains(t, err, "plugin b dispose: boom")
+	require.ErrorContains(t, err, "plugin panics dispose: plugin panic")
+	require.Equal(t, []string{"c", "b", "a"}, order)
+	require.Empty(t, GetStates())
+}
+
+func TestPluginOptionsPassedToInit(t *testing.T) {
+	require.NoError(t, Close(context.Background()))
+	t.Cleanup(func() { require.NoError(t, Close(context.Background())) })
+	orig := builtinPlugins
+	builtinPlugins = map[string]Plugin{}
+	t.Cleanup(func() { builtinPlugins = orig })
+
+	var got map[string]any
+	RegisterBuiltin("opts", PluginFunc(func(_ context.Context, in PluginInput) (*Hooks, error) {
+		got = in.Options
+		return &Hooks{}, nil
+	}))
+	initSinglePlugin(context.Background(), initCur.Load(), &InitConfig{}, nil, "opts", PluginConfig{
+		Type: PluginTypeBuiltin, Options: map[string]any{"strict": true},
+	})
+	require.Equal(t, map[string]any{"strict": true}, got)
+}
+
+func TestTriggerPermissionAskDenyIsFinal(t *testing.T) {
+	require.NoError(t, Close(context.Background()))
+	t.Cleanup(func() { require.NoError(t, Close(context.Background())) })
+
+	st := initCur.Load()
+	set := func(name string, priority int, status string) {
+		commit(st, newInfo(name, StateReady, nil, &Hooks{
+			Priority: priority,
+			PermissionAsk: func(_ context.Context, _ PermissionInput, out *PermissionOutput) error {
+				out.Status = status
+				return nil
+			},
+		}), nil)
+	}
+	set("allow1", 0, "allow")
+	set("deny", 1, "deny")
+	set("allow2", 2, "allow")
+
+	out := &PermissionOutput{Status: "ask"}
+	TriggerPermissionAsk(context.Background(), PermissionInput{ToolName: "bash"}, out)
+	require.Equal(t, "deny", out.Status)
+}
+
+func TestPluginToolNameSanitized(t *testing.T) {
+	t.Parallel()
+
+	pt := &PluginTool{pluginName: "acme.tools", def: ToolDefinition{Name: "say hi/v2"}}
+	require.Equal(t, "plugin_acme_tools_say_hi_v2", pt.Name())
+	pt = &PluginTool{pluginName: "gemini-auth", def: ToolDefinition{Name: "Login_1"}}
+	require.Equal(t, "plugin_gemini-auth_Login_1", pt.Name())
 }
