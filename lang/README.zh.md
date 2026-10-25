@@ -64,14 +64,14 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 - 压缩输入输出、上下文与提示以节省 token，利用缓存和规则降低成本
 - 支持任何终端和操作系统，同时支持 Web 终端
 - 易用性：TUI 随处可用，体验接近 GUI，支持 TUI 编辑器、Web 和桌面版
-- 点击或输入 “/xxx” 切换会话，TUI 中任意位置可点击
-- 点击 “Modified Files” 或输入 “/diff”、“/diff git” 在 TUI 中查看差异文件，体验与 VSCode 相似
+- 世界上最好的 TUI：点击或输入 “/xxx” 切换会话，TUI 中任意位置可点击
+- 点击 “Modified Files” 或输入 “/diff”、“/diff git” 在 TUI 中审查/推送差异文件，体验与 VSCode 相似
 - 多语言字母和短句自动补全
 - 更易用的 Agents、Skills 与 MCP 系统，支持自定义 Agents 与 Skills
 - 支持智能体团队，多主智能体
 - 类似 OpenClaw 的频道与功能支持
 - 完整的 Web UI、远程 TUI 和桌面应用支持，支持 vscode/zed 扩展
-- 支持 Claude Code 和 Codex 插件
+- 支持 Claude Code 和 Codex 插件，以及 Codg api/sdk/acp/plugin
 - 完整的电脑、移动设备与浏览器操控，智能体无所不能
 - 完整的语音支持，支持在线与本地引擎（whisper.cpp、funasr 和 qwen3-asr），使用 “/run install” 安装本地引擎
 

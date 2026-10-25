@@ -5,12 +5,14 @@ package pub
 import (
 	"bytes"
 	"embed"
+
+	"github.com/vcaesar/codg/plugin/version"
 )
 
 // AppVersion is a variable (not a const) so release builds can override it:
 //
 //	-ldflags "-X github.com/vcaesar/codg/ui/desktop/pub.AppVersion=1.2.3"
-var AppVersion = "2.6.1"
+var AppVersion = version.Version
 
 // Shared application metadata and window geometry for both desktop shells.
 const (

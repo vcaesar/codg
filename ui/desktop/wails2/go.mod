@@ -9,7 +9,10 @@ require (
 
 // The shared desktop process-management code lives in the sibling pub
 // package; use the in-repo copy.
-replace github.com/vcaesar/codg/ui/desktop/pub => ../pub
+replace (
+	github.com/vcaesar/codg/plugin => ../../../plugin
+	github.com/vcaesar/codg/ui/desktop/pub => ../pub
+)
 
 require (
 	git.sr.ht/~jackmordaunt/go-toast/v2 v2.0.3 // indirect
@@ -35,6 +38,7 @@ require (
 	github.com/tkrajina/go-reflector v0.5.8 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasttemplate v1.2.2 // indirect
+	github.com/vcaesar/codg/plugin v0.0.0-00010101000000-000000000000 // indirect
 	github.com/wailsapp/go-webview2 v1.0.22 // indirect
 	golang.org/x/crypto v0.53.0 // indirect
 	golang.org/x/net v0.56.0 // indirect

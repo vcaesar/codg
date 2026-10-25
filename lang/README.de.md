@@ -64,14 +64,14 @@ Mit „/yolo“ können Sie zwischen Auto- und Bestätigungsmodus wechseln; Bere
 - Komprimierung von Ein-/Ausgabe, Kontext und Prompts spart Tokens; Cache und Regeln senken die Kosten
 - Unterstützung für jedes Terminal und Betriebssystem, auch für Web-Terminals
 - Benutzerfreundlich: TUI überall einsetzbar, GUI-nah; TUI-Editor, Web- und Desktop-Unterstützung
-- Klicken oder „/xxx" zum Sitzungswechsel, überall im TUI anklickbar
-- Klick auf „Modified Files" oder „/diff" bzw. „/diff git" zeigt Diff-Dateien im TUI wie in VSCode
+- Das beste TUI der Welt: Klicken oder „/xxx" zum Sitzungswechsel, überall im TUI anklickbar
+- Klick auf „Modified Files" oder „/diff" bzw. „/diff git" zum Prüfen/Pushen von Diff-Dateien im TUI wie in VSCode
 - Mehrsprachige Autovervollständigung von Buchstaben und kurzen Sätzen
 - Einfacheres Agents-, Skills- und MCP-System, Unterstützung für benutzerdefinierte Agents und Skills
 - Unterstützung für Agenten-Teams, mehrere Haupt-Agenten
 - Kanal- und Funktionsunterstützung wie OpenClaw
 - Vollständige Unterstützung für Web-UI, Remote-TUI und Desktop-App sowie vscode/zed-Erweiterungen
-- Unterstützung für Claude Code- und Codex-Plugins
+- Unterstützung für Claude Code- und Codex-Plugins sowie Codg api/sdk/acp/plugin
 - Vollständige Computer-, Mobil- und Browser-Steuerung, Agenten erledigen alles
 - Vollständige Sprachunterstützung mit Online- und lokalen Engines (whisper.cpp, funasr und qwen3-asr), „/run install" installiert die lokale Engine
 

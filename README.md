@@ -64,14 +64,14 @@ Use "/yolo" to toggle the auto and ask mode, and you can set permissions by codg
 - Compression input-output, context and prompts to save the tokens, cache and rules to reduce the cost
 - Any terminal and OS support, also web terminal support
 - Easy use: The TUI in everywhere like GUI and Easy, TUI editor, Web and desktop support
-- Click or "/xxx" to switch sessions, Click to everywhere in TUI
-- Clcik "Modified Files" or "/diff" and "/diff git" to view the diff files in TUI same the vscode
+- Best TUI in the word: Click or "/xxx" to switch sessions, Click to everywhere in TUI
+- Clcik "Modified Files" or "/diff" and "/diff git" to review/push the diff files in TUI same the vscode
 - Autocomplete the multi languages letters and short sentences
 - More easy Agents, Skills and MCP system, custom Agents and Skills support
 - Agent teams support, multi main agents
 - Channel and features support like OpenClaw
 - Full Web UI and remote TUI support, and desktop app support, vscode/zed Extensions support
-- Claude Code and Codex Plugin support
+- Claude Code and Codex Plugin support, and Codg api/sdk/acp/plugin support
 - Full computer, mobile and browser use, agents play everything
 - Full Voice support, online and local engine support (whisper.cpp, funasr and qwen3-asr), "/run install" to install local engine
 

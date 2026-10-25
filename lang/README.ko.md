@@ -64,14 +64,14 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 - 입출력, 컨텍스트와 프롬프트를 압축해 토큰 절약, 캐시와 규칙으로 비용 절감
 - 모든 터미널과 OS 지원, 웹 터미널도 지원
 - 사용 편의성: TUI는 어디서나 GUI처럼 사용 가능하며, TUI 편집기, 웹 및 데스크톱 지원
-- 클릭 또는 "/xxx" 로 세션 전환, TUI 어디서나 클릭 가능
-- "Modified Files" 클릭 또는 "/diff", "/diff git" 으로 VSCode처럼 TUI 내에서 diff 파일 확인
+- 세계 최고의 TUI: 클릭 또는 "/xxx" 로 세션 전환, TUI 어디서나 클릭 가능
+- "Modified Files" 클릭 또는 "/diff", "/diff git" 으로 VSCode처럼 TUI 내에서 diff 파일 리뷰/푸시
 - 다국어 글자 및 짧은 문장 자동 완성
 - 더 쉽고 간편한 Agents, Skills 및 MCP 시스템, 사용자 정의 Agents 및 Skills 지원
 - 에이전트 팀 지원, 다중 메인 에이전트
 - OpenClaw와 유사한 채널 및 기능 지원
 - 완전한 웹 UI, 원격 TUI 및 데스크톱 앱 지원, vscode/zed 확장 프로그램 지원
-- Claude Code 및 Codex 플러그인 지원
+- Claude Code 및 Codex 플러그인 지원, Codg api/sdk/acp/plugin 지원
 - 컴퓨터, 모바일 및 브라우저 완전 제어, 에이전트가 모든 것을 처리
 - 완전한 음성 지원, 온라인 및 로컬 엔진(whisper.cpp, funasr, qwen3-asr) 지원, "/run install" 로 로컬 엔진 설치
 

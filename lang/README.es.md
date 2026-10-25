@@ -64,14 +64,14 @@ Usa «/yolo» para alternar entre el modo automático y el modo de confirmación
 - Compresión de entrada/salida, contexto y prompts para ahorrar tokens; caché y reglas para reducir el costo
 - Compatible con cualquier terminal y SO, también con terminales web
 - Fácil de usar: TUI disponible en todas partes, cercana a una GUI; editor TUI, soporte Web y Desktop
-- Haz clic o usa «/xxx» para cambiar de sesión; todo es cliqueable en la TUI
-- Haz clic en «Modified Files» o usa «/diff» y «/diff git» para ver los archivos de diff en la TUI, como en VSCode
+- La mejor TUI del mundo: haz clic o usa «/xxx» para cambiar de sesión; todo es cliqueable en la TUI
+- Haz clic en «Modified Files» o usa «/diff» y «/diff git» para revisar/hacer push de los archivos de diff en la TUI, como en VSCode
 - Autocompletado multilingüe de letras y frases cortas
 - Sistema de Agents, Skills y MCP más sencillo, con soporte para Agents y Skills personalizados
 - Soporte de equipos de agentes, con múltiples agentes principales
 - Soporte de canales y funciones similar a OpenClaw
 - Soporte completo de la interfaz web, la TUI remota y la aplicación de escritorio, y extensiones para vscode/zed
-- Soporte de plugins de Claude Code y Codex
+- Soporte de plugins de Claude Code y Codex, y soporte de Codg api/sdk/acp/plugin
 - Control total del ordenador, móvil y navegador; los agentes lo manejan todo
 - Soporte completo de voz, con motores en línea y locales (whisper.cpp, funasr y qwen3-asr); usa «/run install» para instalar el motor local
 

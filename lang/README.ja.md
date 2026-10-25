@@ -64,14 +64,14 @@ curl -fsSL https://raw.githubusercontent.com/vcaesar/codg/main/demo/boot.sh | ba
 - 入出力・コンテキスト・プロンプトを圧縮してトークンを節約、キャッシュとルールでコストを削減
 - あらゆるターミナルと OS をサポート、Web ターミナルにも対応
 - 使いやすさ：TUI はどこでも GUI のように使え、TUI エディタ、Web 版とデスクトップ版に対応
-- クリックまたは「/xxx」でセッション切り替え、TUI 内のあらゆる場所をクリック可能
-- 「Modified Files」をクリックするか「/diff」「/diff git」で VSCode のように差分ファイルを表示
+- 世界最高の TUI：クリックまたは「/xxx」でセッション切り替え、TUI 内のあらゆる場所をクリック可能
+- 「Modified Files」をクリックするか「/diff」「/diff git」で VSCode のように差分ファイルをレビュー/プッシュ
 - 多言語の文字と短文の自動補完
 - より使いやすいエージェント、スキル、MCP システム。カスタム Agents と Skills に対応
 - エージェントチームのサポート、複数のメインエージェント
 - OpenClaw のようなチャンネルと機能サポート
 - 完全な Web UI、リモート TUI、デスクトップアプリをサポート、vscode/zed 拡張機能にも対応
-- Claude Code および Codex プラグインのサポート
+- Claude Code および Codex プラグインのサポート、Codg api/sdk/acp/plugin のサポート
 - コンピューター、モバイル、ブラウザの完全な操作、エージェントが何でもこなす
 - 完全な音声サポート、オンラインおよびローカルエンジン(whisper.cpp、funasr、qwen3-asr)に対応、「/run install」でローカルエンジンをインストール
 
