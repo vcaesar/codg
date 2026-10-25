@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "moduleResolution": "node",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "outDir": "out-test",
+    "rootDir": ".",
+    "types": ["node"]
+  },
+  "include": ["src/lib.ts", "src/acp.ts", "src/webview/render.ts", "src/webview/composer.ts", "test"]
+}
