@@ -69,8 +69,8 @@ jobs:
           # Apple Silicon runner also cross-compiles the amd64 slice
           # natively (CGO darwin->darwin works), so one mac runner
           # covers both arches.
-          - { runner: macos-14, platform: darwin/arm64, name: darwin-arm64 }
-          - { runner: macos-14, platform: darwin/amd64, name: darwin-amd64 }
+          - { runner: macos-15, platform: darwin/arm64, name: darwin-arm64 }
+          - { runner: macos-15, platform: darwin/amd64, name: darwin-amd64 }
           - {
               runner: windows-latest,
               platform: windows/amd64,
