@@ -1,4 +1,4 @@
 package version
 
 // Version the codg plugin version
-const Version = "2.6.7"
+const Version = "2.6.12"
