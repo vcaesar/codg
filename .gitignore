@@ -11,7 +11,12 @@
 # Test binary, built with `go test -c`
 *.test
 *.log
-v1
+
+.v0
+v0
+# demo
+.codg
+test0
 
 # Code coverage profiles and other test artifacts
 *.out
