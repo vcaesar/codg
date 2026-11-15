@@ -58,6 +58,11 @@ func TestEmbeddedUIWithProxy_EndToEnd(t *testing.T) {
 	if !strings.Contains(string(body), "window.WebSocket") {
 		t.Fatalf("GET / missing websocket shim: %.200s", body)
 	}
+	// The theme report must be injected too: without it the native glass
+	// backdrop keeps the system appearance under a dark (or light) web UI.
+	if !strings.Contains(string(body), "codg:theme:") {
+		t.Fatalf("GET / missing theme report script: %.200s", body)
+	}
 	// Websockets must target the origin-stripping relay, not the backend:
 	// the backend upgrader 403s the wails://localhost page Origin.
 	if backendHost := strings.TrimPrefix(backend.URL, "http://"); strings.Contains(string(body), `"ws://`+backendHost+`"`) {

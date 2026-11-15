@@ -95,6 +95,18 @@ func main() {
 			application.NewService(desktopSvc),
 			application.NewService(browserSvc),
 		},
+		// The web UI reports its theme (themeReportScript); keep the native
+		// glass backdrop on the matching light/dark material.
+		RawMessageHandler: func(w application.Window, message string, _ *application.OriginInfo) {
+			dark, ok := backdropDark(message)
+			if !ok {
+				return
+			}
+			application.InvokeAsync(func() {
+				applied := setBackdropAppearance(w.NativeWindow(), dark)
+				slog.Debug("Backdrop appearance", "dark", dark, "applied", applied)
+			})
+		},
 		Mac: application.MacOptions{
 			// Keep the app running when the last window closes (system
 			// tray remains active). Users can re-open via tray icon.

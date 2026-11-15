@@ -12,7 +12,7 @@ import (
 // Websockets go through the loopback relay because the backend's upgrader
 // rejects the wails://localhost / http://wails.localhost page Origin with 403.
 func backendProxyMiddleware(backendURL string) (application.Middleware, func(), error) {
-	mw, stop, err := pub.BackendProxyMiddlewareWithRelay(backendURL)
+	mw, stop, err := pub.BackendProxyMiddlewareWithRelay(backendURL, themeReportScript)
 	if err != nil {
 		return nil, nil, err
 	}
