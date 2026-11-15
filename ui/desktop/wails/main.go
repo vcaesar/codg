@@ -60,15 +60,17 @@ func main() {
 	// --- Window URL + asset middleware ---
 	windowURL := "/?codg_desktop=" + runtime.GOOS
 	var assetMiddleware application.Middleware
+	stopRelay := func() {}
 	switch {
 	case serverURL != "" && pub.EmbedHasRealUI():
-		mw, err := backendProxyMiddleware(serverURL)
+		mw, stop, err := backendProxyMiddleware(serverURL)
 		if err != nil {
 			slog.Warn("backend proxy unavailable; loading backend URL directly",
 				"err", err)
 			windowURL = strings.TrimRight(serverURL, "/") + windowURL
 		} else {
 			assetMiddleware = mw
+			stopRelay = stop
 			slog.Info("Serving embedded web UI; proxying API to backend",
 				"backend", serverURL)
 		}
@@ -113,6 +115,7 @@ func main() {
 	var stopOnce sync.Once
 	stopAPI := func() {
 		stopOnce.Do(func() {
+			stopRelay()
 			cancelAPI()
 			if apiShutdown == nil {
 				return

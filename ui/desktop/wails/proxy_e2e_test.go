@@ -20,16 +20,17 @@ func TestEmbeddedUIWithProxy_EndToEnd(t *testing.T) {
 	t.Parallel()
 
 	backend := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if _, err := io.WriteString(w, "backend:"+r.URL.Path); err != nil {
+		if _, err := io.WriteString(w, "backend:"+r.URL.Path+";origin="+r.Header.Get("Origin")); err != nil {
 			t.Errorf("backend write: %v", err)
 		}
 	}))
 	t.Cleanup(backend.Close)
 
-	mw, err := backendProxyMiddleware(backend.URL)
+	mw, stopRelay, err := backendProxyMiddleware(backend.URL)
 	if err != nil {
 		t.Fatalf("backendProxyMiddleware: %v", err)
 	}
+	t.Cleanup(stopRelay)
 	srv := httptest.NewServer(mw(application.BundledAssetFileServer(pub.Assets)))
 	t.Cleanup(srv.Close)
 
@@ -57,6 +58,11 @@ func TestEmbeddedUIWithProxy_EndToEnd(t *testing.T) {
 	if !strings.Contains(string(body), "window.WebSocket") {
 		t.Fatalf("GET / missing websocket shim: %.200s", body)
 	}
+	// Websockets must target the origin-stripping relay, not the backend:
+	// the backend upgrader 403s the wails://localhost page Origin.
+	if backendHost := strings.TrimPrefix(backend.URL, "http://"); strings.Contains(string(body), `"ws://`+backendHost+`"`) {
+		t.Fatalf("shim targets backend %q directly, want the relay", backendHost)
+	}
 
 	// API path -> proxied to the backend.
 	resp, err = srv.Client().Get(srv.URL + "/health")
@@ -70,7 +76,29 @@ func TestEmbeddedUIWithProxy_EndToEnd(t *testing.T) {
 	if err != nil {
 		t.Fatalf("read body: %v", err)
 	}
-	if string(body) != "backend:/health" {
+	if string(body) != "backend:/health;origin=" {
 		t.Fatalf("GET /health = %q, want backend response", body)
+	}
+
+	// Mutations carry the webview Origin, which the backend's CORS 403s;
+	// the proxy must drop it.
+	req, err := http.NewRequest(http.MethodPost, srv.URL+"/v1/session", strings.NewReader("{}"))
+	if err != nil {
+		t.Fatalf("new request: %v", err)
+	}
+	req.Header.Set("Origin", "wails://localhost")
+	resp, err = srv.Client().Do(req)
+	if err != nil {
+		t.Fatalf("POST /v1/session: %v", err)
+	}
+	body, err = io.ReadAll(resp.Body)
+	if cerr := resp.Body.Close(); cerr != nil {
+		t.Fatalf("close body: %v", cerr)
+	}
+	if err != nil {
+		t.Fatalf("read body: %v", err)
+	}
+	if string(body) != "backend:/v1/session;origin=" {
+		t.Fatalf("POST /v1/session = %q, want Origin stripped", body)
 	}
 }

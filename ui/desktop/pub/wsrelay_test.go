@@ -130,11 +130,16 @@ func TestStartWSRelay_StripsOriginAndRelaysUpgrade(t *testing.T) {
 		t.Fatalf("echo = %q, want %q", echo, "echo:ping\n")
 	}
 
-	// stop is idempotent and severs the listener.
+	// stop is idempotent and severs the listener. On darwin a dial racing
+	// the close can still connect (and is then reset), so assert that
+	// nothing is served rather than that the dial fails.
 	stop()
 	stop()
-	if _, err := net.DialTimeout("tcp", relayURL.Host, time.Second); err == nil {
-		t.Fatal("relay still accepting connections after stop")
+	if resp, err := http.Get(relayURL.String()); err == nil {
+		if cerr := resp.Body.Close(); cerr != nil {
+			t.Logf("close body: %v", cerr)
+		}
+		t.Fatalf("relay still serving after stop: %d", resp.StatusCode)
 	}
 }
 

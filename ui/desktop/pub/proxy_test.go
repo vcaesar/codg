@@ -284,6 +284,44 @@ func TestBackendProxyMiddleware_InjectsShimIntoBackendFallbackDocument(t *testin
 	}
 }
 
+// API-only backends (`codg api`, `codg web 0`) 404 every non-API path, so a
+// reload on an SPA client route must fall back to the embedded document —
+// but only for navigations, and only when the embed has one.
+func TestBackendProxyMiddleware_ServesEmbeddedIndexForClientRoutes(t *testing.T) {
+	t.Parallel()
+
+	backend := httptest.NewServer(http.NotFoundHandler())
+	t.Cleanup(backend.Close)
+	mw, err := BackendProxyMiddleware(backend.URL)
+	if err != nil {
+		t.Fatalf("BackendProxyMiddleware: %v", err)
+	}
+	withIndex := mw(assetHandler(map[string]string{"/": "<html><head></head>ui</html>"}))
+
+	for _, tt := range []struct {
+		name, path, accept string
+		handler            http.Handler
+		status             int
+		wantUI             bool
+	}{
+		{"client route", "/p/L3RtcA/session/abc?x=1", "text/html,application/xhtml+xml", withIndex, http.StatusOK, true},
+		{"api 404 stays 404", "/v1/missing/", "application/json", withIndex, http.StatusNotFound, false},
+		{"no embedded index", "/p/L3RtcA/session/abc", "text/html", mw(assetHandler(nil)), http.StatusNotFound, false},
+	} {
+		req := httptest.NewRequest(http.MethodGet, tt.path, nil)
+		req.Header.Set("Accept", tt.accept)
+		rec := httptest.NewRecorder()
+		tt.handler.ServeHTTP(rec, req)
+
+		body := rec.Body.String()
+		gotUI := strings.Contains(body, "ui</html>") && strings.Contains(body, "window.WebSocket")
+		if rec.Code != tt.status || gotUI != tt.wantUI {
+			t.Errorf("%s: status = %d, embedded ui = %v, want %d, %v: %.80q",
+				tt.name, rec.Code, gotUI, tt.status, tt.wantUI, body)
+		}
+	}
+}
+
 func TestBackendProxyMiddleware_DoesNotInjectIntoNonHTML(t *testing.T) {
 	t.Parallel()
 
@@ -463,5 +501,40 @@ func TestBackendProxyMiddleware_WebPreviewGoesToBackendWithoutShim(t *testing.T)
 	}
 	if !wantsBackend(httptest.NewRequest(http.MethodGet, "/V1/File/Web/tok/a.css", nil)) {
 		t.Fatal("preview assets must go to the backend")
+	}
+}
+
+// The backend's CORS middleware 403s webview page origins, so the proxy must
+// drop them on forwarded API calls while leaving foreign origins for the
+// backend to reject.
+func TestBackendProxyMiddleware_StripsWebviewOrigin(t *testing.T) {
+	t.Parallel()
+
+	backend := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if _, err := io.WriteString(w, "origin="+r.Header.Get("Origin")+";host="+r.Host); err != nil {
+			t.Errorf("backend write: %v", err)
+		}
+	}))
+	t.Cleanup(backend.Close)
+	mw, err := BackendProxyMiddleware(backend.URL)
+	if err != nil {
+		t.Fatalf("BackendProxyMiddleware: %v", err)
+	}
+	h := mw(assetHandler(nil))
+	backendHost := strings.TrimPrefix(backend.URL, "http://")
+
+	for origin, want := range map[string]string{
+		"wails://wails":          "",
+		"wails://localhost":      "",
+		"http://wails.localhost": "",
+		"https://evil.example":   "https://evil.example",
+	} {
+		req := httptest.NewRequest(http.MethodPost, "http://wails/v1/session", strings.NewReader("{}"))
+		req.Header.Set("Origin", origin)
+		rec := httptest.NewRecorder()
+		h.ServeHTTP(rec, req)
+		if got, exp := rec.Body.String(), "origin="+want+";host="+backendHost; got != exp {
+			t.Errorf("origin %q: backend saw %q, want %q", origin, got, exp)
+		}
 	}
 }

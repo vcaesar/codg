@@ -40,7 +40,8 @@ func DesktopMarkerMiddleware(extra ...[]byte) Middleware {
 // Routing rules:
 //   - non-GET/HEAD requests -> backend (static asset servers only serve GET)
 //   - Upgrade (websocket) or text/event-stream (SSE) requests -> backend
-//   - HTML document requests -> served (embed first, backend fallback)
+//   - HTML document requests -> served (embed first, backend fallback,
+//     then the embedded index for client routes an API-only backend 404s)
 //     with the websocket-redirect shim injected into <head>
 //   - GET/HEAD the asset server answers 404/405 to -> replayed to backend
 func BackendProxyMiddleware(backendURL string) (Middleware, error) {
@@ -96,6 +97,18 @@ func documentMiddleware(proxy *httputil.ReverseProxy, backend *url.URL, extra ..
 					// still injecting into whatever HTML it returns.
 					buf = newHTMLBuffer()
 					proxy.ServeHTTP(buf, r)
+					// API-only backends (`codg api`, `codg web 0`) have no
+					// SPA fallback: a reload on a client route such as
+					// /p/<dir>/session/<id> still needs the embedded document.
+					if buf.status == http.StatusNotFound && strings.Contains(r.Header.Get("Accept"), "text/html") {
+						root := r.Clone(r.Context())
+						root.URL.Path, root.URL.RawPath = "/", ""
+						index := newHTMLBuffer()
+						next.ServeHTTP(index, root)
+						if index.status == http.StatusOK {
+							buf = index
+						}
+					}
 				}
 				buf.writeTo(w, shim)
 				return
@@ -119,12 +132,22 @@ func documentMiddleware(proxy *httputil.ReverseProxy, backend *url.URL, extra ..
 }
 
 func newBackendProxy(target *url.URL) *httputil.ReverseProxy {
-	proxy := httputil.NewSingleHostReverseProxy(target)
-	proxy.ErrorHandler = func(w http.ResponseWriter, r *http.Request, err error) {
-		slog.Warn("Backend proxy error", "path", r.URL.Path, "err", err)
-		http.Error(w, "codg backend unreachable", http.StatusBadGateway)
+	return &httputil.ReverseProxy{
+		Rewrite: func(pr *httputil.ProxyRequest) {
+			pr.SetURL(target)
+			// The backend's CORS check 403s the webview page Origin
+			// (wails://…, http://wails.localhost) that WebKit/WebView2
+			// stamp on mutations; this proxy is only reachable from the
+			// in-process asset server, so drop it like the WS relay does.
+			if webviewOrigin(pr.In.Header.Get("Origin")) {
+				pr.Out.Header.Del("Origin")
+			}
+		},
+		ErrorHandler: func(w http.ResponseWriter, r *http.Request, err error) {
+			slog.Warn("Backend proxy error", "path", r.URL.Path, "err", err)
+			http.Error(w, "codg backend unreachable", http.StatusBadGateway)
+		},
 	}
-	return proxy
 }
 
 // WSRedirectShim returns an inline <script> that marks the page as running
